@@ -25,6 +25,11 @@ class CStandardShader;
 #define RESOURCE_TEXTURE_CUBE		0x04
 #define RESOURCE_BUFFER				0x05
 
+#define VK_W						0x57
+#define VK_S						0x53
+#define VK_A						0x41
+#define VK_D						0x44
+
 class CTexture
 {
 public:

@@ -285,26 +285,49 @@ void CThirdPersonCamera::Update(XMFLOAT3& xmf3LookAt, float fTimeElapsed)
 			SetLookAt(xmf3LookAt);
 		}
 	}
-
-	
 }
 
 void CThirdPersonCamera::SetLookAt(XMFLOAT3& xmf3LookAt)
 {
-	XMFLOAT4X4 mtxLookAt = Matrix4x4::LookAtLH(m_xmf3Position, xmf3LookAt, m_pPlayer->GetUpVector());
-	XMMATRIX lookAtMatrix = XMLoadFloat4x4(&mtxLookAt);
-
-	// Y축 주위로 60도 회전하는 회전 행렬 생성
-	float fAngleRadians = XMConvertToRadians(30.0f);
-	XMMATRIX rotationMatrix = XMMatrixRotationX(fAngleRadians);
-
-	// 회전 적용: 회전 행렬 * 기본 LookAt 행렬
-	XMMATRIX combinedMatrix = rotationMatrix * lookAtMatrix;
-
-	// 결과 행렬 저장
-	XMStoreFloat4x4(&mtxLookAt, combinedMatrix);
+	/*XMFLOAT4X4 mtxLookAt = Matrix4x4::LookAtLH(m_xmf3Position, xmf3LookAt, m_pPlayer->GetUpVector());
+	mtxLookAt = Rotate(mtxLookAt, 30.0f);
 
 	m_xmf3Right = XMFLOAT3(mtxLookAt._11, mtxLookAt._21, mtxLookAt._31);
 	m_xmf3Up = XMFLOAT3(mtxLookAt._12, mtxLookAt._22, mtxLookAt._32);
-	m_xmf3Look = XMFLOAT3(mtxLookAt._13, mtxLookAt._23, mtxLookAt._33);
+	m_xmf3Look = XMFLOAT3(mtxLookAt._13, mtxLookAt._23, mtxLookAt._33);*/
+
+	// 플레이어의 방향 벡터를 가져옵니다.
+	XMFLOAT3 xmf3PlayerDirection = m_pPlayer->GetLookVector();
+	
+	// 플레이어의 현재 위치를 시작점으로 하고, 플레이어의 시선 방향을 바라보는 끝점을 계산합니다.
+	XMFLOAT3 xmf3LookAtPoint;
+	xmf3LookAtPoint.x = m_pPlayer->GetPosition().x + xmf3PlayerDirection.x;
+	xmf3LookAtPoint.y = m_pPlayer->GetPosition().y + xmf3PlayerDirection.y;
+	xmf3LookAtPoint.z = m_pPlayer->GetPosition().z + xmf3PlayerDirection.z;
+
+	// LookAt 행렬을 계산합니다.
+	XMFLOAT4X4 mtxLookAt = Matrix4x4::LookAtLH(m_xmf3Position, xmf3LookAtPoint, m_pPlayer->GetUpVector());
+	//mtxLookAt = Rotate(mtxLookAt, 20.0f);
+	// 업데이트된 벡터를 카메라에 적용합니다.
+	m_xmf3Right = XMFLOAT3(m_pPlayer->GetRightVector());
+	m_xmf3Up = XMFLOAT3(m_pPlayer->GetUpVector());
+	m_xmf3Look = XMFLOAT3(m_pPlayer->GetLookVector());
+}
+
+XMFLOAT4X4 CThirdPersonCamera::Rotate(XMFLOAT4X4& mtxLookAt, float Radians)
+{
+	XMMATRIX lookAtMatrix = XMLoadFloat4x4(&mtxLookAt);
+
+	// X축 주위로 Radians도 회전하는 회전 행렬 생성
+	float fAngleRadians = XMConvertToRadians(Radians);
+	XMMATRIX rotationMatrix = XMMatrixRotationX(fAngleRadians);
+
+	// 회전 적용: 기본 LookAt 행렬 * 회전 행렬
+	// 주의: 행렬 곱셈 순서가 중요합니다. 월드 좌표계 기준으로 회전하기 위해서는
+	// LookAt 행렬에 회전 행렬을 곱하는 순서를 먼저 적용해야 합니다.
+	XMMATRIX combinedMatrix = lookAtMatrix * rotationMatrix;
+
+	// 결과 행렬 저장
+	XMStoreFloat4x4(&mtxLookAt, combinedMatrix);
+	return mtxLookAt;
 }
