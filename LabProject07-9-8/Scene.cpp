@@ -85,7 +85,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 {
 	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
 
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 76); //SuperCobra(17), Gunship(2), Player:Mi24(1), Angrybot()
+	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 76 + 30); //SuperCobra(17), Gunship(2), Player:Mi24(1), Angrybot() + 총알 30?
 
 	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
@@ -157,6 +157,13 @@ void CScene::ReleaseObjects()
 
 	if (m_pTerrain) delete m_pTerrain;
 	if (m_pSkyBox) delete m_pSkyBox;
+	// 여기서도 제거 해줘야함
+	 	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+	  // 이 부분을 어떻게 해야하지
+		if (m_pPlayer->m_ppBullets[i]->m_bActive)
+			delete m_pPlayer->m_ppBullets[i];
+	}
 
 	if (m_ppHierarchicalGameObjects)
 	{
@@ -389,6 +396,14 @@ void CScene::ReleaseUploadBuffers()
 	if (m_pSkyBox) m_pSkyBox->ReleaseUploadBuffers();
 	if (m_pTerrain) m_pTerrain->ReleaseUploadBuffers();
 
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+	  // 이 부분을 어떻게 해야하지
+		if (m_pPlayer->m_ppBullets[i]->m_bActive)
+			m_pPlayer->m_ppBullets[i]->ReleaseUploadBuffers();
+	}
+	
+
 	for (int i = 0; i < m_nShaders; i++) m_ppShaders[i]->ReleaseUploadBuffers();
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->ReleaseUploadBuffers();
 	for (int i = 0; i < m_nHierarchicalGameObjects; i++) m_ppHierarchicalGameObjects[i]->ReleaseUploadBuffers();
@@ -499,6 +514,13 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 	if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
 	if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
+
+	// 총알 렌더링
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (m_pPlayer->m_ppBullets[i]->m_bActive)
+			m_pPlayer->m_ppBullets[i]->Render(pd3dCommandList, pCamera);
+	}
 
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);

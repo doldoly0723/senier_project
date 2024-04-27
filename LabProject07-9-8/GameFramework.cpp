@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "GameFramework.h"
 
+// cmd Ã¢ ¶ç¿ì±â
+#pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
+
 CGameFramework::CGameFramework()
 {
 	m_pdxgiFactory = NULL;
@@ -324,6 +327,9 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					break;
 				case VK_F9:
 					ChangeSwapChainState();
+					break;
+				case VK_NUMPAD0:
+					((CTerrainPlayer*)m_pPlayer)->FireBullet();
 					break;
 				default:
 					break;

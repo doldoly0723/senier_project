@@ -7,6 +7,8 @@
 #define DIR_UP					0x10
 #define DIR_DOWN				0x20
 
+#define MAX_BULLETS				30
+
 #include "Object.h"
 #include "Camera.h"
 
@@ -35,6 +37,9 @@ protected:
 
 	CCamera						*m_pCamera = NULL;
 
+	// ÃÑ¾Ë 
+	float						m_fFireDelayTime;
+	float						m_fFireWaitingTime;
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -83,6 +88,10 @@ public:
 	virtual CCamera *ChangeCamera(DWORD nNewCameraMode, float fTimeElapsed) { return(NULL); }
 	virtual void OnPrepareRender();
 	virtual void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera = NULL);
+
+	// Ãß°¡
+	CGameObject** m_BulletObjects = NULL;
+	CBulletObject* m_ppBullets[MAX_BULLETS];
 };
 
 class CAirplanePlayer : public CPlayer
@@ -128,5 +137,14 @@ public:
 	virtual void Move(ULONG nDirection, float fDistance, bool bVelocity = false);
 
 	virtual void Update(float fTimeElapsed);
+
+	// ÃÑ¾Ë Ãß°¡
+	// void UpdateTransform(XMFLOAT4X4* pxmf4x4Parent = NULL);
+	void Animate(float fTimeElapsed);
+	// void ReleaseUploadBuffers();
+
+
+	void FireBullet();
+	float						m_fBulletEffectiveRange = 300.0f;
 };
 

@@ -375,6 +375,26 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 	CAnimationCallbackHandler *pAnimationCallbackHandler = new CSoundCallbackHandler();
 	m_pSkinnedAnimationController->SetAnimationCallbackHandler(1, pAnimationCallbackHandler);
 
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+
+		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
+		m_ppBullets[i]->SetScale(0.5f, 0.5f, 0.1f);
+		m_ppBullets[i]->SetChild(pBulletMesh->m_pModelRootObject, true);
+		m_ppBullets[i]->SetMovingSpeed(100.0f);
+		m_ppBullets[i]->SetActive(false);
+
+		// Èì..
+		m_ppBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
+		m_ppBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
+		m_ppBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
+
+	}
+
+	std::cout << "ÃÑ¾Ë »ý¼º ¿Ï·á" << std::endl;
+
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 	
 	SetPlayerUpdatedContext(pContext);
@@ -504,5 +524,63 @@ void CTerrainPlayer::Update(float fTimeElapsed)
 			m_pSkinnedAnimationController->SetTrackEnable(1, false);
 			m_pSkinnedAnimationController->SetTrackPosition(1, 0.0f);
 		}
+	}
+}
+
+void CTerrainPlayer::Animate(float fTimeElapsed)
+{
+	CPlayer::OnPrepareRender();
+
+	if (m_pSkinnedAnimationController) m_pSkinnedAnimationController->AdvanceTime(fTimeElapsed, this);
+
+	if (m_pSibling) m_pSibling->Animate(fTimeElapsed);
+	if (m_pChild) m_pChild->Animate(fTimeElapsed);
+
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (m_ppBullets[i]->m_bActive) {
+			m_ppBullets[i]->Animate(fTimeElapsed);
+		};
+	}
+}
+
+void CTerrainPlayer::FireBullet()
+{
+	// std::cout << "¹ß»ç µÊ" << std::endl;
+	if (m_fFireWaitingTime > 0.0f)
+		return;
+
+	CBulletObject* pBulletObject = NULL;
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (!m_ppBullets[i]->m_bActive)
+		{
+			pBulletObject = m_ppBullets[i];
+			break;
+		}
+	}
+
+	if (pBulletObject)
+	{
+		XMFLOAT3 xmf3Position = GetPosition();
+		XMFLOAT3 xmf3Direction = GetLook();
+		XMFLOAT3 xmf3Right = GetRight();
+		XMFLOAT3 xmf3Up = GetUp();
+		XMFLOAT3 xmf3FirePosition;
+
+		XMFLOAT3 m_xmf3Look = GetLookVector();
+		XMFLOAT3 m_xmf3LookC = m_pCamera->GetLookVector();
+
+		m_xmf3LookC.y = m_xmf3Look.y;
+		pBulletObject->m_xmf3Look = m_xmf3Look;
+
+		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
+		xmf3FirePosition.x = xmf3Position.x;
+		xmf3FirePosition.y = xmf3Position.y;
+		xmf3FirePosition.z = xmf3Position.z;
+		pBulletObject->SetPosition(xmf3FirePosition);
+		pBulletObject->SetActive(true);
+
+		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
 	}
 }
