@@ -36,5 +36,13 @@
 *.vsidx
 *.ipch
 *.db
+*.pdb
+*.idb
+*.log
+*.res
+*.ilk
+*.json
+*.recipe
+LabProject07-9-8/x64/Debug
 LabProject07-9-8/.vs/LabProject07-9-8/v17/.suo
 LabProject07-9-8/.vs/LabProject07-9-8/FileContentIndex/read.lock

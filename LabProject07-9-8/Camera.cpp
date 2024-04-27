@@ -285,11 +285,25 @@ void CThirdPersonCamera::Update(XMFLOAT3& xmf3LookAt, float fTimeElapsed)
 			SetLookAt(xmf3LookAt);
 		}
 	}
+
+	
 }
 
 void CThirdPersonCamera::SetLookAt(XMFLOAT3& xmf3LookAt)
 {
 	XMFLOAT4X4 mtxLookAt = Matrix4x4::LookAtLH(m_xmf3Position, xmf3LookAt, m_pPlayer->GetUpVector());
+	XMMATRIX lookAtMatrix = XMLoadFloat4x4(&mtxLookAt);
+
+	// Y축 주위로 60도 회전하는 회전 행렬 생성
+	float fAngleRadians = XMConvertToRadians(30.0f);
+	XMMATRIX rotationMatrix = XMMatrixRotationX(fAngleRadians);
+
+	// 회전 적용: 회전 행렬 * 기본 LookAt 행렬
+	XMMATRIX combinedMatrix = rotationMatrix * lookAtMatrix;
+
+	// 결과 행렬 저장
+	XMStoreFloat4x4(&mtxLookAt, combinedMatrix);
+
 	m_xmf3Right = XMFLOAT3(mtxLookAt._11, mtxLookAt._21, mtxLookAt._31);
 	m_xmf3Up = XMFLOAT3(mtxLookAt._12, mtxLookAt._22, mtxLookAt._32);
 	m_xmf3Look = XMFLOAT3(mtxLookAt._13, mtxLookAt._23, mtxLookAt._33);
