@@ -375,13 +375,15 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 	CAnimationCallbackHandler *pAnimationCallbackHandler = new CSoundCallbackHandler();
 	m_pSkinnedAnimationController->SetAnimationCallbackHandler(1, pAnimationCallbackHandler);
 
+	CGameObject::SetBoundingBox(pAngrybotModel->m_pModelRootObject->m_xmOOBB, pAngrybotModel->m_pModelRootObject);
+
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
 		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
 
 		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
-		m_ppBullets[i]->SetScale(0.5f, 0.5f, 0.1f);
+		m_ppBullets[i]->SetScale(1.0f, 1.0f, 0.5f);
 		m_ppBullets[i]->SetChild(pBulletMesh->m_pModelRootObject, true);
 		m_ppBullets[i]->SetMovingSpeed(100.0f);
 		m_ppBullets[i]->SetActive(false);
@@ -576,10 +578,12 @@ void CTerrainPlayer::FireBullet()
 
 		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
 		xmf3FirePosition.x = xmf3Position.x;
-		xmf3FirePosition.y = xmf3Position.y;
-		xmf3FirePosition.z = xmf3Position.z;
+		xmf3FirePosition.y = xmf3Position.y + 10;
+		xmf3FirePosition.z = xmf3Position.z + 2;
 		pBulletObject->SetPosition(xmf3FirePosition);
 		pBulletObject->SetActive(true);
+
+		pBulletObject->SetScale(0.1f, 0.1f, 0.05f);
 
 		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
 	}

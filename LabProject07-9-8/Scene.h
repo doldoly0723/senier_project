@@ -119,4 +119,11 @@ public:
 
 	ID3D12Resource						*m_pd3dcbLights = NULL;
 	LIGHTS								*m_pcbMappedLights = NULL;
+
+	// 面倒贸府
+	virtual void CheckPlayerByObjectCollisions();
+	virtual void CheckBulletByObjectCollisions();
+
+	// object 持阑 府胶飘
+	std::list<CGameObject*>		m_lpGameObjects;
 };

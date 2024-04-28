@@ -365,15 +365,24 @@ public:
 	CAnimationController*			m_pSkinnedAnimationController = NULL;
 
 	// 총알 
-	BoundingBox			aabb;
-	bool						m_bActive = false;
+	bool							m_bActive = false;
 
-	XMFLOAT3					m_xmf3RotationAxis = XMFLOAT3(0.0f, 1.0f, 0.0f);
-	XMFLOAT3					m_xmf3MovingDirection = XMFLOAT3(0.0f, 0.0f, 1.0f);
-	float						m_fMovingSpeed = 0.0;
-	float						m_fMovingRange = 0.0f;
+	XMFLOAT3						m_xmf3RotationAxis = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	XMFLOAT3						m_xmf3MovingDirection = XMFLOAT3(0.0f, 0.0f, 1.0f);
+	float							m_fMovingSpeed = 0.0;
+	float							m_fMovingRange = 0.0f;
 
 	void SetActive(bool bActive) { m_bActive = bActive; }
+	//
+
+	// 충돌처리
+	// 정확한 충돌 감지를 위해 AABB가 아닌 OOBB사용
+	// AABB -> BoundingBox | OOBB->BoundingOrientedBox
+	BoundingOrientedBox				m_xmOOBB = BoundingOrientedBox();
+	void SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGameObject);	
+	void SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& xmOOBB2);
+
+	void UpdateBoundingBox();
 	//
 
 	void SetMesh(CMesh *pMesh);
