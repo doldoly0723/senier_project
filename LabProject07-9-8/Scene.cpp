@@ -478,11 +478,11 @@ void CScene::CheckPlayerByObjectCollisions()
 	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
 	{
 		CGameObject* Object = *iter;
-		XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
-		XMFLOAT3 playerCenter = m_pPlayer->m_xmOOBB.Center;
+		//XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
+		//XMFLOAT3 playerCenter = m_pPlayer->m_xmOOBB.Center;
 
-		std::cout << "Object의 중심 위치: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-		std::cout << "Player의 중심 위치: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
+		//std::cout << "Object의 중심 위치: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+		//std::cout << "Player의 중심 위치: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
 
 		if (Object->m_xmOOBB.Intersects(m_pPlayer->m_xmOOBB))
 		{
@@ -494,6 +494,31 @@ void CScene::CheckPlayerByObjectCollisions()
 
 void CScene::CheckBulletByObjectCollisions()
 {
+	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
+	{
+		CGameObject* Object = *iter;
+
+		for (int i = 0; i < MAX_BULLETS; i++)
+		{
+			XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
+			XMFLOAT3 bulletCenter = m_pPlayer->m_ppBullets[i]->m_xmOOBB.Center;
+			if (m_pPlayer->m_ppBullets[i]->m_bActive)
+			{
+				std::cout << "Object의 중심 위치: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+				std::cout << "Bullet의 중심 위치: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
+			}
+		}
+
+		for (int i = 0; i < MAX_BULLETS; i++)
+		{
+			if (m_pPlayer->m_ppBullets[i]->m_bActive)
+				if (m_pPlayer->m_ppBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
+				{
+					std::cout << "총알 충돌!" << std::endl;
+
+				}
+		}
+	}
 }
 
 bool CScene::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
@@ -531,6 +556,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 		m_pLights[1].m_xmf3Direction = m_pPlayer->GetLookVector();
 	}
 	CheckPlayerByObjectCollisions();
+	CheckBulletByObjectCollisions();
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
