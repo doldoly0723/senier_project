@@ -38,3 +38,13 @@
 *.db
 LabProject07-9-8/.vs/LabProject07-9-8/v17/.suo
 LabProject07-9-8/.vs/LabProject07-9-8/FileContentIndex/read.lock
+
+*.exe.recipe
+*.ilk
+*.log
+*.pdb
+*.idb
+*.res
+*.vcxproj.user
+*.vs
+x64/
