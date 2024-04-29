@@ -209,6 +209,22 @@ namespace Vector3
 	{
 		return(TransformCoord(xmf3Vector, XMLoadFloat4x4(&xmmtx4x4Matrix)));
 	}
+
+	// 04-16 Lerp(보간)함수 추가
+	inline XMFLOAT3 Lerp(const XMFLOAT3& xmf3Vector1, const XMFLOAT3& xmf3Vector2, float fScalar)
+	{
+		// v1 + t * (v2 - v1)
+		XMFLOAT3 xmf3Result;
+		XMVECTOR result = XMVectorAdd(XMLoadFloat3(&xmf3Vector1), XMVectorScale(XMVectorSubtract(XMLoadFloat3(&xmf3Vector2), XMLoadFloat3(&xmf3Vector1)), fScalar));
+		XMStoreFloat3(&xmf3Result, result);
+		return xmf3Result;
+	}
+
+	// 04.27 Zero float 리턴 함수 추가
+	inline XMFLOAT3 ZeroFloat()
+	{
+		return XMFLOAT3(0.0f, 0.0f, 0.0f);
+	}
 }
 
 namespace Vector4
@@ -374,4 +390,10 @@ namespace Plane
 		XMStoreFloat4(&xmf4Result, XMPlaneNormalize(XMLoadFloat4(&xmf4Plane)));
 		return(xmf4Result);
 	}
+}
+
+// float의 소수점을 올리고 int형으로 변환
+// 04.16 추가
+int CeilToInt(float value) {
+	return static_cast<int>(std::ceil(value));
 }
