@@ -85,5 +85,9 @@ private:
 	POINT						m_ptOldCursorPos;
 
 	_TCHAR						m_pszFrameRate[70];
+
+
+	XMFLOAT3 normalCameraPos = XMFLOAT3(0.0f, 20.0f, -20.0f);
+	XMFLOAT3 zoomCameraPos = XMFLOAT3(5.0f, 15.0f, -5.0f);
 };
 

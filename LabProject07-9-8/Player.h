@@ -35,6 +35,7 @@ protected:
 
 	CCamera						*m_pCamera = NULL;
 
+	bool						bZoom = FALSE;
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -83,6 +84,11 @@ public:
 	virtual CCamera *ChangeCamera(DWORD nNewCameraMode, float fTimeElapsed) { return(NULL); }
 	virtual void OnPrepareRender();
 	virtual void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera = NULL);
+	
+	void SetZoom(bool bEnable)
+	{
+		bZoom = bEnable;
+	}
 };
 
 class CAirplanePlayer : public CPlayer
@@ -128,5 +134,6 @@ public:
 	virtual void Move(ULONG nDirection, float fDistance, bool bVelocity = false);
 
 	virtual void Update(float fTimeElapsed);
+
 };
 

@@ -131,3 +131,13 @@ public:
 	XMFLOAT4X4 Rotate(XMFLOAT4X4& LookAt, float Radians);
 };
 
+//class CZoomCamera : public CCamera
+//{
+//public:
+//	CZoomCamera(CCamera* pCamera);
+//	virtual ~CZoomCamera() { }
+//
+//	virtual void Update(XMFLOAT3& xmf3LookAt, float fTimeElapsed);
+//	virtual void SetLookAt(XMFLOAT3& vLookAt);
+//};
+
