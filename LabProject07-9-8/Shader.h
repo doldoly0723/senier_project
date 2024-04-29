@@ -189,3 +189,28 @@ public:
 	virtual void BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, void *pContext = NULL);
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 4.28 추가 / ComputeShader 추가
+class ComputeShader : public CShader {
+public:
+	ComputeShader() { }
+	virtual ~ComputeShader() { }
+
+	virtual D3D12_SHADER_BYTECODE CreateComputeShader() {
+		return CompileShaderFromFile(L"ComputeShader.hlsl", "CSMain", "cs_5_0", &m_pd3dComputeShaderBlob);
+	}
+
+	virtual void CreateShader(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature) override {
+		D3D12_COMPUTE_PIPELINE_STATE_DESC cpsd = {};
+		cpsd.pRootSignature = pd3dGraphicsRootSignature;
+		cpsd.CS = CreateComputeShader();
+		cpsd.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
+
+		HRESULT hr = pd3dDevice->CreateComputePipelineState(&cpsd, IID_PPV_ARGS(&m_pd3dPipelineState));
+		if (FAILED(hr)) {
+			throw std::runtime_error("Failed to create compute pipeline state.");
+		}
+	}
+
+	ID3DBlob* m_pd3dComputeShaderBlob = NULL;
+};
