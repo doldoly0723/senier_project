@@ -504,8 +504,8 @@ void CScene::CheckBulletByObjectCollisions()
 			XMFLOAT3 bulletCenter = m_pPlayer->m_ppBullets[i]->m_xmOOBB.Center;
 			if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			{
-				std::cout << "Object의 중심 위치: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-				std::cout << "Bullet의 중심 위치: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
+				//std::cout << "Object의 중심 위치: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+				//std::cout << "Bullet의 중심 위치: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
 			}
 		}
 
@@ -515,6 +515,19 @@ void CScene::CheckBulletByObjectCollisions()
 				if (m_pPlayer->m_ppBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
 				{
 					std::cout << "총알 충돌!" << std::endl;
+
+					// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
+					XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
+					XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
+					XMFLOAT3 xmf3SurfaceNormal;
+
+					// 표면 법선 계산
+					XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
+					// 위,아래로 튐 방지
+					xmf3SurfaceNormal.y = 0;
+
+					// 총알을 반사시키는 함수 호출
+					m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
 
 				}
 		}

@@ -11,6 +11,7 @@
 
 #include "Object.h"
 #include "Camera.h"
+#include "Bullet.h"
 
 class CPlayer : public CGameObject
 {
@@ -92,6 +93,8 @@ public:
 	// Ãß°¡
 	CGameObject** m_BulletObjects = NULL;
 	CBulletObject* m_ppBullets[MAX_BULLETS];
+
+	void SetMovingDirection(XMFLOAT3& xmf3MovingDirection) { m_xmf3MovingDirection = Vector3::Normalize(xmf3MovingDirection); }
 };
 
 class CAirplanePlayer : public CPlayer
