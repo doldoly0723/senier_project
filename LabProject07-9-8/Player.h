@@ -7,6 +7,19 @@
 #define DIR_UP					0x10
 #define DIR_DOWN				0x20
 
+// Stand Animation
+#define STAND						0
+#define S_Walk						1
+#define S_WalkBackward				2
+#define S_WalkLeft					3
+#define S_WalkRight					4
+#define S_Aiming					5
+#define S_Aim_to_Down				6
+#define S_Down_to_Aim				7
+#define S_Walking_with_Aim			8
+#define S_WalkingBackward_with_Aim	9
+
+
 #include "Object.h"
 #include "Camera.h"
 
@@ -36,6 +49,7 @@ protected:
 	CCamera						*m_pCamera = NULL;
 
 	bool						bZoom = FALSE;
+	bool						bMove = FALSE;
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -85,10 +99,10 @@ public:
 	virtual void OnPrepareRender();
 	virtual void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera = NULL);
 	
-	void SetZoom(bool bEnable)
-	{
-		bZoom = bEnable;
-	}
+	void SetZoom(bool bEnable){bZoom = bEnable;}
+	void SetMove(bool bEnable) { bMove = bEnable; }
+	
+	virtual void Aiming(bool bEnable) {}
 };
 
 class CAirplanePlayer : public CPlayer
@@ -135,5 +149,7 @@ public:
 
 	virtual void Update(float fTimeElapsed);
 
+	virtual void Aiming(bool bzoom);
+	
 };
 

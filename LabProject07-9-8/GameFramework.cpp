@@ -296,9 +296,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			//m_pCamera = m_pPlayer->ChangeCamera(THIRD_PERSON_CAMERA, m_GameTimer.GetTimeElapsed());
 			//m_pCamera->SetOffset(zoomCameraPos);
 			m_pPlayer->SetZoom(true);
-			//m_pPlayer->m_pSkinnedAnimationController->SetTrackEnable(0, false);
-			//m_pPlayer->m_pSkinnedAnimationController->SetTrackEnable(2, true);
-			std::cout << "zoom on" << std::endl;
+			//m_pPlayer->Aiming(true);
+			//std::cout << "zoom on" << std::endl;
 			break;
 		case WM_LBUTTONUP:
 			::ReleaseCapture();
@@ -306,8 +305,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 		case WM_RBUTTONUP:
 			//m_pCamera->SetOffset(normalCameraPos);
 			m_pPlayer->SetZoom(false);
-			//m_pPlayer->m_pSkinnedAnimationController->SetTrackEnable(0, true);
-			//m_pPlayer->m_pSkinnedAnimationController->SetTrackEnable(2, false);
+			//m_pPlayer->Aiming(false);
 			break;
 		case WM_MOUSEMOVE:
 			break;
@@ -480,10 +478,17 @@ void CGameFramework::ProcessInput()
 				else
 					m_pPlayer->Rotate(cyDelta, cxDelta, 0.0f);
 			}
-			if (dwDirection) m_pPlayer->Move(dwDirection, 10.25f, true);
+			if (dwDirection)
+			{
+				m_pPlayer->SetMove(true);
+				m_pPlayer->Move(dwDirection, 10.25f, true);
+			}
+			
 		}
 	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
+
+	m_pPlayer->SetMove(false);
 }
 
 void CGameFramework::AnimateObjects()
