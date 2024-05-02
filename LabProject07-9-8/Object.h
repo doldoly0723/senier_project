@@ -383,6 +383,7 @@ public:
 	void SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& xmOOBB2);
 
 	void UpdateBoundingBox();
+	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox* xmOOBB);
 	//
 
 	void SetMesh(CMesh *pMesh);

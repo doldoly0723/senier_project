@@ -131,7 +131,6 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	{
 		if (m_ppHierarchicalGameObjects[i]) m_ppHierarchicalGameObjects[i]->SetBoundingBox(m_ppHierarchicalGameObjects[i]->m_xmOOBB, m_ppHierarchicalGameObjects[i]);
 			m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[i]);
-			std::cout << "들어와짐" << std::endl;
 	}
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
@@ -166,12 +165,13 @@ void CScene::ReleaseObjects()
 
 	if (m_pTerrain) delete m_pTerrain;
 	if (m_pSkyBox) delete m_pSkyBox;
+
 	// 여기서도 제거 해줘야함
-	 	for (int i = 0; i < MAX_BULLETS; i++)
+	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-	  // 이 부분을 어떻게 해야하지
-		if (m_pPlayer->m_ppBullets[i]->m_bActive)
-			delete m_pPlayer->m_ppBullets[i];
+		// 이 부분을 어떻게 해야하지
+		if (m_pPlayer->m_ppBullets[i]->m_bActive) m_pPlayer->m_ppBullets[i]->Release();
+			delete m_pPlayer->m_ppBullets;
 	}
 
 	if (m_ppHierarchicalGameObjects)
@@ -593,6 +593,13 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	{
 		if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			m_pPlayer->m_ppBullets[i]->Render(pd3dCommandList, pCamera);
+	}
+
+	// OOBB 렌더링
+	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
+	{
+		CGameObject* Object = *iter;
+		Object->Render(pd3dCommandList, &(Object->m_xmOOBB));
 	}
 
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);

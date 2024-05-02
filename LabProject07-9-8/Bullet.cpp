@@ -130,14 +130,15 @@ void CBulletObject::ReflectBullet(const XMFLOAT3& surfaceNormal)
 {
 	// surfaceNormal은 충돌한 객체의 표면 법선입니다.
 
-// 총알의 방향을 반사시킵니다.
-// 방향 벡터를 surfaceNormal에 대한 반사로 갱신합니다.
+	// 총알의 방향을 반사시킵니다.
+	// 방향 벡터를 surfaceNormal에 대한 반사로 갱신합니다.
 	XMVECTOR incidentDirection = XMLoadFloat3(&m_xmf3MovingDirection);
 	XMVECTOR normal = XMLoadFloat3(&surfaceNormal);
 
 	// 반사 벡터 계산
 	XMVECTOR reflectedDirection = XMVector3Reflect(incidentDirection, normal);
 
+	Rotate(10.0f, 10.0f, 0.0f);
 	// 반사 벡터를 총알의 방향으로 설정
 	XMStoreFloat3(&m_xmf3MovingDirection, reflectedDirection);
 }

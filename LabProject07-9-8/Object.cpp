@@ -798,6 +798,22 @@ void CGameObject::UpdateBoundingBox()
 	m_xmOOBB.Center = Pos;
 }
 
+void CGameObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox* xmOOBB)
+{
+	//// BoundingOrientedBox의 모서리 좌표를 가져오기
+	XMFLOAT3 corners[8];
+	xmOOBB->GetCorners(corners);
+
+	// 모르겠다.
+	XMFLOAT3 vertices[] = {
+	{ corners[0] }, { corners[1] }, { corners[1] }, { corners[2] }, { corners[2] }, { corners[3] }, { corners[3] }, { corners[0] },
+	{ corners[4] }, { corners[5] }, { corners[5] }, { corners[6] }, { corners[6] }, { corners[7] }, { corners[7] }, { corners[4] },
+	{ corners[0] }, { corners[4] }, { corners[1] }, { corners[5] }, { corners[2] }, { corners[6] }, { corners[3] }, { corners[7] }
+	};
+
+	pd3dCommandList->DrawInstanced(24, 1, 0, 0);
+}
+
 void CGameObject::SetMesh(CMesh *pMesh)
 {
 	if (m_pMesh) m_pMesh->Release();

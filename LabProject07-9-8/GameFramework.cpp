@@ -476,6 +476,34 @@ void CGameFramework::ProcessInput()
 			}
 			if (dwDirection) m_pPlayer->Move(dwDirection, 10.25f, true);
 		}
+		SetCursor(NULL); // 마우스 커서 안보이게 하기
+
+		HWND hWnd = GetFocus();
+
+		if (hWnd != nullptr)
+		{
+
+			RECT rect = {};
+
+			GetWindowRect(hWnd, &rect);
+
+			// 마우스 커서 위치 계산
+			POINT oldCursor = { static_cast<LONG>(rect.right / 2), static_cast<LONG>(rect.bottom / 2) };
+			POINT cursor = {};
+
+			// 이 함수는 윈도우 전체 영역을 기준으로 커서의 위치를 계산한다.
+			GetCursorPos(&cursor);
+
+			XMFLOAT2 delta = {};
+
+			delta.x = (cursor.x - oldCursor.x) / 100.0f;
+			delta.y = (cursor.y - oldCursor.y) / 100.0f;
+
+			SetCursorPos(oldCursor.x, oldCursor.y);
+
+			m_pPlayer->Rotate(0.0f, delta.x, 0.0f);
+			m_pCamera->Rotate(delta.y, 0.0f, 0.0f);
+		}
 	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 }
