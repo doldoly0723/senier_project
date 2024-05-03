@@ -394,9 +394,3 @@ namespace Plane
 		return(xmf4Result);
 	}
 }
-
-// float의 소수점을 올리고 int형으로 변환
-// 04.16 추가
-int CeilToInt(float value) {
-	return static_cast<int>(std::ceil(value));
-}

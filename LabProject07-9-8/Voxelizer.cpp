@@ -1,5 +1,11 @@
 //#include "stdafx.h"
 //#include "Voxelizer.h"
+// 
+// float의 소수점을 올리고 int형으로 변환
+// 04.16 추가
+//int CeilToInt(float value) {
+//	return static_cast<int>(std::ceil(value));
+//}
 //
 //// 연기 복셀 버퍼 반환 함수
 //ComputeBuffer Voxelizer::GetSmokeVoxelBuffer()
