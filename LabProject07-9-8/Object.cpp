@@ -567,7 +567,7 @@ void CAnimationController::SetTrackAnimationSet(int nAnimationTrack, int nAnimat
 void CAnimationController::SetTrackEnable(int nAnimationTrack, bool bEnable)
 {
 	if (m_pAnimationTracks) m_pAnimationTracks[nAnimationTrack].SetEnable(bEnable);
-	for(int i = 0; i < 10; i++)
+	for(int i = 0; i < 11; i++)
 		std::cout << i << ": " <<  m_pAnimationTracks[i].m_bEnable << "\t";
 	std::cout << endl;
 
@@ -1437,7 +1437,7 @@ CSkyBox::CSkyBox(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dComman
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 
 	CTexture* pSkyBoxTexture = new CTexture(1, RESOURCE_TEXTURE_CUBE, 0, 1);
-	pSkyBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/SkyBox_0.dds", RESOURCE_TEXTURE_CUBE, 0);
+	pSkyBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/skybox.dds", RESOURCE_TEXTURE_CUBE, 0);
 
 	CSkyBoxShader *pSkyBoxShader = new CSkyBoxShader();
 	pSkyBoxShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);

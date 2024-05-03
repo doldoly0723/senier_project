@@ -291,19 +291,21 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 		case WM_LBUTTONDOWN:
 			::SetCapture(hWnd);
 			::GetCursorPos(&m_ptOldCursorPos);
+			m_pPlayer->SetFire(true);
 			break;
 		case WM_RBUTTONDOWN:
-			//m_pCamera = m_pPlayer->ChangeCamera(THIRD_PERSON_CAMERA, m_GameTimer.GetTimeElapsed());
-			//m_pCamera->SetOffset(zoomCameraPos);
+			m_pCamera = m_pPlayer->ChangeCamera(THIRD_PERSON_CAMERA, m_GameTimer.GetTimeElapsed());
+			m_pCamera->SetOffset(zoomCameraPos);
 			m_pPlayer->SetZoom(true);
 			//m_pPlayer->Aiming(true);
 			//std::cout << "zoom on" << std::endl;
 			break;
 		case WM_LBUTTONUP:
 			::ReleaseCapture();
+			m_pPlayer->SetFire(false);
 			break;
 		case WM_RBUTTONUP:
-			//m_pCamera->SetOffset(normalCameraPos);
+			m_pCamera->SetOffset(normalCameraPos);
 			m_pPlayer->SetZoom(false);
 			//m_pPlayer->Aiming(false);
 			break;
@@ -445,6 +447,7 @@ void CGameFramework::ReleaseObjects()
 
 void CGameFramework::ProcessInput()
 {
+
 	static UCHAR pKeysBuffer[256];
 	bool bProcessedByScene = false;
 	if (GetKeyboardState(pKeysBuffer) && m_pScene) bProcessedByScene = m_pScene->ProcessInput(pKeysBuffer);
@@ -460,6 +463,39 @@ void CGameFramework::ProcessInput()
 			cyDelta = (float)(ptCursorPos.y - m_ptOldCursorPos.y) / 3.0f;
 			SetCursorPos(m_ptOldCursorPos.x, m_ptOldCursorPos.y);
 		}
+		
+
+		// 화면 스크롤로 방향 전환
+		//SetCursor(NULL); // 마우스 커서 안보이게 하기
+		//HWND hWnd = GetFocus();
+
+		//if (hWnd != nullptr)
+		//{
+
+		//	RECT rect = {};
+
+		//	GetWindowRect(hWnd, &rect);
+
+		//	// 마우스 커서 위치 계산
+		//	POINT oldCursor = { static_cast<LONG>(rect.right / 2), static_cast<LONG>(rect.bottom / 2) };
+		//	POINT cursor = {};
+
+		//	// 이 함수는 윈도우 전체 영역을 기준으로 커서의 위치를 계산한다.
+		//	GetCursorPos(&cursor);
+
+		//	XMFLOAT2 delta = {};
+
+		//	delta.x = (cursor.x - oldCursor.x) / 100.0f;
+		//	delta.y = (cursor.y - oldCursor.y) / 100.0f;
+
+		//	SetCursorPos(oldCursor.x, oldCursor.y);
+
+		//	m_pPlayer->Rotate(0.0f, delta.x, 0.0f);
+		//	m_pCamera->Rotate(delta.y, 0.0f, 0.0f);
+		//}
+
+
+
 
 		DWORD dwDirection = 0;
 		if (pKeysBuffer[VK_W] & 0xF0) dwDirection |= DIR_FORWARD;
@@ -485,6 +521,7 @@ void CGameFramework::ProcessInput()
 			}
 			
 		}
+
 	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 

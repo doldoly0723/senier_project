@@ -18,6 +18,7 @@
 #define S_Down_to_Aim				7
 #define S_Walking_with_Aim			8
 #define S_WalkingBackward_with_Aim	9
+#define Firing						10
 
 
 #include "Object.h"
@@ -50,6 +51,7 @@ protected:
 
 	bool						bZoom = FALSE;
 	bool						bMove = FALSE;
+	bool						bFire = FALSE;
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -99,8 +101,9 @@ public:
 	virtual void OnPrepareRender();
 	virtual void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera = NULL);
 	
-	void SetZoom(bool bEnable){bZoom = bEnable;}
+	void SetZoom(bool bEnable) { bZoom = bEnable; }
 	void SetMove(bool bEnable) { bMove = bEnable; }
+	void SetFire(bool bEnable) { bFire = bEnable; }
 	
 	virtual void Aiming(bool bEnable) {}
 };
