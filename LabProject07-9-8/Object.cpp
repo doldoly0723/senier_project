@@ -829,6 +829,13 @@ void CGameObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOri
 	pd3dCommandList->DrawInstanced(24, 1, 0, 0);
 }
 
+void CGameObject::ScaleBoundingBox(float x, float y, float z)
+{
+	m_xmOOBB.Extents.x *= x;
+	m_xmOOBB.Extents.y *= y;
+	m_xmOOBB.Extents.z *= z;
+}
+
 void CGameObject::SetMesh(CMesh *pMesh)
 {
 	if (m_pMesh) m_pMesh->Release();

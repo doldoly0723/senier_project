@@ -673,10 +673,12 @@ void CTerrainPlayer::FireBullet()
 		pBulletObject->m_xmf3Look = m_xmf3Look;
 
 		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
+		// 발사 위치
 		xmf3FirePosition.x = xmf3Position.x;
-		// xmf3FirePosition.y = xmf3Position.y + 10;
-		xmf3FirePosition.y = xmf3Position.y;
+		xmf3FirePosition.y = xmf3Position.y + 10;
+		// xmf3FirePosition.y = xmf3Position.y;
 		xmf3FirePosition.z = xmf3Position.z + 2;
+		//
 		pBulletObject->SetPosition(xmf3FirePosition);
 		pBulletObject->SetMovingDirection(xmf3Direction);
 		pBulletObject->SetActive(true);

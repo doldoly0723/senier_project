@@ -389,6 +389,8 @@ public:
 
 	void UpdateBoundingBox();
 	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox* xmOOBB);
+
+	void ScaleBoundingBox(float x, float y, float z);
 	//
 
 	void SetMesh(CMesh *pMesh);
