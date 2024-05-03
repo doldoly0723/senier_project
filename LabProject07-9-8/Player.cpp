@@ -394,10 +394,10 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
-		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
 
 		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
-		m_ppBullets[i]->SetScale(1.0f, 1.0f, 0.5f);
+		m_ppBullets[i]->SetScale(10.0f, 10.0f, 10.5f);
 		m_ppBullets[i]->SetChild(pBulletMesh->m_pModelRootObject, true);
 		m_ppBullets[i]->SetMovingSpeed(100.0f);
 		m_ppBullets[i]->SetActive(false);
@@ -674,10 +674,10 @@ void CTerrainPlayer::FireBullet()
 
 		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
 		// 발사 위치
-		xmf3FirePosition.x = xmf3Position.x;
-		xmf3FirePosition.y = xmf3Position.y + 10;
+		xmf3FirePosition.x = xmf3Position.x+2;
+		xmf3FirePosition.y = xmf3Position.y + 12.2;
 		// xmf3FirePosition.y = xmf3Position.y;
-		xmf3FirePosition.z = xmf3Position.z + 2;
+		xmf3FirePosition.z = xmf3Position.z + 2.3;
 		//
 		pBulletObject->SetPosition(xmf3FirePosition);
 		pBulletObject->SetMovingDirection(xmf3Direction);

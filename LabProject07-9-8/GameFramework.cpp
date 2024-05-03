@@ -295,11 +295,14 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			::SetCapture(hWnd);
 			::GetCursorPos(&m_ptOldCursorPos);
 			m_pPlayer->SetFire(true);
+
+			((CTerrainPlayer*)m_pPlayer)->FireBullet();
 			break;
 		case WM_RBUTTONDOWN:
 			m_pCamera = m_pPlayer->ChangeCamera(THIRD_PERSON_CAMERA, m_GameTimer.GetTimeElapsed());
 			m_pCamera->SetOffset(zoomCameraPos);
 			m_pPlayer->SetZoom(true);
+
 			//m_pPlayer->Aiming(true);
 			//std::cout << "zoom on" << std::endl;
 			break;
