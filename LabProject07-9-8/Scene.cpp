@@ -98,7 +98,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	XMFLOAT4 xmf4Color = XMFLOAT4(0.7608f, 0.6980f, 0.5020f, 0.0f);
 	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 513, 513, xmf3Scale, xmf4Color);
 
-	m_nHierarchicalGameObjects = 3;
+	m_nHierarchicalGameObjects = 4;
 	m_ppHierarchicalGameObjects = new CGameObject * [m_nHierarchicalGameObjects];
 
 	CLoadedModelInfo* pAngrybotModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Character_Swat_Guy.bin", NULL);
@@ -121,7 +121,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[1]);
 	if (pMonsterModel) delete pMonsterModel;
 
-	CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box.bin", NULL);
+	CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box2.bin", NULL);
 	m_ppHierarchicalGameObjects[2] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox, 1);
 	//m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
 	m_ppHierarchicalGameObjects[2]->SetPosition(330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
@@ -131,6 +131,15 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (pbox) delete pbox;
 
+	CLoadedModelInfo* pbox1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
+	m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox1, 1);
+	//m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
+	m_ppHierarchicalGameObjects[3]->SetPosition(350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
+	m_ppHierarchicalGameObjects[3]->SetScale(30.0f, 30.0f, 30.0f);
+	m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
+	m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	if (pbox1) delete pbox1;
 
 	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
 	{
