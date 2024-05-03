@@ -7,6 +7,9 @@
 #define DIR_UP					0x10
 #define DIR_DOWN				0x20
 
+
+#define MAX_BULLETS				30
+=======
 // Stand Animation
 #define STAND						0
 #define S_Walk						1
@@ -20,9 +23,9 @@
 #define S_WalkingBackward_with_Aim	9
 #define Firing						10
 
-
 #include "Object.h"
 #include "Camera.h"
+#include "Bullet.h"
 
 class CPlayer : public CGameObject
 {
@@ -49,9 +52,15 @@ protected:
 
 	CCamera						*m_pCamera = NULL;
 
+
+	// �Ѿ� 
+	float						m_fFireDelayTime;
+	float						m_fFireWaitingTime;
+=======
 	bool						bZoom = FALSE;
 	bool						bMove = FALSE;
 	bool						bFire = FALSE;
+
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -100,12 +109,21 @@ public:
 	virtual CCamera *ChangeCamera(DWORD nNewCameraMode, float fTimeElapsed) { return(NULL); }
 	virtual void OnPrepareRender();
 	virtual void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera = NULL);
+
+
+	// �߰�
+	CGameObject** m_BulletObjects = NULL;
+	CBulletObject* m_ppBullets[MAX_BULLETS];
+
+	void SetMovingDirection(XMFLOAT3& xmf3MovingDirection) { m_xmf3MovingDirection = Vector3::Normalize(xmf3MovingDirection); }
+=======
 	
 	void SetZoom(bool bEnable) { bZoom = bEnable; }
 	void SetMove(bool bEnable) { bMove = bEnable; }
 	void SetFire(bool bEnable) { bFire = bEnable; }
 	
 	virtual void Aiming(bool bEnable) {}
+
 };
 
 class CAirplanePlayer : public CPlayer
@@ -152,7 +170,18 @@ public:
 
 	virtual void Update(float fTimeElapsed);
 
+
+	// �Ѿ� �߰�
+	// void UpdateTransform(XMFLOAT4X4* pxmf4x4Parent = NULL);
+	void Animate(float fTimeElapsed);
+	// void ReleaseUploadBuffers();
+
+
+	void FireBullet();
+	float						m_fBulletEffectiveRange = 300.0f;
+=======
 	virtual void Aiming(bool bzoom);
 	
+
 };
 

@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "GameFramework.h"
 
+// cmd ì°½ ë„ìš°ê¸°
+#pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
+
 CGameFramework::CGameFramework()
 {
 	m_pdxgiFactory = NULL;
@@ -337,6 +340,9 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				case VK_F9:
 					ChangeSwapChainState();
 					break;
+				case VK_NUMPAD0:
+					((CTerrainPlayer*)m_pPlayer)->FireBullet();
+					break;
 				default:
 					break;
 			}
@@ -465,8 +471,8 @@ void CGameFramework::ProcessInput()
 		}
 		
 
-		// È­¸é ½ºÅ©·Ñ·Î ¹æÇâ ÀüÈ¯
-		//SetCursor(NULL); // ¸¶¿ì½º Ä¿¼­ ¾Èº¸ÀÌ°Ô ÇÏ±â
+		// í™”ë©´ ìŠ¤í¬ë¡¤ë¡œ ë°©í–¥ ì „í™˜
+		//SetCursor(NULL); // ë§ˆìš°ìŠ¤ ì»¤ì„œ ì•ˆë³´ì´ê²Œ í•˜ê¸°
 		//HWND hWnd = GetFocus();
 
 		//if (hWnd != nullptr)
@@ -476,11 +482,11 @@ void CGameFramework::ProcessInput()
 
 		//	GetWindowRect(hWnd, &rect);
 
-		//	// ¸¶¿ì½º Ä¿¼­ À§Ä¡ °è»ê
+		//	// ë§ˆìš°ìŠ¤ ì»¤ì„œ ìœ„ì¹˜ ê³„ì‚°
 		//	POINT oldCursor = { static_cast<LONG>(rect.right / 2), static_cast<LONG>(rect.bottom / 2) };
 		//	POINT cursor = {};
 
-		//	// ÀÌ ÇÔ¼ö´Â À©µµ¿ì ÀüÃ¼ ¿µ¿ªÀ» ±âÁØÀ¸·Î Ä¿¼­ÀÇ À§Ä¡¸¦ °è»êÇÑ´Ù.
+		//	// ì´ í•¨ìˆ˜ëŠ” ìœˆë„ìš° ì „ì²´ ì˜ì—­ì„ ê¸°ì¤€ìœ¼ë¡œ ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ê³„ì‚°í•œë‹¤.
 		//	GetCursorPos(&cursor);
 
 		//	XMFLOAT2 delta = {};
@@ -522,7 +528,6 @@ void CGameFramework::ProcessInput()
 			
 		}
 
-	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 
 	m_pPlayer->SetMove(false);

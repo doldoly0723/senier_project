@@ -376,7 +376,7 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 	//m_pSkinnedAnimationController->SetTrackEnable(1, false);
 	//m_pSkinnedAnimationController->SetTrackEnable(2, false);
 
-	m_pSkinnedAnimationController->SetCallbackKeys(1, 2);				// 1¹ø ¾Ö´Ï¸ÞÀÌ¼Ç ¼Ò¸®¸¦ À§ÇÑ ¼³Á¤
+	m_pSkinnedAnimationController->SetCallbackKeys(1, 2);				// 1ë²ˆ ì• ë‹ˆë©”ì´ì…˜ ì†Œë¦¬ë¥¼ ìœ„í•œ ì„¤ì •
 #ifdef _WITH_SOUND_RESOURCE
 	m_pSkinnedAnimationController->SetCallbackKey(0, 0.1f, _T("Footstep01"));
 	m_pSkinnedAnimationController->SetCallbackKey(1, 0.5f, _T("Footstep02"));
@@ -388,6 +388,28 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 #endif
 	CAnimationCallbackHandler *pAnimationCallbackHandler = new CSoundCallbackHandler();
 	m_pSkinnedAnimationController->SetAnimationCallbackHandler(1, pAnimationCallbackHandler);
+
+	CGameObject::SetBoundingBox(pAngrybotModel->m_pModelRootObject->m_xmOOBB, pAngrybotModel->m_pModelRootObject);
+
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+
+		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
+		m_ppBullets[i]->SetScale(1.0f, 1.0f, 0.5f);
+		m_ppBullets[i]->SetChild(pBulletMesh->m_pModelRootObject, true);
+		m_ppBullets[i]->SetMovingSpeed(100.0f);
+		m_ppBullets[i]->SetActive(false);
+
+		// í ..
+		m_ppBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
+		m_ppBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
+		m_ppBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
+
+	}
+
+	std::cout << "ì´ì•Œ ìƒì„± ì™„ë£Œ" << std::endl;
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 	
@@ -496,7 +518,7 @@ void CTerrainPlayer::OnCameraUpdateCallback(float fTimeElapsed)
 
 void CTerrainPlayer::Move(DWORD dwDirection, float fDistance, bool bUpdateVelocity)
 {
-	if (dwDirection && !bZoom)			// ±âº» ÀÌµ¿
+	if (dwDirection && !bZoom)			// ê¸°ë³¸ ì´ë™
 	{
 		m_pSkinnedAnimationController->SetTrackEnable(S_Walking_with_Aim, false);
 		m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
@@ -505,11 +527,11 @@ void CTerrainPlayer::Move(DWORD dwDirection, float fDistance, bool bUpdateVeloci
 		m_pSkinnedAnimationController->SetTrackEnable(S_Walk, true);
 	}
 
-	else if (dwDirection && bZoom)		// Á¶ÁØ ÀÌµ¿
+	else if (dwDirection && bZoom)		// ì¡°ì¤€ ì´ë™
 	{
 		if (!bFire)
 		{
-			// ÀÌµ¿ÇÏ¸é¼­ Á¶ÁØÇÏ´Â ¾Ö´Ï¸ÞÀÌ¼Ç
+			// ì´ë™í•˜ë©´ì„œ ì¡°ì¤€í•˜ëŠ” ì• ë‹ˆë©”ì´ì…˜
 			m_pSkinnedAnimationController->SetTrackEnable(S_Walk, false);
 			m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
 			m_pSkinnedAnimationController->SetTrackEnable(STAND, false);
@@ -536,7 +558,7 @@ void CTerrainPlayer::Move(DWORD dwDirection, float fDistance, bool bUpdateVeloci
 	CPlayer::Move(dwDirection, fDistance, bUpdateVelocity);
 }
 
-void CTerrainPlayer::Update(float fTimeElapsed)			// ±âº» ÀÏ¾î¼­ ÀÖ´Â »óÅÂ¸¦ ¿©±â¼­ Ã³¸®ÇØµµ µÉµí?
+void CTerrainPlayer::Update(float fTimeElapsed)			// ê¸°ë³¸ ì¼ì–´ì„œ ìžˆëŠ” ìƒíƒœë¥¼ ì—¬ê¸°ì„œ ì²˜ë¦¬í•´ë„ ë ë“¯?
 {
 	CPlayer::Update(fTimeElapsed);
 
@@ -602,9 +624,71 @@ void CTerrainPlayer::Update(float fTimeElapsed)			// ±âº» ÀÏ¾î¼­ ÀÖ´Â »óÅÂ¸¦ ¿©±
 	}
 }
 
+
+void CTerrainPlayer::Animate(float fTimeElapsed)
+{
+	CPlayer::OnPrepareRender();
+
+	if (m_pSkinnedAnimationController) m_pSkinnedAnimationController->AdvanceTime(fTimeElapsed, this);
+
+	if (m_pSibling) m_pSibling->Animate(fTimeElapsed);
+	if (m_pChild) m_pChild->Animate(fTimeElapsed);
+
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (m_ppBullets[i]->m_bActive) {
+			m_ppBullets[i]->Animate(fTimeElapsed);
+		};
+	}
+}
+
+void CTerrainPlayer::FireBullet()
+{
+	// std::cout << "ë°œì‚¬ ë¨" << std::endl;
+	if (m_fFireWaitingTime > 0.0f)
+		return;
+
+	CBulletObject* pBulletObject = NULL;
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (!m_ppBullets[i]->m_bActive)
+		{
+			pBulletObject = m_ppBullets[i];
+			break;
+		}
+	}
+
+	if (pBulletObject)
+	{
+		XMFLOAT3 xmf3Position = GetPosition();
+		XMFLOAT3 xmf3Direction = GetLook();
+		XMFLOAT3 xmf3Right = GetRight();
+		XMFLOAT3 xmf3Up = GetUp();
+		XMFLOAT3 xmf3FirePosition;
+
+		XMFLOAT3 m_xmf3Look = GetLookVector();
+		XMFLOAT3 m_xmf3LookC = m_pCamera->GetLookVector();
+
+		m_xmf3LookC.y = m_xmf3Look.y;
+		pBulletObject->m_xmf3Look = m_xmf3Look;
+
+		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
+		xmf3FirePosition.x = xmf3Position.x;
+		// xmf3FirePosition.y = xmf3Position.y + 10;
+		xmf3FirePosition.y = xmf3Position.y;
+		xmf3FirePosition.z = xmf3Position.z + 2;
+		pBulletObject->SetPosition(xmf3FirePosition);
+		pBulletObject->SetMovingDirection(xmf3Direction);
+		pBulletObject->SetActive(true);
+		pBulletObject->SetScale(0.1f, 0.1f, 0.05f);
+
+		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
+	}
+}
+=======
 void CTerrainPlayer::Aiming(bool bEnable)
 {
-	//¿©±â¼­ Ãæµ¹ ¹ß»ý
+	//ì—¬ê¸°ì„œ ì¶©ëŒ ë°œìƒ
 	if (bEnable)
 	{
 		m_pSkinnedAnimationController->SetTrackEnable(STAND, false);
@@ -616,4 +700,5 @@ void CTerrainPlayer::Aiming(bool bEnable)
 		m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
 	}
 }
+
 
