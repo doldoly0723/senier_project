@@ -23,6 +23,7 @@
 
 #include <fstream>
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -49,14 +50,16 @@ extern HINSTANCE						ghAppInstance;
 
 //#define _WITH_SWAPCHAIN_FULLSCREEN_STATE
 
-#define FRAME_BUFFER_WIDTH				640
-#define FRAME_BUFFER_HEIGHT				480
+#define FRAME_BUFFER_WIDTH				1280
+#define FRAME_BUFFER_HEIGHT				720
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 
 #pragma comment(lib, "dxguid.lib")
+
+#pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
 
 //#pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.

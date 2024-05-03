@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "GameFramework.h"
 
+// cmd 창 띄우기
+#pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
+
 CGameFramework::CGameFramework()
 {
 	m_pdxgiFactory = NULL;
@@ -289,13 +292,25 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	switch (nMessageID)
 	{
 		case WM_LBUTTONDOWN:
-		case WM_RBUTTONDOWN:
 			::SetCapture(hWnd);
 			::GetCursorPos(&m_ptOldCursorPos);
+			m_pPlayer->SetFire(true);
+			break;
+		case WM_RBUTTONDOWN:
+			m_pCamera = m_pPlayer->ChangeCamera(THIRD_PERSON_CAMERA, m_GameTimer.GetTimeElapsed());
+			m_pCamera->SetOffset(zoomCameraPos);
+			m_pPlayer->SetZoom(true);
+			//m_pPlayer->Aiming(true);
+			//std::cout << "zoom on" << std::endl;
 			break;
 		case WM_LBUTTONUP:
-		case WM_RBUTTONUP:
 			::ReleaseCapture();
+			m_pPlayer->SetFire(false);
+			break;
+		case WM_RBUTTONUP:
+			m_pCamera->SetOffset(normalCameraPos);
+			m_pPlayer->SetZoom(false);
+			//m_pPlayer->Aiming(false);
 			break;
 		case WM_MOUSEMOVE:
 			break;
@@ -324,6 +339,9 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					break;
 				case VK_F9:
 					ChangeSwapChainState();
+					break;
+				case VK_NUMPAD0:
+					((CTerrainPlayer*)m_pPlayer)->FireBullet();
 					break;
 				default:
 					break;
@@ -435,6 +453,7 @@ void CGameFramework::ReleaseObjects()
 
 void CGameFramework::ProcessInput()
 {
+
 	static UCHAR pKeysBuffer[256];
 	bool bProcessedByScene = false;
 	if (GetKeyboardState(pKeysBuffer) && m_pScene) bProcessedByScene = m_pScene->ProcessInput(pKeysBuffer);
@@ -451,11 +470,44 @@ void CGameFramework::ProcessInput()
 			SetCursorPos(m_ptOldCursorPos.x, m_ptOldCursorPos.y);
 		}
 
+
+		// 화면 스크롤로 방향 전환
+		//SetCursor(NULL); // 마우스 커서 안보이게 하기
+		//HWND hWnd = GetFocus();
+
+		//if (hWnd != nullptr)
+		//{
+
+		//	RECT rect = {};
+
+		//	GetWindowRect(hWnd, &rect);
+
+		//	// 마우스 커서 위치 계산
+		//	POINT oldCursor = { static_cast<LONG>(rect.right / 2), static_cast<LONG>(rect.bottom / 2) };
+		//	POINT cursor = {};
+
+		//	// 이 함수는 윈도우 전체 영역을 기준으로 커서의 위치를 계산한다.
+		//	GetCursorPos(&cursor);
+
+		//	XMFLOAT2 delta = {};
+
+		//	delta.x = (cursor.x - oldCursor.x) / 100.0f;
+		//	delta.y = (cursor.y - oldCursor.y) / 100.0f;
+
+		//	SetCursorPos(oldCursor.x, oldCursor.y);
+
+		//	m_pPlayer->Rotate(0.0f, delta.x, 0.0f);
+		//	m_pCamera->Rotate(delta.y, 0.0f, 0.0f);
+		//}
+
+
+
+
 		DWORD dwDirection = 0;
-		if (pKeysBuffer[VK_UP] & 0xF0) dwDirection |= DIR_FORWARD;
-		if (pKeysBuffer[VK_DOWN] & 0xF0) dwDirection |= DIR_BACKWARD;
-		if (pKeysBuffer[VK_LEFT] & 0xF0) dwDirection |= DIR_LEFT;
-		if (pKeysBuffer[VK_RIGHT] & 0xF0) dwDirection |= DIR_RIGHT;
+		if (pKeysBuffer[VK_W] & 0xF0) dwDirection |= DIR_FORWARD;
+		if (pKeysBuffer[VK_S] & 0xF0) dwDirection |= DIR_BACKWARD;
+		if (pKeysBuffer[VK_A] & 0xF0) dwDirection |= DIR_LEFT;
+		if (pKeysBuffer[VK_D] & 0xF0) dwDirection |= DIR_RIGHT;
 		if (pKeysBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
 		if (pKeysBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
 
@@ -468,10 +520,17 @@ void CGameFramework::ProcessInput()
 				else
 					m_pPlayer->Rotate(cyDelta, cxDelta, 0.0f);
 			}
-			if (dwDirection) m_pPlayer->Move(dwDirection, 10.25f, true);
+			if (dwDirection)
+			{
+				m_pPlayer->SetMove(true);
+				m_pPlayer->Move(dwDirection, 10.25f, true);
+			}
+
 		}
 	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
+
+	m_pPlayer->SetMove(false);
 }
 
 void CGameFramework::AnimateObjects()

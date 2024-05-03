@@ -567,6 +567,21 @@ void CAnimationController::SetTrackAnimationSet(int nAnimationTrack, int nAnimat
 void CAnimationController::SetTrackEnable(int nAnimationTrack, bool bEnable)
 {
 	if (m_pAnimationTracks) m_pAnimationTracks[nAnimationTrack].SetEnable(bEnable);
+	for(int i = 0; i < 11; i++)
+		std::cout << i << ": " <<  m_pAnimationTracks[i].m_bEnable << "\t";
+	std::cout << endl;
+
+	/*std::cout <<"Stand" <<  m_pAnimationTracks[STAND].m_bEnable << " ";
+	std::cout << "Walk" << m_pAnimationTracks[S_Walk].m_bEnable << " ";
+	std::cout << "walk backward" << m_pAnimationTracks[S_WalkBackward].m_bEnable << " ";
+	std::cout << "walk left" << m_pAnimationTracks[S_WalkLeft].m_bEnable << " ";
+	std::cout << "walk right" << m_pAnimationTracks[S_WalkRight].m_bEnable << " ";
+	std::cout << "aim" << m_pAnimationTracks[S_Aiming].m_bEnable << " ";
+	std::cout << "aim to down" << m_pAnimationTracks[S_Aim_to_Down].m_bEnable << " ";
+	std::cout << "down to aim" << m_pAnimationTracks[S_Down_to_Aim].m_bEnable << " ";
+	std::cout << "walking with aim" << m_pAnimationTracks[S_WalkingBackward_with_Aim].m_bEnable << " ";
+	std::cout << "walking backward with aim" << m_pAnimationTracks[S_WalkingBackward_with_Aim].m_bEnable << " ";
+	std::cout << endl;*/
 }
 
 void CAnimationController::SetTrackPosition(int nAnimationTrack, float fPosition)
@@ -741,6 +756,86 @@ void CGameObject::SetChild(CGameObject *pChild, bool bReferenceUpdate)
 	}
 }
 
+void CGameObject::SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGameObject)
+{
+	//// 부모 오브젝트의 BoundingOrientedBox를 자식 오브젝트에 설정
+	//pGameObject->m_xmOOBB = xmOOBB;
+
+	if (pGameObject->m_pSibling)
+		pGameObject->m_pSibling->SetBoundingBox(xmOOBB, pGameObject->m_pSibling);
+	if (pGameObject->m_pChild)
+		pGameObject->m_pChild->SetBoundingBox(xmOOBB, pGameObject->m_pChild);
+
+	SetExtents(xmOOBB, pGameObject->m_xmOOBB);
+
+	//	// 부모 오브젝트의 변환을 고려하여 자식 오브젝트의 BoundingOrientedBox 설정
+	//XMVECTOR vCenter = XMLoadFloat3(&xmOOBB.Center);
+	//XMVECTOR vExtents = XMLoadFloat3(&xmOOBB.Extents);
+	//XMVECTOR vOrientation = XMLoadFloat4(&xmOOBB.Orientation);
+
+	//// 부모 오브젝트의 변환 적용
+	//XMVECTOR vParentPosition = XMLoadFloat3(&GetPosition());
+	//// XMVECTOR vParentScale = XMLoadFloat3(&GetScale());
+
+	//vCenter = XMVectorAdd(vCenter, vParentPosition);
+	//// vExtents = XMVectorMultiply(vExtents, vParentScale);
+
+	//// 자식 오브젝트의 BoundingOrientedBox 설정
+	//pGameObject->m_xmOOBB.Center = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f); // 초기화
+	//pGameObject->m_xmOOBB.Extents = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f); // 초기화
+	//pGameObject->m_xmOOBB.Orientation = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f); // 초기화
+
+	//XMStoreFloat3(&pGameObject->m_xmOOBB.Center, vCenter);
+	//XMStoreFloat3(&pGameObject->m_xmOOBB.Extents, vExtents);
+	//XMStoreFloat4(&pGameObject->m_xmOOBB.Orientation, vOrientation);
+
+	//// 현재 오브젝트가 부모 오브젝트라면 자식 오브젝트에 대해 재귀적으로 설정
+	//if (pGameObject->m_pSibling)
+	//	pGameObject->m_pSibling->SetBoundingBox(pGameObject->m_xmOOBB, pGameObject->m_pSibling);
+	//if (pGameObject->m_pChild)
+	//	pGameObject->m_pChild->SetBoundingBox(pGameObject->m_xmOOBB, pGameObject->m_pChild);
+}
+
+void CGameObject::SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& xmOOBB2)
+{
+	if (xmOOBB1.Extents.x < xmOOBB2.Extents.x)
+		xmOOBB1.Extents.x = xmOOBB2.Extents.x;
+	if (xmOOBB1.Extents.y < xmOOBB2.Extents.y)
+		xmOOBB1.Extents.y = xmOOBB2.Extents.y;
+	if (xmOOBB1.Extents.z < xmOOBB2.Extents.z)
+		xmOOBB1.Extents.z = xmOOBB2.Extents.z;
+}
+
+void CGameObject::UpdateBoundingBox()
+{
+	// OOBB의 중심을 월드좌표로 이동
+	XMFLOAT3 Pos = GetPosition();
+	m_xmOOBB.Center = Pos;
+}
+
+void CGameObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox* xmOOBB)
+{
+	//// BoundingOrientedBox의 모서리 좌표를 가져오기
+	XMFLOAT3 corners[8];
+	xmOOBB->GetCorners(corners);
+
+	// 모르겠다.
+	XMFLOAT3 vertices[] = {
+	{ corners[0] }, { corners[1] }, { corners[1] }, { corners[2] }, { corners[2] }, { corners[3] }, { corners[3] }, { corners[0] },
+	{ corners[4] }, { corners[5] }, { corners[5] }, { corners[6] }, { corners[6] }, { corners[7] }, { corners[7] }, { corners[4] },
+	{ corners[0] }, { corners[4] }, { corners[1] }, { corners[5] }, { corners[2] }, { corners[6] }, { corners[3] }, { corners[7] }
+	};
+
+	pd3dCommandList->DrawInstanced(24, 1, 0, 0);
+}
+
+void CGameObject::ScaleBoundingBox(float x, float y, float z)
+{
+	m_xmOOBB.Extents.x *= x;
+	m_xmOOBB.Extents.y *= y;
+	m_xmOOBB.Extents.z *= z;
+}
+
 void CGameObject::SetMesh(CMesh *pMesh)
 {
 	if (m_pMesh) m_pMesh->Release();
@@ -808,6 +903,8 @@ void CGameObject::UpdateTransform(XMFLOAT4X4 *pxmf4x4Parent)
 
 	if (m_pSibling) m_pSibling->UpdateTransform(pxmf4x4Parent);
 	if (m_pChild) m_pChild->UpdateTransform(&m_xmf4x4World);
+	
+	UpdateBoundingBox();
 }
 
 void CGameObject::SetTrackAnimationSet(int nAnimationTrack, int nAnimationSet)
@@ -1422,7 +1519,7 @@ CSkyBox::CSkyBox(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dComman
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 
 	CTexture* pSkyBoxTexture = new CTexture(1, RESOURCE_TEXTURE_CUBE, 0, 1);
-	pSkyBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/SkyBox_0.dds", RESOURCE_TEXTURE_CUBE, 0);
+	pSkyBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/skybox.dds", RESOURCE_TEXTURE_CUBE, 0);
 
 	CSkyBoxShader *pSkyBoxShader = new CSkyBoxShader();
 	pSkyBoxShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
