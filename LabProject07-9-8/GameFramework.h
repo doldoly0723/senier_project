@@ -1,7 +1,7 @@
 #pragma once
 
-#define FRAME_BUFFER_WIDTH		640
-#define FRAME_BUFFER_HEIGHT		480
+#define FRAME_BUFFER_WIDTH		1280
+#define FRAME_BUFFER_HEIGHT		720
 
 #include "Timer.h"
 #include "Player.h"
@@ -85,5 +85,9 @@ private:
 	POINT						m_ptOldCursorPos;
 
 	_TCHAR						m_pszFrameRate[70];
+
+
+	XMFLOAT3 normalCameraPos = XMFLOAT3(0.0f, 20.0f, -20.0f);
+	XMFLOAT3 zoomCameraPos = XMFLOAT3(5.0f, 15.0f, -5.0f);
 };
 

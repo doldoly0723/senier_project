@@ -85,7 +85,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 {
 	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
 
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 76 + 30); //SuperCobra(17), Gunship(2), Player:Mi24(1), Angrybot() + √—æÀ 30?
+	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 76 + 30); //SuperCobra(17), Gunship(2), Player:Mi24(1), Angrybot() + √É√ë¬æ√ã 30?
 
 	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
@@ -93,9 +93,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	m_pSkyBox = new CSkyBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
-	XMFLOAT3 xmf3Scale(8.0f, 1.0f, 8.0f);
-	XMFLOAT4 xmf4Color(0.0f, 0.0f, 0.0f, 0.0f);
-	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 2018, 2018, xmf3Scale, xmf4Color);
+	XMFLOAT3 xmf3Scale(8.0f, 0.0f, 8.0f);
+	//XMFLOAT4 xmf4Color(0.0f, 0.0f, 0.0f, 0.0f);
+	XMFLOAT4 xmf4Color = XMFLOAT4(0.7608f, 0.6980f, 0.5020f, 0.0f);
+	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 513, 513, xmf3Scale, xmf4Color);
 
 	m_nHierarchicalGameObjects = 3;
 	m_ppHierarchicalGameObjects = new CGameObject * [m_nHierarchicalGameObjects];
@@ -127,11 +128,14 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (pbox) delete pbox;
 
+
 	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
 	{
 		if (m_ppHierarchicalGameObjects[i]) m_ppHierarchicalGameObjects[i]->SetBoundingBox(m_ppHierarchicalGameObjects[i]->m_xmOOBB, m_ppHierarchicalGameObjects[i]);
 			m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[i]);
 	}
+=======
+
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
@@ -166,10 +170,10 @@ void CScene::ReleaseObjects()
 	if (m_pTerrain) delete m_pTerrain;
 	if (m_pSkyBox) delete m_pSkyBox;
 
-	// ø©±‚º≠µµ ¡¶∞≈ «ÿ¡‡æﬂ«‘
+	// ¬ø¬©¬±√¢¬º¬≠¬µ¬µ √Å¬¶¬∞√Ö √á√ò√Å√†¬æ√ü√á√î
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-		// ¿Ã ∫Œ∫–¿ª æÓ∂ª∞‘ «ÿæﬂ«œ¡ˆ
+		// √Ä√å ¬∫√é¬∫√ê√Ä¬ª ¬æ√Æ¬∂¬ª¬∞√î √á√ò¬æ√ü√á√è√Å√∂
 		if (m_pPlayer->m_ppBullets[i]->m_bActive) m_pPlayer->m_ppBullets[i]->Release();
 			delete m_pPlayer->m_ppBullets;
 	}
@@ -378,7 +382,7 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 
 void CScene::CreateShaderVariables(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList)
 {
-	UINT ncbElementBytes = ((sizeof(LIGHTS) + 255) & ~255); //256¿« πËºˆ
+	UINT ncbElementBytes = ((sizeof(LIGHTS) + 255) & ~255); //256√Ä√á ¬π√®¬º√∂
 	m_pd3dcbLights = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbElementBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
 
 	m_pd3dcbLights->Map(0, NULL, (void **)&m_pcbMappedLights);
@@ -409,7 +413,7 @@ void CScene::ReleaseUploadBuffers()
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-	  // ¿Ã ∫Œ∫–¿ª æÓ∂ª∞‘ «ÿæﬂ«œ¡ˆ
+	  // √Ä√å ¬∫√é¬∫√ê√Ä¬ª ¬æ√Æ¬∂¬ª¬∞√î √á√ò¬æ√ü√á√è√Å√∂
 		if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			m_pPlayer->m_ppBullets[i]->ReleaseUploadBuffers();
 	}
@@ -481,12 +485,12 @@ void CScene::CheckPlayerByObjectCollisions()
 		//XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
 		//XMFLOAT3 playerCenter = m_pPlayer->m_xmOOBB.Center;
 
-		//std::cout << "Object¿« ¡ﬂΩ… ¿ßƒ°: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-		//std::cout << "Player¿« ¡ﬂΩ… ¿ßƒ°: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
+		//std::cout << "Object√Ä√á √Å√ü¬Ω√â √Ä¬ß√Ñ¬°: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+		//std::cout << "Player√Ä√á √Å√ü¬Ω√â √Ä¬ß√Ñ¬°: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
 
 		if (Object->m_xmOOBB.Intersects(m_pPlayer->m_xmOOBB))
 		{
-			std::cout << "√Êµπ!" << std::endl;
+			std::cout << "√É√¶¬µ¬π!" << std::endl;
 
 		}
 	}
@@ -504,8 +508,8 @@ void CScene::CheckBulletByObjectCollisions()
 			XMFLOAT3 bulletCenter = m_pPlayer->m_ppBullets[i]->m_xmOOBB.Center;
 			if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			{
-				//std::cout << "Object¿« ¡ﬂΩ… ¿ßƒ°: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-				//std::cout << "Bullet¿« ¡ﬂΩ… ¿ßƒ°: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
+				//std::cout << "Object√Ä√á √Å√ü¬Ω√â √Ä¬ß√Ñ¬°: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+				//std::cout << "Bullet√Ä√á √Å√ü¬Ω√â √Ä¬ß√Ñ¬°: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
 			}
 		}
 
@@ -514,19 +518,19 @@ void CScene::CheckBulletByObjectCollisions()
 			if (m_pPlayer->m_ppBullets[i]->m_bActive)
 				if (m_pPlayer->m_ppBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
 				{
-					std::cout << "√—æÀ √Êµπ!" << std::endl;
+					std::cout << "√É√ë¬æ√ã √É√¶¬µ¬π!" << std::endl;
 
-					// √Êµπ«— ∞¥√ºøÕ √—æÀ¿« ¿ßƒ°∏¶ ªÁøÎ«œø© «•∏È π˝º± ∞ËªÍ
+					// √É√¶¬µ¬π√á√ë ¬∞¬¥√É¬º¬ø√ç √É√ë¬æ√ã√Ä√á √Ä¬ß√Ñ¬°¬∏¬¶ ¬ª√ß¬ø√´√á√è¬ø¬© √á¬•¬∏√© ¬π√Ω¬º¬± ¬∞√®¬ª√™
 					XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
 					XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
 					XMFLOAT3 xmf3SurfaceNormal;
 
-					// «•∏È π˝º± ∞ËªÍ
+					// √á¬•¬∏√© ¬π√Ω¬º¬± ¬∞√®¬ª√™
 					XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
-					// ¿ß,æ∆∑°∑Œ ∆¶ πÊ¡ˆ
+					// √Ä¬ß,¬æ√Ü¬∑¬°¬∑√é √Ü¬¶ ¬π√¶√Å√∂
 					xmf3SurfaceNormal.y = 0;
 
-					// √—æÀ¿ª π›ªÁΩ√≈∞¥¬ «‘ºˆ »£√‚
+					// √É√ë¬æ√ã√Ä¬ª ¬π√ù¬ª√ß¬Ω√É√Ö¬∞¬¥√Ç √á√î¬º√∂ √à¬£√É√¢
 					m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
 
 				}
@@ -588,14 +592,14 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
 	if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
 
-	// √—æÀ ∑ª¥ı∏µ
+	// √É√ë¬æ√ã ¬∑¬ª¬¥√µ¬∏¬µ
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			m_pPlayer->m_ppBullets[i]->Render(pd3dCommandList, pCamera);
 	}
 
-	// OOBB ∑ª¥ı∏µ
+	// OOBB ¬∑¬ª¬¥√µ¬∏¬µ
 	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
 	{
 		CGameObject* Object = *iter;

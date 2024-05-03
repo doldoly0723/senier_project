@@ -205,12 +205,14 @@ CCamera *CPlayer::OnChangeCamera(DWORD nNewCameraMode, DWORD nCurrentCameraMode)
 		m_xmf3Up = m_pCamera->GetUpVector();
 		m_xmf3Look = m_pCamera->GetLookVector();
 	}
-
+	
 	if (pNewCamera)
 	{
 		pNewCamera->SetMode(nNewCameraMode);
 		pNewCamera->SetPlayer(this);
 	}
+
+	
 
 	if (m_pCamera) delete m_pCamera;
 
@@ -354,22 +356,34 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 {
 	m_pCamera = ChangeCamera(THIRD_PERSON_CAMERA, 0.0f);
 
+
 	CLoadedModelInfo *pAngrybotModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Player.bin", NULL);
 	SetChild(pAngrybotModel->m_pModelRootObject, true);
+	int standAnimationTrack = 11;
+	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, standAnimationTrack, pAngrybotModel);
 
-	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 2, pAngrybotModel);
-	m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
-	m_pSkinnedAnimationController->SetTrackAnimationSet(1, 1);
-	m_pSkinnedAnimationController->SetTrackEnable(1, false);
+	for (int i = 0; i < standAnimationTrack; i++)
+	{
+		m_pSkinnedAnimationController->SetTrackAnimationSet(i, i);
+		m_pSkinnedAnimationController->SetTrackEnable(i, false);
+	}
+	m_pSkinnedAnimationController->SetTrackEnable(STAND, true);
+	
 
-	m_pSkinnedAnimationController->SetCallbackKeys(1, 2);
+	//m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
+	//m_pSkinnedAnimationController->SetTrackAnimationSet(1, 1);
+	//m_pSkinnedAnimationController->SetTrackAnimationSet(2, 2);
+	//m_pSkinnedAnimationController->SetTrackEnable(1, false);
+	//m_pSkinnedAnimationController->SetTrackEnable(2, false);
+
+	m_pSkinnedAnimationController->SetCallbackKeys(1, 2);				// 1번 애니메이션 소리를 위한 설정
 #ifdef _WITH_SOUND_RESOURCE
 	m_pSkinnedAnimationController->SetCallbackKey(0, 0.1f, _T("Footstep01"));
 	m_pSkinnedAnimationController->SetCallbackKey(1, 0.5f, _T("Footstep02"));
 	m_pSkinnedAnimationController->SetCallbackKey(2, 0.9f, _T("Footstep03"));
 #else
-	m_pSkinnedAnimationController->SetCallbackKey(1, 0, 0.2f, _T("Sound/Footstep01.wav"));
-	m_pSkinnedAnimationController->SetCallbackKey(1, 1, 0.5f, _T("Sound/Footstep02.wav"));
+	//m_pSkinnedAnimationController->SetCallbackKey(1, 0, 0.2f, _T("Sound/Footstep01.wav"));
+	//m_pSkinnedAnimationController->SetCallbackKey(1, 1, 0.5f, _T("Sound/Footstep02.wav"));
 //	m_pSkinnedAnimationController->SetCallbackKey(1, 2, 0.39f, _T("Sound/Footstep03.wav"));
 #endif
 	CAnimationCallbackHandler *pAnimationCallbackHandler = new CSoundCallbackHandler();
@@ -388,14 +402,14 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 		m_ppBullets[i]->SetMovingSpeed(100.0f);
 		m_ppBullets[i]->SetActive(false);
 
-		// ��..
+		// 흠..
 		m_ppBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
 		m_ppBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
 		m_ppBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
 
 	}
 
-	std::cout << "�Ѿ� ���� �Ϸ�" << std::endl;
+	std::cout << "총알 생성 완료" << std::endl;
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 	
@@ -450,7 +464,7 @@ CCamera *CTerrainPlayer::ChangeCamera(DWORD nNewCameraMode, float fTimeElapsed)
 			SetMaxVelocityY(400.0f);
 			m_pCamera = OnChangeCamera(THIRD_PERSON_CAMERA, nCurrentCameraMode);
 			m_pCamera->SetTimeLag(0.25f);
-			m_pCamera->SetOffset(XMFLOAT3(0.0f, 20.0f, -50.0f));
+			m_pCamera->SetOffset(XMFLOAT3(0.0f, 20.0f, -20.0f));
 			m_pCamera->GenerateProjectionMatrix(1.01f, 5000.0f, ASPECT_RATIO, 60.0f);
 			m_pCamera->SetViewport(0, 0, FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT, 0.0f, 1.0f);
 			m_pCamera->SetScissorRect(0, 0, FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT);
@@ -504,30 +518,112 @@ void CTerrainPlayer::OnCameraUpdateCallback(float fTimeElapsed)
 
 void CTerrainPlayer::Move(DWORD dwDirection, float fDistance, bool bUpdateVelocity)
 {
-	if (dwDirection)
+	if (dwDirection && !bZoom)			// 기본 이동
 	{
-		m_pSkinnedAnimationController->SetTrackEnable(0, false);
-		m_pSkinnedAnimationController->SetTrackEnable(1, true);
+		m_pSkinnedAnimationController->SetTrackEnable(S_Walking_with_Aim, false);
+		m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
+		m_pSkinnedAnimationController->SetTrackEnable(STAND, false);
+
+		m_pSkinnedAnimationController->SetTrackEnable(S_Walk, true);
+	}
+
+	else if (dwDirection && bZoom)		// 조준 이동
+	{
+		if (!bFire)
+		{
+			// 이동하면서 조준하는 애니메이션
+			m_pSkinnedAnimationController->SetTrackEnable(S_Walk, false);
+			m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
+			m_pSkinnedAnimationController->SetTrackEnable(STAND, false);
+
+			m_pSkinnedAnimationController->SetTrackEnable(Firing, false);
+
+			m_pSkinnedAnimationController->SetTrackEnable(S_Walking_with_Aim, true);
+		}
+		else
+		{
+			m_pSkinnedAnimationController->SetTrackEnable(S_Walk, false);
+			m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
+			m_pSkinnedAnimationController->SetTrackEnable(STAND, false);
+
+			m_pSkinnedAnimationController->SetTrackEnable(S_Walking_with_Aim, false);
+
+			m_pSkinnedAnimationController->SetTrackEnable(Firing, true);
+
+
+		}
+		
 	}
 
 	CPlayer::Move(dwDirection, fDistance, bUpdateVelocity);
 }
 
-void CTerrainPlayer::Update(float fTimeElapsed)
+void CTerrainPlayer::Update(float fTimeElapsed)			// 기본 일어서 있는 상태를 여기서 처리해도 될듯?
 {
 	CPlayer::Update(fTimeElapsed);
 
 	if (m_pSkinnedAnimationController)
 	{
-		float fLength = sqrtf(m_xmf3Velocity.x * m_xmf3Velocity.x + m_xmf3Velocity.z * m_xmf3Velocity.z);
+		//stand
+		float fLength = sqrtf(m_xmf3Velocity.x * m_xmf3Velocity.x + m_xmf3Velocity.z * m_xmf3Velocity.z);			
 		if (::IsZero(fLength))
 		{
-			m_pSkinnedAnimationController->SetTrackEnable(0, true);
-			m_pSkinnedAnimationController->SetTrackEnable(1, false);
-			m_pSkinnedAnimationController->SetTrackPosition(1, 0.0f);
+			m_pSkinnedAnimationController->SetTrackEnable(STAND, true);
+			m_pSkinnedAnimationController->SetTrackEnable(S_Walk, false);
+			m_pSkinnedAnimationController->SetTrackEnable(S_WalkBackward, false);
+			m_pSkinnedAnimationController->SetTrackEnable(S_WalkLeft, false);
+			m_pSkinnedAnimationController->SetTrackEnable(S_WalkRight, false);
+
+			m_pSkinnedAnimationController->SetTrackEnable(S_Walking_with_Aim, false);
+
+			m_pSkinnedAnimationController->SetTrackEnable(Firing, false);
+
+			m_pSkinnedAnimationController->SetTrackPosition(S_Walk, 0.0f);
+		}
+
+		//Aiming
+		if (bZoom && !bMove)			
+		{
+			if (!bFire)
+			{
+				//cout << "ZOOM ON" << endl;
+				m_pSkinnedAnimationController->SetTrackEnable(STAND, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_Walk, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_WalkBackward, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_WalkLeft, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_WalkRight, false);
+
+				m_pSkinnedAnimationController->SetTrackEnable(S_Walking_with_Aim, false);
+
+				m_pSkinnedAnimationController->SetTrackEnable(Firing, false);
+
+				m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, true);
+			}
+			else
+			{
+				m_pSkinnedAnimationController->SetTrackEnable(STAND, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_Walk, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_WalkBackward, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_WalkLeft, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_WalkRight, false);
+
+				m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
+				m_pSkinnedAnimationController->SetTrackEnable(S_Walking_with_Aim, false);
+
+
+
+				m_pSkinnedAnimationController->SetTrackEnable(Firing, true);
+			}
+			
+		}
+		else if (!bZoom && !bMove)
+		{
+			//m_pSkinnedAnimationController->SetTrackEnable(0, true);
+			m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
 		}
 	}
 }
+
 
 void CTerrainPlayer::Animate(float fTimeElapsed)
 {
@@ -548,7 +644,7 @@ void CTerrainPlayer::Animate(float fTimeElapsed)
 
 void CTerrainPlayer::FireBullet()
 {
-	// std::cout << "�߻� ��" << std::endl;
+	// std::cout << "발사 됨" << std::endl;
 	if (m_fFireWaitingTime > 0.0f)
 		return;
 
@@ -589,3 +685,20 @@ void CTerrainPlayer::FireBullet()
 		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
 	}
 }
+=======
+void CTerrainPlayer::Aiming(bool bEnable)
+{
+	//여기서 충돌 발생
+	if (bEnable)
+	{
+		m_pSkinnedAnimationController->SetTrackEnable(STAND, false);
+		m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, true);
+	}
+	else if (!bEnable)
+	{
+		//m_pSkinnedAnimationController->SetTrackEnable(0, true);
+		m_pSkinnedAnimationController->SetTrackEnable(S_Aiming, false);
+	}
+}
+
+
