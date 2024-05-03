@@ -134,7 +134,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		if (m_ppHierarchicalGameObjects[i]) m_ppHierarchicalGameObjects[i]->SetBoundingBox(m_ppHierarchicalGameObjects[i]->m_xmOOBB, m_ppHierarchicalGameObjects[i]);
 			m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[i]);
 	}
-=======
+
 
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);

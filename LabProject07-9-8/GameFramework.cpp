@@ -469,7 +469,7 @@ void CGameFramework::ProcessInput()
 			cyDelta = (float)(ptCursorPos.y - m_ptOldCursorPos.y) / 3.0f;
 			SetCursorPos(m_ptOldCursorPos.x, m_ptOldCursorPos.y);
 		}
-		
+
 
 		// 화면 스크롤로 방향 전환
 		//SetCursor(NULL); // 마우스 커서 안보이게 하기
@@ -525,9 +525,9 @@ void CGameFramework::ProcessInput()
 				m_pPlayer->SetMove(true);
 				m_pPlayer->Move(dwDirection, 10.25f, true);
 			}
-			
-		}
 
+		}
+	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 
 	m_pPlayer->SetMove(false);

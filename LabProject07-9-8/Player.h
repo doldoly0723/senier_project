@@ -9,7 +9,7 @@
 
 
 #define MAX_BULLETS				30
-=======
+
 // Stand Animation
 #define STAND						0
 #define S_Walk						1
@@ -56,7 +56,7 @@ protected:
 	// �Ѿ� 
 	float						m_fFireDelayTime;
 	float						m_fFireWaitingTime;
-=======
+
 	bool						bZoom = FALSE;
 	bool						bMove = FALSE;
 	bool						bFire = FALSE;
@@ -116,8 +116,7 @@ public:
 	CBulletObject* m_ppBullets[MAX_BULLETS];
 
 	void SetMovingDirection(XMFLOAT3& xmf3MovingDirection) { m_xmf3MovingDirection = Vector3::Normalize(xmf3MovingDirection); }
-=======
-	
+
 	void SetZoom(bool bEnable) { bZoom = bEnable; }
 	void SetMove(bool bEnable) { bMove = bEnable; }
 	void SetFire(bool bEnable) { bFire = bEnable; }
@@ -179,7 +178,7 @@ public:
 
 	void FireBullet();
 	float						m_fBulletEffectiveRange = 300.0f;
-=======
+
 	virtual void Aiming(bool bzoom);
 	
 

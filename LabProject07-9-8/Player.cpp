@@ -685,7 +685,6 @@ void CTerrainPlayer::FireBullet()
 		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
 	}
 }
-=======
 void CTerrainPlayer::Aiming(bool bEnable)
 {
 	//여기서 충돌 발생
