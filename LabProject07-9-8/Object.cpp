@@ -567,9 +567,9 @@ void CAnimationController::SetTrackAnimationSet(int nAnimationTrack, int nAnimat
 void CAnimationController::SetTrackEnable(int nAnimationTrack, bool bEnable)
 {
 	if (m_pAnimationTracks) m_pAnimationTracks[nAnimationTrack].SetEnable(bEnable);
-	for(int i = 0; i < 11; i++)
-		std::cout << i << ": " <<  m_pAnimationTracks[i].m_bEnable << "\t";
-	std::cout << endl;
+	//for(int i = 0; i < 11; i++)
+	//	std::cout << i << ": " <<  m_pAnimationTracks[i].m_bEnable << "\t";
+	//std::cout << endl;
 
 	/*std::cout <<"Stand" <<  m_pAnimationTracks[STAND].m_bEnable << " ";
 	std::cout << "Walk" << m_pAnimationTracks[S_Walk].m_bEnable << " ";

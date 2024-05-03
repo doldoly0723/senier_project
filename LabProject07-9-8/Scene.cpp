@@ -486,13 +486,19 @@ void CScene::CheckPlayerByObjectCollisions()
 	{
 		CGameObject* Object = *iter;
 		//XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
+		//auto t = Object->GetPosition();
 		//XMFLOAT3 playerCenter = m_pPlayer->m_xmOOBB.Center;
 
 		//std::cout << "ObjectÀÇ Áß½É À§Ä¡: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
 		//std::cout << "PlayerÀÇ Áß½É À§Ä¡: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
 
+		//std::cout << "Object OBB: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+		//std::cout << "Object Position: " << t.x << ", " << t.y << ", " << t.z << std::endl;
+
 		if (Object->m_xmOOBB.Intersects(m_pPlayer->m_xmOOBB))
 		{
+			XMFLOAT3 v{ 0.0f, 0.0f, 0.0f };
+			m_pPlayer->SetVelocity(v);
 			std::cout << "Ãæµ¹!" << std::endl;
 
 		}
@@ -509,10 +515,12 @@ void CScene::CheckBulletByObjectCollisions()
 		{
 			XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
 			XMFLOAT3 bulletCenter = m_pPlayer->m_ppBullets[i]->m_xmOOBB.Center;
+			auto t = Object->GetPosition();
 			if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			{
-				//std::cout << "ObjectÀÇ Áß½É À§Ä¡: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-				//std::cout << "BulletÀÇ Áß½É À§Ä¡: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
+				//std::cout << "Object OBB: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+				//std::cout << "Object Position: " << t.x << ", " << t.y << ", " << t.z << std::endl;
+				// std::cout << "BulletÀÇ Áß½É À§Ä¡: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
 			}
 		}
 
@@ -521,7 +529,7 @@ void CScene::CheckBulletByObjectCollisions()
 			if (m_pPlayer->m_ppBullets[i]->m_bActive)
 				if (m_pPlayer->m_ppBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
 				{
-					std::cout << "ÃÑ¾Ë Ãæµ¹!" << std::endl;
+					// std::cout << "ÃÑ¾Ë Ãæµ¹!" << std::endl;
 
 					// Ãæµ¹ÇÑ °´Ã¼¿Í ÃÑ¾ËÀÇ À§Ä¡¸¦ »ç¿ëÇÏ¿© Ç¥¸é ¹ý¼± °è»ê
 					XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();

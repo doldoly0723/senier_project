@@ -646,7 +646,12 @@ void CTerrainPlayer::FireBullet()
 {
 	// std::cout << "발사 됨" << std::endl;
 	if (m_fFireWaitingTime > 0.0f)
+	{
+		m_fFireWaitingTime -= 0.1f;
 		return;
+	}
+
+	std::cout << m_fFireWaitingTime << std::endl;
 
 	CBulletObject* pBulletObject = NULL;
 	for (int i = 0; i < MAX_BULLETS; i++)

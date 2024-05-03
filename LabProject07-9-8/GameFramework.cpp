@@ -295,8 +295,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			::SetCapture(hWnd);
 			::GetCursorPos(&m_ptOldCursorPos);
 			m_pPlayer->SetFire(true);
+			((CTerrainPlayer*)m_pPlayer)->bLeftMouseButtonDown = true;
 
-			((CTerrainPlayer*)m_pPlayer)->FireBullet();
+			// ((CTerrainPlayer*)m_pPlayer)->FireBullet();
 			break;
 		case WM_RBUTTONDOWN:
 			m_pCamera = m_pPlayer->ChangeCamera(THIRD_PERSON_CAMERA, m_GameTimer.GetTimeElapsed());
@@ -309,6 +310,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 		case WM_LBUTTONUP:
 			::ReleaseCapture();
 			m_pPlayer->SetFire(false);
+			((CTerrainPlayer*)m_pPlayer)->bLeftMouseButtonDown = false;
 			break;
 		case WM_RBUTTONUP:
 			m_pCamera->SetOffset(normalCameraPos);
@@ -319,6 +321,12 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			break;
 		default:
 			break;
+	}
+
+	// 연속적인 발사
+	if (((CTerrainPlayer*)m_pPlayer)->bLeftMouseButtonDown)
+	{
+		((CTerrainPlayer*)m_pPlayer)->FireBullet();
 	}
 }
 
