@@ -567,6 +567,21 @@ void CAnimationController::SetTrackAnimationSet(int nAnimationTrack, int nAnimat
 void CAnimationController::SetTrackEnable(int nAnimationTrack, bool bEnable)
 {
 	if (m_pAnimationTracks) m_pAnimationTracks[nAnimationTrack].SetEnable(bEnable);
+	for(int i = 0; i < 11; i++)
+		std::cout << i << ": " <<  m_pAnimationTracks[i].m_bEnable << "\t";
+	std::cout << endl;
+
+	/*std::cout <<"Stand" <<  m_pAnimationTracks[STAND].m_bEnable << " ";
+	std::cout << "Walk" << m_pAnimationTracks[S_Walk].m_bEnable << " ";
+	std::cout << "walk backward" << m_pAnimationTracks[S_WalkBackward].m_bEnable << " ";
+	std::cout << "walk left" << m_pAnimationTracks[S_WalkLeft].m_bEnable << " ";
+	std::cout << "walk right" << m_pAnimationTracks[S_WalkRight].m_bEnable << " ";
+	std::cout << "aim" << m_pAnimationTracks[S_Aiming].m_bEnable << " ";
+	std::cout << "aim to down" << m_pAnimationTracks[S_Aim_to_Down].m_bEnable << " ";
+	std::cout << "down to aim" << m_pAnimationTracks[S_Down_to_Aim].m_bEnable << " ";
+	std::cout << "walking with aim" << m_pAnimationTracks[S_WalkingBackward_with_Aim].m_bEnable << " ";
+	std::cout << "walking backward with aim" << m_pAnimationTracks[S_WalkingBackward_with_Aim].m_bEnable << " ";
+	std::cout << endl;*/
 }
 
 void CAnimationController::SetTrackPosition(int nAnimationTrack, float fPosition)
@@ -1422,7 +1437,7 @@ CSkyBox::CSkyBox(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dComman
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 
 	CTexture* pSkyBoxTexture = new CTexture(1, RESOURCE_TEXTURE_CUBE, 0, 1);
-	pSkyBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/SkyBox_0.dds", RESOURCE_TEXTURE_CUBE, 0);
+	pSkyBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/skybox.dds", RESOURCE_TEXTURE_CUBE, 0);
 
 	CSkyBoxShader *pSkyBoxShader = new CSkyBoxShader();
 	pSkyBoxShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
