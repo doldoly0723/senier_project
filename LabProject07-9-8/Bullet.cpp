@@ -25,9 +25,12 @@ CBulletObject::CBulletObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 
 void CBulletObject::Animate(float fElapsedTime)
 {
+<<<<<<< HEAD
 	CScene* Ts;
 	Ts->CheckBulletByObjectCollisions();
 
+=======
+>>>>>>> main
 	m_fElapsedTimeAfterFire += fElapsedTime;
 
 	float fDistance = m_fMovingSpeed * fElapsedTime;

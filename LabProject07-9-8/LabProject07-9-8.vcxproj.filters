@@ -64,6 +64,13 @@
     <ClCompile Include="LabProject07-9-8.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Raymarcher.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Voxelizer.cpp">
+    <ClCompile Include="Bullet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -103,6 +110,13 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="LabProject07-9-8.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Raymarcher.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Voxelizer.h">
+    <ClInclude Include="Bullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

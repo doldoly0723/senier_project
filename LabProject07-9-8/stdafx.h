@@ -23,6 +23,7 @@
 
 #include <fstream>
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -49,14 +50,16 @@ extern HINSTANCE						ghAppInstance;
 
 //#define _WITH_SWAPCHAIN_FULLSCREEN_STATE
 
-#define FRAME_BUFFER_WIDTH				640
-#define FRAME_BUFFER_HEIGHT				480
+#define FRAME_BUFFER_WIDTH				1280
+#define FRAME_BUFFER_HEIGHT				720
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 
 #pragma comment(lib, "dxguid.lib")
+
+#pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
 
 //#pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
@@ -208,6 +211,22 @@ namespace Vector3
 	inline XMFLOAT3 TransformCoord(XMFLOAT3& xmf3Vector, XMFLOAT4X4& xmmtx4x4Matrix)
 	{
 		return(TransformCoord(xmf3Vector, XMLoadFloat4x4(&xmmtx4x4Matrix)));
+	}
+
+	// 04-16 Lerp(보간)함수 추가
+	inline XMFLOAT3 Lerp(const XMFLOAT3& xmf3Vector1, const XMFLOAT3& xmf3Vector2, float fScalar)
+	{
+		// v1 + t * (v2 - v1)
+		XMFLOAT3 xmf3Result;
+		XMVECTOR result = XMVectorAdd(XMLoadFloat3(&xmf3Vector1), XMVectorScale(XMVectorSubtract(XMLoadFloat3(&xmf3Vector2), XMLoadFloat3(&xmf3Vector1)), fScalar));
+		XMStoreFloat3(&xmf3Result, result);
+		return xmf3Result;
+	}
+
+	// 04.27 Zero float 리턴 함수 추가
+	inline XMFLOAT3 ZeroFloat()
+	{
+		return XMFLOAT3(0.0f, 0.0f, 0.0f);
 	}
 }
 

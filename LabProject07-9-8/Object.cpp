@@ -567,6 +567,21 @@ void CAnimationController::SetTrackAnimationSet(int nAnimationTrack, int nAnimat
 void CAnimationController::SetTrackEnable(int nAnimationTrack, bool bEnable)
 {
 	if (m_pAnimationTracks) m_pAnimationTracks[nAnimationTrack].SetEnable(bEnable);
+	//for(int i = 0; i < 11; i++)
+	//	std::cout << i << ": " <<  m_pAnimationTracks[i].m_bEnable << "\t";
+	//std::cout << endl;
+
+	/*std::cout <<"Stand" <<  m_pAnimationTracks[STAND].m_bEnable << " ";
+	std::cout << "Walk" << m_pAnimationTracks[S_Walk].m_bEnable << " ";
+	std::cout << "walk backward" << m_pAnimationTracks[S_WalkBackward].m_bEnable << " ";
+	std::cout << "walk left" << m_pAnimationTracks[S_WalkLeft].m_bEnable << " ";
+	std::cout << "walk right" << m_pAnimationTracks[S_WalkRight].m_bEnable << " ";
+	std::cout << "aim" << m_pAnimationTracks[S_Aiming].m_bEnable << " ";
+	std::cout << "aim to down" << m_pAnimationTracks[S_Aim_to_Down].m_bEnable << " ";
+	std::cout << "down to aim" << m_pAnimationTracks[S_Down_to_Aim].m_bEnable << " ";
+	std::cout << "walking with aim" << m_pAnimationTracks[S_WalkingBackward_with_Aim].m_bEnable << " ";
+	std::cout << "walking backward with aim" << m_pAnimationTracks[S_WalkingBackward_with_Aim].m_bEnable << " ";
+	std::cout << endl;*/
 }
 
 void CAnimationController::SetTrackPosition(int nAnimationTrack, float fPosition)
@@ -741,8 +756,11 @@ void CGameObject::SetChild(CGameObject *pChild, bool bReferenceUpdate)
 	}
 }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> main
 void CGameObject::SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGameObject)
 {
 	//// 부모 오브젝트의 BoundingOrientedBox를 자식 오브젝트에 설정
@@ -802,10 +820,25 @@ void CGameObject::UpdateBoundingBox()
 
 void CGameObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox* xmOOBB)
 {
+<<<<<<< HEAD
 	XMFLOAT3 corners[8];
 	xmOOBB->GetCorners(corners);
 	// m_pMesh->Render(pd3dCommandList);
 
+=======
+	//// BoundingOrientedBox의 모서리 좌표를 가져오기
+	XMFLOAT3 corners[8];
+	xmOOBB->GetCorners(corners);
+
+	// 모르겠다.
+	XMFLOAT3 vertices[] = {
+	{ corners[0] }, { corners[1] }, { corners[1] }, { corners[2] }, { corners[2] }, { corners[3] }, { corners[3] }, { corners[0] },
+	{ corners[4] }, { corners[5] }, { corners[5] }, { corners[6] }, { corners[6] }, { corners[7] }, { corners[7] }, { corners[4] },
+	{ corners[0] }, { corners[4] }, { corners[1] }, { corners[5] }, { corners[2] }, { corners[6] }, { corners[3] }, { corners[7] }
+	};
+
+	pd3dCommandList->DrawInstanced(24, 1, 0, 0);
+>>>>>>> main
 }
 
 void CGameObject::ScaleBoundingBox(float x, float y, float z)
@@ -815,7 +848,10 @@ void CGameObject::ScaleBoundingBox(float x, float y, float z)
 	m_xmOOBB.Extents.z *= z;
 }
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
 void CGameObject::SetMesh(CMesh *pMesh)
 {
 	if (m_pMesh) m_pMesh->Release();
@@ -883,6 +919,8 @@ void CGameObject::UpdateTransform(XMFLOAT4X4 *pxmf4x4Parent)
 
 	if (m_pSibling) m_pSibling->UpdateTransform(pxmf4x4Parent);
 	if (m_pChild) m_pChild->UpdateTransform(&m_xmf4x4World);
+	
+	UpdateBoundingBox();
 }
 
 void CGameObject::SetTrackAnimationSet(int nAnimationTrack, int nAnimationSet)
@@ -1497,7 +1535,7 @@ CSkyBox::CSkyBox(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dComman
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 
 	CTexture* pSkyBoxTexture = new CTexture(1, RESOURCE_TEXTURE_CUBE, 0, 1);
-	pSkyBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/SkyBox_0.dds", RESOURCE_TEXTURE_CUBE, 0);
+	pSkyBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/skybox.dds", RESOURCE_TEXTURE_CUBE, 0);
 
 	CSkyBoxShader *pSkyBoxShader = new CSkyBoxShader();
 	pSkyBoxShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
@@ -1835,122 +1873,4 @@ CSwatMan::CSwatMan(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dComm
 
 CSwatMan::~CSwatMan()
 {
-}
-
-CBulletObject::CBulletObject(float fEffectiveRange)
-{
-	m_fBulletEffectiveRange = fEffectiveRange;
-}
-
-CBulletObject::CBulletObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, CLoadedModelInfo* pModel, int nAnimationTracks)
-{
-	CLoadedModelInfo* pBulletModel = pModel;
-	if (!pBulletModel) pBulletModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
-
-	//if (pBulletModel->m_pModelRootObject->m_ppMaterials[0])
-	//{
-	//	//pBulletModel->m_pModelRootObject->m_ppMaterials[0]->m_xmf4AlbedoColor = XMFLOAT4(1, 1, 1, 1);
-	//	pBulletModel->m_pModelRootObject->m_ppMaterials[0]->m_xmf4EmissiveColor = XMFLOAT4(1, 1, 1, 1);
-	//	pBulletModel->m_pModelRootObject->m_ppMaterials[0]->m_xmf4AmbientColor = XMFLOAT4(1, 1, 1, 1);
-	//	pBulletModel->m_pModelRootObject->m_ppMaterials[0]->m_xmf4SpecularColor = XMFLOAT4(1, 1, 1, 1);
-	//}
-
-	SetChild(pBulletModel->m_pModelRootObject, true);
-	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pBulletModel);
-}
-
-void CBulletObject::Animate(float fElapsedTime)
-{
-	m_fElapsedTimeAfterFire += fElapsedTime;
-
-	float fDistance = m_fMovingSpeed * fElapsedTime;
-
-	if ((m_fElapsedTimeAfterFire > m_fLockingDelayTime))
-	{
-		m_xmf3Position.x = m_xmf4x4ToParent._41;
-		m_xmf3Position.y = m_xmf4x4ToParent._42;
-		m_xmf3Position.z = m_xmf4x4ToParent._43;
-
-	}
-	m_xmf3Position.x = m_xmf4x4ToParent._41;
-	m_xmf3Position.y = m_xmf4x4ToParent._42;
-	m_xmf3Position.z = m_xmf4x4ToParent._43;
-
-	m_fMovingDistance += fDistance;
-	//std::cout << "fElapsedTime : " << fElapsedTime << std::endl;
-	//std::cout << "fDistance : " << fDistance << " m_fMovingDistance : " << m_fMovingDistance << std::endl;
-
-	Move(DIR_FORWARD, fDistance);
-
-	//cout << "Ani X : " << GetPosition().x << '\t';
-	//cout << "Ani Y : " << GetPosition().y << '\t';
-	//cout << "Ani Z : " << GetPosition().z << endl;
-
-	CGameObject::Animate(fElapsedTime);
-
-	if ((m_fMovingDistance > m_fBulletEffectiveRange) || (m_fElapsedTimeAfterFire > m_fLockingTime)) Reset();
-}
-
-void CBulletObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
-{
-	//if (m_pMesh)
-//{
-//	// 총알 객체의 월드 행렬 업데이트
-//	UpdateShaderVariable(pd3dCommandList, &m_xmf4x4World);
-
-//	// 총알 객체의 머티리얼 렌더링
-//	if (m_nMaterials > 0)
-//	{
-//		for (int i = 0; i < m_nMaterials; i++)
-//		{
-//			if (m_ppMaterials[i])
-//			{
-//				if (m_ppMaterials[i]->m_pShader) m_ppMaterials[i]->m_pShader->Render(pd3dCommandList, pCamera);
-//				m_ppMaterials[i]->UpdateShaderVariable(pd3dCommandList);
-//			}
-
-//			m_pMesh->Render(pd3dCommandList, i);
-//		}
-//	}
-//}
-
-//// 형제 객체와 자식 객체의 렌더링 호출
-//if (m_pSibling) m_pSibling->Render(pd3dCommandList, pCamera);
-//if (m_pChild) m_pChild->Render(pd3dCommandList, pCamera);
-	CGameObject::Render(pd3dCommandList, pCamera);
-}
-
-void CBulletObject::Move(DWORD dwDirection, float fDistance)
-{
-	if (dwDirection)
-	{
-		XMFLOAT3 xmf3Shift = XMFLOAT3(0, 0, 0);
-
-		if (dwDirection & DIR_FORWARD) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Look, fDistance);
-		if (dwDirection & DIR_BACKWARD) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Look, -fDistance);
-		if (dwDirection & DIR_RIGHT) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Right, fDistance);
-		if (dwDirection & DIR_LEFT) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Right, -fDistance);
-		if (dwDirection & DIR_UP) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Up, fDistance);
-		if (dwDirection & DIR_DOWN) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Up, -fDistance);
-
-		Move(xmf3Shift);
-	}
-}
-
-void CBulletObject::Move(const XMFLOAT3& xmf3Shift)
-{
-	m_xmf3Position = Vector3::Add(m_xmf3Position, xmf3Shift);
-	SetPosition(m_xmf3Position);
-}
-
-void CBulletObject::Reset()
-{
-	Rotate(-m_fPitch, -m_fYaw, -m_fRoll);
-	m_fPitch = 0; m_fYaw = 0; m_fRoll = 0;
-	m_pLockedObject = NULL;
-	m_fElapsedTimeAfterFire = 0;
-	m_fMovingDistance = 0;
-	m_fRotationAngle = 0.0f;
-
-	m_bActive = false;
 }

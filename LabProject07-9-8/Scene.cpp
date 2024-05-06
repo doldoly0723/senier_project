@@ -85,7 +85,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 {
 	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
 
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 76 + 30); //SuperCobra(17), Gunship(2), Player:Mi24(1), Angrybot() + �Ѿ� 30?
+	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 76 + 30); //SuperCobra(17), Gunship(2), Player:Mi24(1), Angrybot() + ÃÑ¾Ë 30?
 
 	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
@@ -93,11 +93,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	m_pSkyBox = new CSkyBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
-	XMFLOAT3 xmf3Scale(8.0f, 1.0f, 8.0f);
-	XMFLOAT4 xmf4Color(0.0f, 0.0f, 0.0f, 0.0f);
-	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 2018, 2018, xmf3Scale, xmf4Color);
+	XMFLOAT3 xmf3Scale(8.0f, 0.0f, 8.0f);
+	//XMFLOAT4 xmf4Color(0.0f, 0.0f, 0.0f, 0.0f);
+	XMFLOAT4 xmf4Color = XMFLOAT4(0.7608f, 0.6980f, 0.5020f, 0.0f);
+	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 513, 513, xmf3Scale, xmf4Color);
 
-	m_nHierarchicalGameObjects = 3;
+	m_nHierarchicalGameObjects = 4;
 	m_ppHierarchicalGameObjects = new CGameObject * [m_nHierarchicalGameObjects];
 
 	CLoadedModelInfo* pAngrybotModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Character_Swat_Guy.bin", NULL);
@@ -105,12 +106,18 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
 	m_ppHierarchicalGameObjects[0]->SetPosition(410.0f, m_pTerrain->GetHeight(410.0f, 735.0f), 735.0f);
 	m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
 	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
 >>>>>>> Stashed changes
+=======
+	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
+	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
+>>>>>>> main
 	if (pAngrybotModel) delete pAngrybotModel;
 
 	CLoadedModelInfo* pMonsterModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Character_Swat_Guy.bin", NULL);
@@ -118,19 +125,26 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
 	m_ppHierarchicalGameObjects[1]->SetPosition(230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 600.0f);
 	m_ppHierarchicalGameObjects[1]->SetScale(10.0f, 10.0f, 10.0f);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 	m_ppHierarchicalGameObjects[1]->SetBoundingBox(m_ppHierarchicalGameObjects[1]->m_xmOOBB, m_ppHierarchicalGameObjects[1]);
 	m_ppHierarchicalGameObjects[1]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[1]);
 >>>>>>> Stashed changes
+=======
+	m_ppHierarchicalGameObjects[1]->SetBoundingBox(m_ppHierarchicalGameObjects[1]->m_xmOOBB, m_ppHierarchicalGameObjects[1]);
+	m_ppHierarchicalGameObjects[1]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[1]);
+>>>>>>> main
 	if (pMonsterModel) delete pMonsterModel;
 
-	CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box.bin", NULL);
+	CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box2.bin", NULL);
 	m_ppHierarchicalGameObjects[2] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox, 1);
 	//m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
 	m_ppHierarchicalGameObjects[2]->SetPosition(330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
 	m_ppHierarchicalGameObjects[2]->SetScale(30.0f, 30.0f, 30.0f);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 	if (pbox) delete pbox;
 
@@ -146,13 +160,24 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (pbox) delete pbox;
 
+=======
+	m_ppHierarchicalGameObjects[2]->SetBoundingBox(m_ppHierarchicalGameObjects[2]->m_xmOOBB, m_ppHierarchicalGameObjects[2]);
+	m_ppHierarchicalGameObjects[2]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	if (pbox) delete pbox;
+
+>>>>>>> main
 	CLoadedModelInfo* pbox1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
 	m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox1, 1);
 	//m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
 	m_ppHierarchicalGameObjects[3]->SetPosition(350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
 	m_ppHierarchicalGameObjects[3]->SetScale(30.0f, 30.0f, 30.0f);
 	m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
+<<<<<<< HEAD
 	m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 50.0f, 30.0f);
+=======
+	m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+>>>>>>> main
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (pbox1) delete pbox1;
 
@@ -163,10 +188,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	}
 
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
 
-	
-	
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
 
@@ -192,14 +218,20 @@ void CScene::ReleaseObjects()
 		delete[] m_ppShaders;
 	}
 
+	while (m_lpGameObjects.size()) {
+		m_lpGameObjects.back()->Release();
+		m_lpGameObjects.pop_back();
+	}
+
 	if (m_pTerrain) delete m_pTerrain;
 	if (m_pSkyBox) delete m_pSkyBox;
-	// ���⼭�� ���� �������
-	 	for (int i = 0; i < MAX_BULLETS; i++)
+
+	// ¿©±â¼­µµ Á¦°Å ÇØÁà¾ßÇÔ
+	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-	  // �� �κ��� ��� �ؾ�����
-		if (m_pPlayer->m_ppBullets[i]->m_bActive)
-			delete m_pPlayer->m_ppBullets[i];
+		// ÀÌ ºÎºÐÀ» ¾î¶»°Ô ÇØ¾ßÇÏÁö
+		if (m_pPlayer->m_ppBullets[i]->m_bActive) m_pPlayer->m_ppBullets[i]->Release();
+			delete m_pPlayer->m_ppBullets;
 	}
 
 	if (m_ppHierarchicalGameObjects)
@@ -406,7 +438,7 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 
 void CScene::CreateShaderVariables(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList)
 {
-	UINT ncbElementBytes = ((sizeof(LIGHTS) + 255) & ~255); //256�� ���
+	UINT ncbElementBytes = ((sizeof(LIGHTS) + 255) & ~255); //256ÀÇ ¹è¼ö
 	m_pd3dcbLights = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbElementBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
 
 	m_pd3dcbLights->Map(0, NULL, (void **)&m_pcbMappedLights);
@@ -430,12 +462,14 @@ void CScene::ReleaseShaderVariables()
 
 void CScene::ReleaseUploadBuffers()
 {
+	for (const auto& elm : m_lpGameObjects) elm->ReleaseUploadBuffers();
+
 	if (m_pSkyBox) m_pSkyBox->ReleaseUploadBuffers();
 	if (m_pTerrain) m_pTerrain->ReleaseUploadBuffers();
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-	  // �� �κ��� ��� �ؾ�����
+	  // ÀÌ ºÎºÐÀ» ¾î¶»°Ô ÇØ¾ßÇÏÁö
 		if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			m_pPlayer->m_ppBullets[i]->ReleaseUploadBuffers();
 	}
@@ -499,6 +533,75 @@ void CScene::CreateShaderResourceViews(ID3D12Device* pd3dDevice, CTexture* pText
 	for (int j = 0; j < nRootParameters; j++) pTexture->SetRootParameterIndex(j, nRootParameterStartIndex + j);
 }
 
+void CScene::CheckPlayerByObjectCollisions()
+{
+	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
+	{
+		CGameObject* Object = *iter;
+		//XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
+		//auto t = Object->GetPosition();
+		//XMFLOAT3 playerCenter = m_pPlayer->m_xmOOBB.Center;
+
+		//std::cout << "ObjectÀÇ Áß½É À§Ä¡: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+		//std::cout << "PlayerÀÇ Áß½É À§Ä¡: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
+
+		//std::cout << "Object OBB: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+		//std::cout << "Object Position: " << t.x << ", " << t.y << ", " << t.z << std::endl;
+
+		if (Object->m_xmOOBB.Intersects(m_pPlayer->m_xmOOBB))
+		{
+			XMFLOAT3 v{ 0.0f, 0.0f, 0.0f };
+			m_pPlayer->SetVelocity(v);
+			std::cout << "Ãæµ¹!" << std::endl;
+
+		}
+	}
+}
+
+void CScene::CheckBulletByObjectCollisions()
+{
+	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
+	{
+		CGameObject* Object = *iter;
+
+		for (int i = 0; i < MAX_BULLETS; i++)
+		{
+			XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
+			XMFLOAT3 bulletCenter = m_pPlayer->m_ppBullets[i]->m_xmOOBB.Center;
+			auto t = Object->GetPosition();
+			if (m_pPlayer->m_ppBullets[i]->m_bActive)
+			{
+				//std::cout << "Object OBB: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+				//std::cout << "Object Position: " << t.x << ", " << t.y << ", " << t.z << std::endl;
+				// std::cout << "BulletÀÇ Áß½É À§Ä¡: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
+			}
+		}
+
+		for (int i = 0; i < MAX_BULLETS; i++)
+		{
+			if (m_pPlayer->m_ppBullets[i]->m_bActive)
+				if (m_pPlayer->m_ppBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
+				{
+					// std::cout << "ÃÑ¾Ë Ãæµ¹!" << std::endl;
+
+					// Ãæµ¹ÇÑ °´Ã¼¿Í ÃÑ¾ËÀÇ À§Ä¡¸¦ »ç¿ëÇÏ¿© Ç¥¸é ¹ý¼± °è»ê
+					XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
+					XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
+					XMFLOAT3 xmf3SurfaceNormal;
+
+					// Ç¥¸é ¹ý¼± °è»ê
+					XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
+					// À§,¾Æ·¡·Î Æ¦ ¹æÁö
+					xmf3SurfaceNormal.y = 0;
+
+					// ÃÑ¾ËÀ» ¹Ý»ç½ÃÅ°´Â ÇÔ¼ö È£Ãâ
+					m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
+
+				}
+		}
+	}
+}
+
 bool CScene::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
 	return(false);
@@ -533,7 +636,8 @@ void CScene::AnimateObjects(float fTimeElapsed)
 		m_pLights[1].m_xmf3Position = m_pPlayer->GetPosition();
 		m_pLights[1].m_xmf3Direction = m_pPlayer->GetLookVector();
 	}
-
+	CheckPlayerByObjectCollisions();
+	CheckBulletByObjectCollisions();
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -552,11 +656,18 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
 	if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
 
-	// �Ѿ� ������
+	// ÃÑ¾Ë ·»´õ¸µ
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			m_pPlayer->m_ppBullets[i]->Render(pd3dCommandList, pCamera);
+	}
+
+	// OOBB ·»´õ¸µ
+	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
+	{
+		CGameObject* Object = *iter;
+		Object->Render(pd3dCommandList, &(Object->m_xmOOBB));
 	}
 
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
@@ -570,6 +681,11 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			if (!m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController) m_ppHierarchicalGameObjects[i]->UpdateTransform(NULL);
 			m_ppHierarchicalGameObjects[i]->Render(pd3dCommandList, pCamera);
 		}
+	}
+
+	for (const auto& elm : m_lpGameObjects) {
+		elm->UpdateTransform(NULL);
+		elm->Render(pd3dCommandList, pCamera);
 	}
 }
 
