@@ -1,0 +1,1364 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6031",
+          "message": {
+            "text": "반환 값이 무시되었습니다. 'ReadFile'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 90,
+                  "startColumn": 4,
+                  "endLine": 90,
+                  "endColumn": 76
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CHeightMapImage::{ctor}",
+                  "decoratedName": "??0CHeightMapImage@@QEAA@PEB_WHHUXMFLOAT3@DirectX@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "산술 오버플로: 4 바이트 값의 '*' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '*' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 86,
+                  "startColumn": 36,
+                  "endLine": 86,
+                  "endColumn": 47
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CHeightMapImage::{ctor}",
+                  "decoratedName": "??0CHeightMapImage@@QEAA@PEB_WHHUXMFLOAT3@DirectX@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "산술 오버플로: 4 바이트 값의 '*' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '*' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 93,
+                  "startColumn": 32,
+                  "endLine": 93,
+                  "endColumn": 43
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CHeightMapImage::{ctor}",
+                  "decoratedName": "??0CHeightMapImage@@QEAA@PEB_WHHUXMFLOAT3@DirectX@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6386",
+          "message": {
+            "text": "'this->m_ppnSubSetIndices[0]'에 쓰는 동안 버퍼 오버런이 발생했습니다."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 244,
+                  "startColumn": 5,
+                  "endLine": 244,
+                  "endColumn": 62
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CHeightMapGridMesh::{ctor}",
+                  "decoratedName": "??0CHeightMapGridMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@HHHHUXMFLOAT3@DirectX@@UXMFLOAT4@4@PEAX@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 168,
+                            "startColumn": 222
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 169,
+                            "startColumn": 1
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 118,
+                            "startColumn": 33
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 119,
+                            "startColumn": 41
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 120,
+                            "startColumn": 41
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 122,
+                            "startColumn": 42
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 123,
+                            "startColumn": 48
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 169,
+                            "startColumn": 1
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 126,
+                            "startColumn": 50
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 127,
+                            "startColumn": 56
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 169,
+                            "startColumn": 1
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 130,
+                            "startColumn": 50
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+                          },
+                          "region": {
+                            "startLine": 131,
+                            "startColumn": 56
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 169,
+                            "startColumn": 1
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 170,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 171,
+                            "startColumn": 25
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 173,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 174,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 175,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 177,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 178,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 179,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 180,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 182,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 183,
+                            "startColumn": 6
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 184,
+                            "startColumn": 6
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 186,
+                            "startColumn": 8
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 186,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 186,
+                            "startColumn": 47
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 187,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 187,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 187,
+                            "startColumn": 32
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 201,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 203,
+                            "startColumn": 41
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 204,
+                            "startColumn": 40
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 205,
+                            "startColumn": 38
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 207,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 209,
+                            "startColumn": 38
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 210,
+                            "startColumn": 37
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 211,
+                            "startColumn": 35
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 28
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 215,
+                            "startColumn": 46
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 216,
+                            "startColumn": 45
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 217,
+                            "startColumn": 43
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 219,
+                            "startColumn": 28
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 221,
+                            "startColumn": 46
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 222,
+                            "startColumn": 45
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 223,
+                            "startColumn": 43
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 225,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 226,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 227,
+                            "startColumn": 21
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 229,
+                            "startColumn": 28
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 230,
+                            "startColumn": 34
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 231,
+                            "startColumn": 31
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 233,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 234,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 236,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 236,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 236,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 238,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 240,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 240,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 242,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 243,
+                            "startColumn": 32
+                          }
+                        },
+                        "message": {
+                          "text": "'j'이(가) 1과(와) 같을 수 있습니다."
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                          },
+                          "region": {
+                            "startLine": 244,
+                            "startColumn": 32
+                          }
+                        },
+                        "message": {
+                          "text": "'this->m_ppnSubSetIndices[0][1]'에 쓰기가 잘못됨, (쓰기 가능한 범위는 0에서 0 사이임)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CStandardMesh::m_d3dTextureCoord0BufferView' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 391,
+                  "startColumn": 16,
+                  "endLine": 391,
+                  "endColumn": 16
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CStandardMesh::{ctor}",
+                  "decoratedName": "??0CStandardMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CStandardMesh::m_d3dTextureCoord0BufferView"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CStandardMesh::m_d3dBiTangentBufferView' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 391,
+                  "startColumn": 16,
+                  "endLine": 391,
+                  "endColumn": 16
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CStandardMesh::{ctor}",
+                  "decoratedName": "??0CStandardMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CStandardMesh::m_d3dBiTangentBufferView"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CStandardMesh::m_d3dTextureCoord1BufferView' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 391,
+                  "startColumn": 16,
+                  "endLine": 391,
+                  "endColumn": 16
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CStandardMesh::{ctor}",
+                  "decoratedName": "??0CStandardMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CStandardMesh::m_d3dTextureCoord1BufferView"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CStandardMesh::m_d3dTangentBufferView' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 391,
+                  "startColumn": 16,
+                  "endLine": 391,
+                  "endColumn": 16
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CStandardMesh::{ctor}",
+                  "decoratedName": "??0CStandardMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CStandardMesh::m_d3dTangentBufferView"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CStandardMesh::m_d3dNormalBufferView' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 391,
+                  "startColumn": 16,
+                  "endLine": 391,
+                  "endColumn": 16
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CStandardMesh::{ctor}",
+                  "decoratedName": "??0CStandardMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CStandardMesh::m_d3dNormalBufferView"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CSkinnedMesh::m_d3dBoneWeightBufferView' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 599,
+                  "startColumn": 15,
+                  "endLine": 599,
+                  "endColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CSkinnedMesh::{ctor}",
+                  "decoratedName": "??0CSkinnedMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CSkinnedMesh::m_d3dBoneWeightBufferView"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CSkinnedMesh::m_ppstrSkinningBoneNames' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 599,
+                  "startColumn": 15,
+                  "endLine": 599,
+                  "endColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CSkinnedMesh::{ctor}",
+                  "decoratedName": "??0CSkinnedMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CSkinnedMesh::m_ppstrSkinningBoneNames"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CSkinnedMesh::m_d3dBoneIndexBufferView' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+                },
+                "region": {
+                  "startLine": 599,
+                  "startColumn": 15,
+                  "endLine": 599,
+                  "endColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CSkinnedMesh::{ctor}",
+                  "decoratedName": "??0CSkinnedMesh@@QEAA@PEAUID3D12Device@@PEAUID3D12GraphicsCommandList@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CSkinnedMesh::m_d3dBoneIndexBufferView"
+          }
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.35.32216.1",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "7dae60d601d769d238f2551fd9a15c1e3559d630ce4edc67fd6e5956f6bab88a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Mesh.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "263779653286d515ddc91d3c165258b783bbf49cb8d8dd64ace2c9bce42ea14b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/stdafx.h"
+          },
+          "hashes": {
+            "sha-256": "0ecc9016e414f4482b743c9268263c1d718b4bf248bd0fbb594281c89a094adb"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/object.h"
+          },
+          "hashes": {
+            "sha-256": "4288717dcbb43d49d15ee94a874dc6afc4e0d020a17a5bedd0b0b384ea211174"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/camera.h"
+          },
+          "hashes": {
+            "sha-256": "457d38d0d042a5c273d0e5450d0cc61a085e418a40315b3e430d9d8ab2a4fd7e"
+          }
+        }
+      ]
+    }
+  ]
+}

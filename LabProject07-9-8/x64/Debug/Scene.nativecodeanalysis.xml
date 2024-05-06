@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\</FILEPATH>
+      <FILENAME>Scene.cpp</FILENAME>
+      <LINE>20</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>'CScene::m_xmf4GlobalAmbient' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6).</DESCRIPTION>
+    <FUNCTION>CScene::{ctor}</FUNCTION>
+    <DECORATED>??0CScene@@QEAA@XZ</DECORATED>
+    <FUNCLINE>20</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CScene::m_xmf4GlobalAmbient</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\</FILEPATH>
+      <FILENAME>Scene.cpp</FILENAME>
+      <LINE>450</LINE>
+      <COLUMN>152</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>산술 오버플로: 4 바이트 값의 '*' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '*' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2).</DESCRIPTION>
+    <FUNCTION>CScene::CreateCbvSrvDescriptorHeaps</FUNCTION>
+    <DECORATED>?CreateCbvSrvDescriptorHeaps@CScene@@SAXPEAUID3D12Device@@HH@Z</DECORATED>
+    <FUNCLINE>439</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\</FILEPATH>
+      <FILENAME>Scene.cpp</FILENAME>
+      <LINE>451</LINE>
+      <COLUMN>152</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>산술 오버플로: 4 바이트 값의 '*' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '*' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2).</DESCRIPTION>
+    <FUNCTION>CScene::CreateCbvSrvDescriptorHeaps</FUNCTION>
+    <DECORATED>?CreateCbvSrvDescriptorHeaps@CScene@@SAXPEAUID3D12Device@@HH@Z</DECORATED>
+    <FUNCLINE>439</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\</FILEPATH>
+      <FILENAME>Scene.cpp</FILENAME>
+      <LINE>462</LINE>
+      <COLUMN>62</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>산술 오버플로: 4 바이트 값의 '*' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '*' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2).</DESCRIPTION>
+    <FUNCTION>CScene::CreateConstantBufferViews</FUNCTION>
+    <DECORATED>?CreateConstantBufferViews@CScene@@SA?AUD3D12_GPU_DESCRIPTOR_HANDLE@@PEAUID3D12Device@@HPEAUID3D12Resource@@I@Z</DECORATED>
+    <FUNCLINE>454</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\</FILEPATH>
+      <FILENAME>Scene.cpp</FILENAME>
+      <LINE>472</LINE>
+      <COLUMN>75</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>산술 오버플로: 4 바이트 값의 '*' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '*' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2).</DESCRIPTION>
+    <FUNCTION>CScene::CreateShaderResourceViews</FUNCTION>
+    <DECORATED>?CreateShaderResourceViews@CScene@@SAXPEAUID3D12Device@@PEAVCTexture@@II@Z</DECORATED>
+    <FUNCLINE>470</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\</FILEPATH>
+      <FILENAME>Scene.cpp</FILENAME>
+      <LINE>473</LINE>
+      <COLUMN>75</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>산술 오버플로: 4 바이트 값의 '*' 연산자를 사용한 다음 결과를 8 바이트 값에 캐스트합니다. 오버플로를 방지하려면 '*' 연산자를 호출하기 전에 더 광범위한 형식에 값을 캐스트합니다(io.2).</DESCRIPTION>
+    <FUNCTION>CScene::CreateShaderResourceViews</FUNCTION>
+    <DECORATED>?CreateShaderResourceViews@CScene@@SAXPEAUID3D12Device@@PEAVCTexture@@II@Z</DECORATED>
+    <FUNCLINE>470</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
