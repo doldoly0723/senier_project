@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+Ôªø//-----------------------------------------------------------------------------
 // File: CGameObject.cpp
 //-----------------------------------------------------------------------------
 
@@ -519,7 +519,7 @@ CAnimationController::CAnimationController(ID3D12Device *pd3dDevice, ID3D12Graph
 	m_ppd3dcbSkinningBoneTransforms = new ID3D12Resource*[m_nSkinnedMeshes];
 	m_ppcbxmf4x4MappedSkinningBoneTransforms = new XMFLOAT4X4*[m_nSkinnedMeshes];
 
-	UINT ncbElementBytes = (((sizeof(XMFLOAT4X4) * SKINNED_ANIMATION_BONES) + 255) & ~255); //256¿« πËºˆ
+	UINT ncbElementBytes = (((sizeof(XMFLOAT4X4) * SKINNED_ANIMATION_BONES) + 255) & ~255); //256Ïùò Î∞∞Ïàò
 	for (int i = 0; i < m_nSkinnedMeshes; i++)
 	{
 		m_ppd3dcbSkinningBoneTransforms[i] = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbElementBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
@@ -758,7 +758,7 @@ void CGameObject::SetChild(CGameObject *pChild, bool bReferenceUpdate)
 
 void CGameObject::SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGameObject)
 {
-	//// ∫Œ∏ ø¿∫Í¡ß∆Æ¿« BoundingOrientedBox∏¶ ¿⁄Ωƒ ø¿∫Í¡ß∆Æø° º≥¡§
+	//// Î∂ÄÎ™® Ïò§Î∏åÏ†ùÌä∏Ïùò BoundingOrientedBoxÎ•º ÏûêÏãù Ïò§Î∏åÏ†ùÌä∏Ïóê ÏÑ§Ï†ï
 	//pGameObject->m_xmOOBB = xmOOBB;
 
 	if (pGameObject->m_pSibling)
@@ -768,28 +768,28 @@ void CGameObject::SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGame
 
 	SetExtents(xmOOBB, pGameObject->m_xmOOBB);
 
-	//	// ∫Œ∏ ø¿∫Í¡ß∆Æ¿« ∫Ø»Ø¿ª ∞Ì∑¡«œø© ¿⁄Ωƒ ø¿∫Í¡ß∆Æ¿« BoundingOrientedBox º≥¡§
+	//	// Î∂ÄÎ™® Ïò§Î∏åÏ†ùÌä∏Ïùò Î≥ÄÌôòÏùÑ Í≥†Î†§ÌïòÏó¨ ÏûêÏãù Ïò§Î∏åÏ†ùÌä∏Ïùò BoundingOrientedBox ÏÑ§Ï†ï
 	//XMVECTOR vCenter = XMLoadFloat3(&xmOOBB.Center);
 	//XMVECTOR vExtents = XMLoadFloat3(&xmOOBB.Extents);
 	//XMVECTOR vOrientation = XMLoadFloat4(&xmOOBB.Orientation);
 
-	//// ∫Œ∏ ø¿∫Í¡ß∆Æ¿« ∫Ø»Ø ¿˚øÎ
+	//// Î∂ÄÎ™® Ïò§Î∏åÏ†ùÌä∏Ïùò Î≥ÄÌôò Ï†ÅÏö©
 	//XMVECTOR vParentPosition = XMLoadFloat3(&GetPosition());
 	//// XMVECTOR vParentScale = XMLoadFloat3(&GetScale());
 
 	//vCenter = XMVectorAdd(vCenter, vParentPosition);
 	//// vExtents = XMVectorMultiply(vExtents, vParentScale);
 
-	//// ¿⁄Ωƒ ø¿∫Í¡ß∆Æ¿« BoundingOrientedBox º≥¡§
-	//pGameObject->m_xmOOBB.Center = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f); // √ ±‚»≠
-	//pGameObject->m_xmOOBB.Extents = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f); // √ ±‚»≠
-	//pGameObject->m_xmOOBB.Orientation = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f); // √ ±‚»≠
+	//// ÏûêÏãù Ïò§Î∏åÏ†ùÌä∏Ïùò BoundingOrientedBox ÏÑ§Ï†ï
+	//pGameObject->m_xmOOBB.Center = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f); // Ï¥àÍ∏∞Ìôî
+	//pGameObject->m_xmOOBB.Extents = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f); // Ï¥àÍ∏∞Ìôî
+	//pGameObject->m_xmOOBB.Orientation = DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f); // Ï¥àÍ∏∞Ìôî
 
 	//XMStoreFloat3(&pGameObject->m_xmOOBB.Center, vCenter);
 	//XMStoreFloat3(&pGameObject->m_xmOOBB.Extents, vExtents);
 	//XMStoreFloat4(&pGameObject->m_xmOOBB.Orientation, vOrientation);
 
-	//// «ˆ¿Á ø¿∫Í¡ß∆Æ∞° ∫Œ∏ ø¿∫Í¡ß∆Æ∂Û∏È ¿⁄Ωƒ ø¿∫Í¡ß∆Æø° ¥Î«ÿ ¿Á±Õ¿˚¿∏∑Œ º≥¡§
+	//// ÌòÑÏû¨ Ïò§Î∏åÏ†ùÌä∏Í∞Ä Î∂ÄÎ™® Ïò§Î∏åÏ†ùÌä∏ÎùºÎ©¥ ÏûêÏãù Ïò§Î∏åÏ†ùÌä∏Ïóê ÎåÄÌï¥ Ïû¨Í∑ÄÏ†ÅÏúºÎ°ú ÏÑ§Ï†ï
 	//if (pGameObject->m_pSibling)
 	//	pGameObject->m_pSibling->SetBoundingBox(pGameObject->m_xmOOBB, pGameObject->m_pSibling);
 	//if (pGameObject->m_pChild)
@@ -808,18 +808,18 @@ void CGameObject::SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& 
 
 void CGameObject::UpdateBoundingBox()
 {
-	// OOBB¿« ¡ﬂΩ…¿ª ø˘µÂ¡¬«•∑Œ ¿Ãµø
+	// OOBBÏùò Ï§ëÏã¨ÏùÑ ÏõîÎìúÏ¢åÌëúÎ°ú Ïù¥Îèô
 	XMFLOAT3 Pos = GetPosition();
 	m_xmOOBB.Center = Pos;
 }
 
 void CGameObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox* xmOOBB)
 {
-	//// BoundingOrientedBox¿« ∏º≠∏Æ ¡¬«•∏¶ ∞°¡Æø¿±‚
+	//// BoundingOrientedBoxÏùò Î™®ÏÑúÎ¶¨ Ï¢åÌëúÎ•º Í∞ÄÏ†∏Ïò§Í∏∞
 	XMFLOAT3 corners[8];
 	xmOOBB->GetCorners(corners);
 
-	// ∏∏£∞⁄¥Ÿ.
+	// Î™®Î•¥Í≤†Îã§.
 	XMFLOAT3 vertices[] = {
 	{ corners[0] }, { corners[1] }, { corners[1] }, { corners[2] }, { corners[2] }, { corners[3] }, { corners[3] }, { corners[0] },
 	{ corners[4] }, { corners[5] }, { corners[5] }, { corners[6] }, { corners[6] }, { corners[7] }, { corners[7] }, { corners[4] },

@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+Ôªø//-----------------------------------------------------------------------------
 // File: Scene.h
 //-----------------------------------------------------------------------------
 
@@ -120,10 +120,10 @@ public:
 	ID3D12Resource						*m_pd3dcbLights = NULL;
 	LIGHTS								*m_pcbMappedLights = NULL;
 
-	// √Êµπ√≥∏Æ
+	// Ï∂©ÎèåÏ≤òÎ¶¨
 	virtual void CheckPlayerByObjectCollisions();
 	virtual void CheckBulletByObjectCollisions();
 
-	// object ≥÷¿ª ∏ÆΩ∫∆Æ
+	// object ÎÑ£ÏùÑ Î¶¨Ïä§Ìä∏
 	std::list<CGameObject*>		m_lpGameObjects;
 };

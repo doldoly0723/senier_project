@@ -1,4 +1,4 @@
-//------------------------------------------------------- ----------------------
+ï»¿//------------------------------------------------------- ----------------------
 // File: Object.h
 //-----------------------------------------------------------------------------
 
@@ -369,7 +369,7 @@ public:
 
 	CAnimationController*			m_pSkinnedAnimationController = NULL;
 
-	// ÃÑ¾Ë 
+	// ì´ì•Œ 
 	bool							m_bActive = false;
 
 	XMFLOAT3						m_xmf3RotationAxis = XMFLOAT3(0.0f, 1.0f, 0.0f);
@@ -380,8 +380,8 @@ public:
 	void SetActive(bool bActive) { m_bActive = bActive; }
 	//
 
-	// Ãæµ¹Ã³¸®
-	// Á¤È®ÇÑ Ãæµ¹ °¨Áö¸¦ À§ÇØ AABB°¡ ¾Æ´Ñ OOBB»ç¿ë
+	// ì¶©ëŒì²˜ë¦¬
+	// ì •í™•í•œ ì¶©ëŒ ê°ì§€ë¥¼ ìœ„í•´ AABBê°€ ì•„ë‹Œ OOBBì‚¬ìš©
 	// AABB -> BoundingBox | OOBB->BoundingOrientedBox
 	BoundingOrientedBox				m_xmOOBB = BoundingOrientedBox();
 	void SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGameObject);	

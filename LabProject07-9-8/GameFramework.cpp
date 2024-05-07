@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------------
 // File: CGameFramework.cpp
 //-----------------------------------------------------------------------------
 
@@ -311,6 +311,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			::ReleaseCapture();
 			m_pPlayer->SetFire(false);
 			((CTerrainPlayer*)m_pPlayer)->bLeftMouseButtonDown = false;
+			((CTerrainPlayer*)m_pPlayer)->BulletSpread = 0.0;
 			break;
 		case WM_RBUTTONUP:
 			m_pCamera->SetOffset(normalCameraPos);

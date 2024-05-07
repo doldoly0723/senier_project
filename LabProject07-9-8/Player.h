@@ -118,6 +118,8 @@ public:
 	void SetMovingDirection(XMFLOAT3& xmf3MovingDirection) { m_xmf3MovingDirection = Vector3::Normalize(xmf3MovingDirection); }
 	// 연속적인 총알 발사를 위해 추가
 	bool bLeftMouseButtonDown = false;
+	// 탄 퍼짐
+	float BulletSpread = 0.0;
 
 	void SetZoom(bool bEnable) { bZoom = bEnable; }
 	void SetMove(bool bEnable) { bMove = bEnable; }

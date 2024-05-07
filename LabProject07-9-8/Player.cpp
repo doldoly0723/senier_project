@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------------
 // File: CPlayer.cpp
 //-----------------------------------------------------------------------------
 
@@ -665,6 +665,14 @@ void CTerrainPlayer::FireBullet()
 
 	if (pBulletObject)
 	{
+		random_device rd;
+		mt19937 gen(rd());
+
+		normal_distribution<float> dist(0.0f, 1.0f); // 평균 0, 표준편차 1
+		// 일반적으로 -3 ~ 3 의 값을 가짐
+		float value = dist(gen) / 30;
+		std::cout << value << std::endl;
+
 		XMFLOAT3 xmf3Position = GetPosition();
 		XMFLOAT3 xmf3Direction = GetLook();
 		XMFLOAT3 xmf3Right = GetRight();
@@ -678,6 +686,14 @@ void CTerrainPlayer::FireBullet()
 		pBulletObject->m_xmf3Look = m_xmf3Look;
 
 		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
+
+		// 진짜 간단한 탄퍼짐
+		// 가중치에 따라서 더 퍼지도록 구현해야함
+		// 그래도 초탄은 맞긴해야하니까 잘못된 코드긴함
+		xmf3Direction.x = xmf3Direction.x + value;
+		xmf3Direction.y = xmf3Direction.y + value;
+		xmf3Direction.z = xmf3Direction.z + value;
+
 		// 발사 위치
 		xmf3FirePosition.x = xmf3Position.x+2;
 		xmf3FirePosition.y = xmf3Position.y + 12.2;

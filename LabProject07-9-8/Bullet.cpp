@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Bullet.h"
 
 CBulletObject::CBulletObject(float fEffectiveRange)
@@ -44,7 +44,7 @@ void CBulletObject::Animate(float fElapsedTime)
 	//std::cout << "fElapsedTime : " << fElapsedTime << std::endl;
 	//std::cout << "fDistance : " << fDistance << " m_fMovingDistance : " << m_fMovingDistance << std::endl;
 
-	// ¿©±â¼­ ¹«Á¶°Ç ÀüÁøÇÏ°í ÀÖÀ½
+	// ì—¬ê¸°ì„œ ë¬´ì¡°ê±´ ì „ì§„í•˜ê³  ìˆìŒ
 	// Move(DIR_FORWARD, fDistance);
 	Move(m_xmf3MovingDirection, fDistance);
 
@@ -61,10 +61,10 @@ void CBulletObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* 
 {
 	//if (m_pMesh)
 //{
-//	// ÃÑ¾Ë °´Ã¼ÀÇ ¿ùµå Çà·Ä ¾÷µ¥ÀÌÆ®
+//	// ì´ì•Œ ê°ì²´ì˜ ì›”ë“œ í–‰ë ¬ ì—…ë°ì´íŠ¸
 //	UpdateShaderVariable(pd3dCommandList, &m_xmf4x4World);
 
-//	// ÃÑ¾Ë °´Ã¼ÀÇ ¸ÓÆ¼¸®¾ó ·»´õ¸µ
+//	// ì´ì•Œ ê°ì²´ì˜ ë¨¸í‹°ë¦¬ì–¼ ë Œë”ë§
 //	if (m_nMaterials > 0)
 //	{
 //		for (int i = 0; i < m_nMaterials; i++)
@@ -80,7 +80,7 @@ void CBulletObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* 
 //	}
 //}
 
-//// ÇüÁ¦ °´Ã¼¿Í ÀÚ½Ä °´Ã¼ÀÇ ·»´õ¸µ È£Ãâ
+//// í˜•ì œ ê°ì²´ì™€ ìì‹ ê°ì²´ì˜ ë Œë”ë§ í˜¸ì¶œ
 //if (m_pSibling) m_pSibling->Render(pd3dCommandList, pCamera);
 //if (m_pChild) m_pChild->Render(pd3dCommandList, pCamera);
 	CGameObject::Render(pd3dCommandList, pCamera);
@@ -128,17 +128,17 @@ void CBulletObject::Reset()
 
 void CBulletObject::ReflectBullet(const XMFLOAT3& surfaceNormal)
 {
-	// surfaceNormalÀº Ãæµ¹ÇÑ °´Ã¼ÀÇ Ç¥¸é ¹ı¼±ÀÔ´Ï´Ù.
+	// surfaceNormalì€ ì¶©ëŒí•œ ê°ì²´ì˜ í‘œë©´ ë²•ì„ ì…ë‹ˆë‹¤.
 
-	// ÃÑ¾ËÀÇ ¹æÇâÀ» ¹İ»ç½ÃÅµ´Ï´Ù.
-	// ¹æÇâ º¤ÅÍ¸¦ surfaceNormal¿¡ ´ëÇÑ ¹İ»ç·Î °»½ÅÇÕ´Ï´Ù.
+	// ì´ì•Œì˜ ë°©í–¥ì„ ë°˜ì‚¬ì‹œí‚µë‹ˆë‹¤.
+	// ë°©í–¥ ë²¡í„°ë¥¼ surfaceNormalì— ëŒ€í•œ ë°˜ì‚¬ë¡œ ê°±ì‹ í•©ë‹ˆë‹¤.
 	XMVECTOR incidentDirection = XMLoadFloat3(&m_xmf3MovingDirection);
 	XMVECTOR normal = XMLoadFloat3(&surfaceNormal);
 
-	// ¹İ»ç º¤ÅÍ °è»ê
+	// ë°˜ì‚¬ ë²¡í„° ê³„ì‚°
 	XMVECTOR reflectedDirection = XMVector3Reflect(incidentDirection, normal);
 
 	// Rotate(10.0f, 10.0f, 0.0f);
-	// ¹İ»ç º¤ÅÍ¸¦ ÃÑ¾ËÀÇ ¹æÇâÀ¸·Î ¼³Á¤
+	// ë°˜ì‚¬ ë²¡í„°ë¥¼ ì´ì•Œì˜ ë°©í–¥ìœ¼ë¡œ ì„¤ì •
 	XMStoreFloat3(&m_xmf3MovingDirection, reflectedDirection);
 }
