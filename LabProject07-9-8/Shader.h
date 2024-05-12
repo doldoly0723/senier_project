@@ -214,3 +214,18 @@ public:
 
 	ID3DBlob* m_pd3dComputeShaderBlob = NULL;
 };
+
+//////////////////////////////////////////////////////////////////
+
+class CUIShader : public CShader
+{
+public:
+	CUIShader();
+	virtual ~CUIShader();
+
+	virtual D3D12_DEPTH_STENCIL_DESC CreateDepthStencilState();
+	virtual D3D12_BLEND_DESC CreateBlendState();
+
+	virtual D3D12_SHADER_BYTECODE CreateVertexShader();
+	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
+};
