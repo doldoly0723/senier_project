@@ -294,8 +294,11 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 		case WM_LBUTTONDOWN:
 			::SetCapture(hWnd);
 			::GetCursorPos(&m_ptOldCursorPos);
-			m_pPlayer->SetFire(true);
-			((CTerrainPlayer*)m_pPlayer)->bLeftMouseButtonDown = true;
+			if (m_pPlayer->GetZoom())
+			{
+				m_pPlayer->SetFire(true);
+				((CTerrainPlayer*)m_pPlayer)->bLeftMouseButtonDown = true;
+			}
 
 			// ((CTerrainPlayer*)m_pPlayer)->FireBullet();
 			break;
