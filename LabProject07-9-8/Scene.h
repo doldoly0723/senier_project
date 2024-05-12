@@ -64,7 +64,8 @@ public:
 	void ReleaseUploadBuffers();
 
 	CPlayer								*m_pPlayer = NULL;
-
+	
+	CUIShader							* m_pCUIShader;
 protected:
 	ID3D12RootSignature					*m_pd3dGraphicsRootSignature = NULL;
 
@@ -126,4 +127,6 @@ public:
 
 	// object 넣을 리스트
 	std::list<CGameObject*>		m_lpGameObjects;
+
+	CUI									*m_pUI = NULL;
 };

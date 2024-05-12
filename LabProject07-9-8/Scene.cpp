@@ -92,6 +92,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	BuildDefaultLightsAndMaterials();
 
 	m_pSkyBox = new CSkyBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	m_pUI = new CUI(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
 	XMFLOAT3 xmf3Scale(8.0f, 0.0f, 8.0f);
 	//XMFLOAT4 xmf4Color(0.0f, 0.0f, 0.0f, 0.0f);
@@ -147,8 +148,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[i]);
 	}
 
-
-
+	
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
 
@@ -181,6 +181,7 @@ void CScene::ReleaseObjects()
 
 	if (m_pTerrain) delete m_pTerrain;
 	if (m_pSkyBox) delete m_pSkyBox;
+
 
 	// ¿©±â¼­µµ Á¦°Å ÇØÁà¾ßÇÔ
 	for (int i = 0; i < MAX_BULLETS; i++)
@@ -608,9 +609,12 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 	D3D12_GPU_VIRTUAL_ADDRESS d3dcbLightsGpuVirtualAddress = m_pd3dcbLights->GetGPUVirtualAddress();
 	pd3dCommandList->SetGraphicsRootConstantBufferView(2, d3dcbLightsGpuVirtualAddress); //Lights
-
+	
 	if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
 	if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
+	
+	/*XMFLOAT2 xmpos = { 10, 10 };
+	m_pTextureToViewportShader->Render(pd3dCommandList, pCamera, 100.0f,xmpos) ;*/
 
 	// ÃÑ¾Ë ·»´õ¸µ
 	for (int i = 0; i < MAX_BULLETS; i++)
@@ -643,5 +647,8 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		elm->UpdateTransform(NULL);
 		elm->Render(pd3dCommandList, pCamera);
 	}
+
+	if(m_pUI)
+		m_pUI->Render(pd3dCommandList, pCamera);
 }
 

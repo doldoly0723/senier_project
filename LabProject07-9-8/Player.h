@@ -120,6 +120,7 @@ public:
 	bool bLeftMouseButtonDown = false;
 
 	void SetZoom(bool bEnable) { bZoom = bEnable; }
+	bool GetZoom() { return bZoom; }
 	void SetMove(bool bEnable) { bMove = bEnable; }
 	void SetFire(bool bEnable) { bFire = bEnable; }
 	
