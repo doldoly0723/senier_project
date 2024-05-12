@@ -113,11 +113,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
 	if (pAngrybotModel) delete pAngrybotModel;
 
-	CLoadedModelInfo* pMonsterModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Character_Swat_Guy.bin", NULL);
+	CLoadedModelInfo* pMonsterModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
 	m_ppHierarchicalGameObjects[1] = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pMonsterModel, 1);
-	m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-	m_ppHierarchicalGameObjects[1]->SetPosition(230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 600.0f);
-	m_ppHierarchicalGameObjects[1]->SetScale(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
+	m_ppHierarchicalGameObjects[1]->SetPosition(230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 630.0f);
+	m_ppHierarchicalGameObjects[1]->SetScale(30.0f, 30.0f, 30.0f);
 	m_ppHierarchicalGameObjects[1]->SetBoundingBox(m_ppHierarchicalGameObjects[1]->m_xmOOBB, m_ppHierarchicalGameObjects[1]);
 	m_ppHierarchicalGameObjects[1]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
 	m_pBoundingBox[1] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[1]->m_xmOOBB);
@@ -135,11 +135,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (pbox) delete pbox;
 
-	CLoadedModelInfo* pbox1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
+	CLoadedModelInfo* pbox1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
 	m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox1, 1);
 	//m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
 	m_ppHierarchicalGameObjects[3]->SetPosition(350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
-	m_ppHierarchicalGameObjects[3]->SetScale(30.0f, 30.0f, 30.0f);
+	m_ppHierarchicalGameObjects[3]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
 	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
 	m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
