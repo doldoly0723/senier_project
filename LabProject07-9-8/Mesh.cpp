@@ -762,7 +762,7 @@ void CSkinnedMesh::OnPreRender(ID3D12GraphicsCommandList *pd3dCommandList, void 
 	pd3dCommandList->IASetVertexBuffers(m_nSlot, 7, pVertexBufferViews);
 }
 
-<<<<<<< HEAD
+
 /// ////////////////////////////////////////////////////////////////////////////////////////////
 CAimingPointMesh::CAimingPointMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fSize) : CMesh(pd3dDevice, pd3dCommandList)
 {
@@ -782,7 +782,8 @@ CAimingPointMesh::CAimingPointMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	};
 
 	// Create a vertex buffer for the mesh
-=======
+}
+
 CBoundingBoxMesh::CBoundingBoxMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox& xmOOBB) : CMesh(pd3dDevice, pd3dCommandList)
 {
 	m_nVertices = 24;
@@ -834,7 +835,7 @@ CBoundingBoxMesh::CBoundingBoxMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	m_pxmf3Positions[22] = corners[3];
 	m_pxmf3Positions[23] = corners[7];
 
->>>>>>> Coliision2
+
 	m_pd3dPositionBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, m_pxmf3Positions, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
 
 	m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();
@@ -842,15 +843,15 @@ CBoundingBoxMesh::CBoundingBoxMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	m_d3dPositionBufferView.SizeInBytes = sizeof(XMFLOAT3) * m_nVertices;
 }
 
-<<<<<<< HEAD
+
 CAimingPointMesh::~CAimingPointMesh()
 {
 	if (m_pd3dPositionBuffer) m_pd3dPositionBuffer->Release();
 	if (m_pxmf3Positions) delete[] m_pxmf3Positions;
 }
 
-=======
+
 CBoundingBoxMesh::~CBoundingBoxMesh()
 {
 }
->>>>>>> Coliision2
+

@@ -128,10 +128,10 @@ public:
 	// object 넣을 리스트
 	std::list<CGameObject*>		m_lpGameObjects;
 
-<<<<<<< HEAD
+
 	CUI									*m_pUI = NULL;
-=======
+
 	std::list<CBoundingBox*>    m_lpBoundingBoxs;
 	CBoundingBox*				m_pBoundingBox[4];
->>>>>>> Coliision2
+
 };

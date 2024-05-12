@@ -186,15 +186,12 @@ void CScene::ReleaseObjects()
 	if (m_pTerrain) delete m_pTerrain;
 	if (m_pSkyBox) delete m_pSkyBox;
 
-<<<<<<< HEAD
-
-	// ¿©±â¼­µµ Á¦°Å ÇØÁà¾ßÇÔ
-=======
+	// OBB 제거
 	for (int i = 0; i < 4; i++)
 		delete m_pBoundingBox[i];
 
 	// 여기 고쳐야함
->>>>>>> Coliision2
+
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		// 흠..

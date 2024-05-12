@@ -1845,7 +1845,7 @@ CSwatMan::CSwatMan(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dComm
 CSwatMan::~CSwatMan()
 {
 }
-<<<<<<< HEAD
+
 //////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1880,7 +1880,9 @@ void CUI::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
 {
 	XMFLOAT3 xmf3CameraPos = pCamera->GetPosition();
 	SetPosition(xmf3CameraPos.x, xmf3CameraPos.y, xmf3CameraPos.z);
-=======
+
+	CGameObject::Render(pd3dCommandList, pCamera);
+}
 
 CBoundingBox::CBoundingBox(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, BoundingOrientedBox& mxOOBB) : CGameObject(1)
 {
@@ -1913,7 +1915,6 @@ void CBoundingBox::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* p
 {
 	//XMFLOAT3 xmf3CameraPos = pCamera->GetPosition();
 	//SetPosition(xmf3CameraPos.x, xmf3CameraPos.y, xmf3CameraPos.z);
->>>>>>> Coliision2
 
 	CGameObject::Render(pd3dCommandList, pCamera);
 }

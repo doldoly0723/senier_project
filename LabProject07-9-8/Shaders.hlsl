@@ -245,7 +245,7 @@ float4 PSSkyBox(VS_SKYBOX_CUBEMAP_OUTPUT input) : SV_TARGET
 	return(cColor);
 }
 
-<<<<<<< HEAD
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct VS_TEXTURED_OUTPUT
 {
@@ -258,13 +258,21 @@ VS_TEXTURED_OUTPUT VSTextureToViewport(uint nVertexID : SV_VertexID)
 	VS_TEXTURED_OUTPUT output = (VS_TEXTURED_OUTPUT)0;
 
 	float size = 0.05f;
-	if (nVertexID == 0) { output.position = float4(-size/1.7, +size, 0.0f, 1.0f); output.uv = float2(0.0f, 0.0f); }
-	if (nVertexID == 1) { output.position = float4(+size/1.7, +size, 0.0f, 1.0f); output.uv = float2(1.0f, 0.0f); }
-	if (nVertexID == 2) { output.position = float4(+size/1.7, -size, 0.0f, 1.0f); output.uv = float2(1.0f, 1.0f); }
-	if (nVertexID == 3) { output.position = float4(-size/1.7, +size, 0.0f, 1.0f); output.uv = float2(0.0f, 0.0f); }
-	if (nVertexID == 4) { output.position = float4(+size/1.7, -size, 0.0f, 1.0f); output.uv = float2(1.0f, 1.0f); }
-	if (nVertexID == 5) { output.position = float4(-size/1.7, -size, 0.0f, 1.0f); output.uv = float2(0.0f, 1.0f); }
-=======
+	if (nVertexID == 0) { output.position = float4(-size / 1.7, +size, 0.0f, 1.0f); output.uv = float2(0.0f, 0.0f); }
+	if (nVertexID == 1) { output.position = float4(+size / 1.7, +size, 0.0f, 1.0f); output.uv = float2(1.0f, 0.0f); }
+	if (nVertexID == 2) { output.position = float4(+size / 1.7, -size, 0.0f, 1.0f); output.uv = float2(1.0f, 1.0f); }
+	if (nVertexID == 3) { output.position = float4(-size / 1.7, +size, 0.0f, 1.0f); output.uv = float2(0.0f, 0.0f); }
+	if (nVertexID == 4) { output.position = float4(+size / 1.7, -size, 0.0f, 1.0f); output.uv = float2(1.0f, 1.0f); }
+	if (nVertexID == 5) { output.position = float4(-size / 1.7, -size, 0.0f, 1.0f); output.uv = float2(0.0f, 1.0f); }
+
+	return(output);
+}
+
+float4 PSTextureToViewport(VS_TEXTURED_OUTPUT input) : SV_Target
+{
+	float4 color = gtxtAlbedoTexture.Sample(gssWrap, input.uv);
+	return float4(color.rgb, color.a); // 이제 알파 값이 적절하게 처리됩니다.
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 struct VS_BOUNDINGBOX_INPUT
@@ -284,21 +292,14 @@ VS_BOUNDINGBOX_OUTPUT VSBoundingBox(VS_BOUNDINGBOX_INPUT input)
 
 	output.position = mul(mul(mul(float4(input.position, 1.0f), gmtxGameObject), gmtxView), gmtxProjection);
 	output.positionL = input.position;
->>>>>>> Coliision2
+
 
 	return(output);
 }
 
-<<<<<<< HEAD
-float4 PSTextureToViewport(VS_TEXTURED_OUTPUT input) : SV_Target
-{
-    float4 color = gtxtAlbedoTexture.Sample(gssWrap, input.uv);
-    return float4(color.rgb, color.a); // 이제 알파 값이 적절하게 처리됩니다.
-}
-=======
 float4 PSBoundingBox(VS_BOUNDINGBOX_OUTPUT input) : SV_TARGET
 {
 	// return (float4(BoundingColor, 1.0f));
 	return (float4(1.0f, 0.0f, 0.0f, 1.0f));
 }
->>>>>>> Coliision2
+
