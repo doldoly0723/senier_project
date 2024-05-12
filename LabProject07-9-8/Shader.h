@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+ï»¿//-----------------------------------------------------------------------------
 // File: Shader.h
 //-----------------------------------------------------------------------------
 
@@ -190,7 +190,7 @@ public:
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 4.28 Ãß°¡ / ComputeShader Ãß°¡
+// 4.28 ì¶”ê°€ / ComputeShader ì¶”ê°€
 class ComputeShader : public CShader {
 public:
 	ComputeShader() { }
@@ -215,6 +215,7 @@ public:
 	ID3DBlob* m_pd3dComputeShaderBlob = NULL;
 };
 
+<<<<<<< HEAD
 //////////////////////////////////////////////////////////////////
 
 class CUIShader : public CShader
@@ -229,3 +230,26 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreateVertexShader();
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 };
+=======
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+class CBoundingBoxShader : public CShader
+{
+public:
+	CBoundingBoxShader();
+	virtual ~CBoundingBoxShader();
+
+	virtual D3D12_INPUT_LAYOUT_DESC CreateInputLayout();
+	virtual D3D12_DEPTH_STENCIL_DESC CreateDepthStencilState();
+
+	virtual D3D12_SHADER_BYTECODE CreateVertexShader();
+	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
+
+	virtual D3D12_RASTERIZER_DESC CreateRasterizerState();
+
+	virtual void CreateShader(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature);
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+>>>>>>> Coliision2

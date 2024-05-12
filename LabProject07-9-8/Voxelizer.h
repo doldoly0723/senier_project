@@ -1,4 +1,4 @@
-//#pragma once
+ï»¿//#pragma once
 //#include <cmath>
 //
 //#include "Mesh.h"
@@ -8,103 +8,103 @@
 //
 //class Voxelizer {
 //private:
-//    // Á¤Àû º¹¼¿ ¹öÆÛ, ¿¬±â º¹¼¿ ¹öÆÛ, ¿¬±â ÇÎ º¹¼¿ ¹öÆÛ, args ¹öÆÛ
+//    // ì •ì  ë³µì…€ ë²„í¼, ì—°ê¸° ë³µì…€ ë²„í¼, ì—°ê¸° í•‘ ë³µì…€ ë²„í¼, args ë²„í¼
 //    ComputeBuffer m_staticVoxelsBuffer, m_smokeVoxelsBuffer, m_smokePingVoxelsBuffer, m_argsBuffer;
 //
-//    // º¹¼¿È­ ÄÄÇ»Æ® ¼ÎÀÌ´õ
+//    // ë³µì…€í™” ì»´í“¨íŠ¸ ì…°ì´ë”
 //    ComputeShader m_voxelizeCompute;
 //
-//    // µğ¹ö±× º¹¼¿ ¸ÓÆ¼¸®¾ó
+//    // ë””ë²„ê·¸ ë³µì…€ ë¨¸í‹°ë¦¬ì–¼
 //    CMaterial m_debugVoxelMaterial;
 //
-//    // µğ¹ö±× ¹Ù¿îµù ¹Ú½º
+//    // ë””ë²„ê·¸ ë°”ìš´ë”© ë°•ìŠ¤
 //    BoundingBox m_debugBounds;
 //
-//    // º¹¼¿ ÇØ»óµµ
+//    // ë³µì…€ í•´ìƒë„
 //    int m_voxelsX, m_voxelsY, m_voxelsZ, m_totalVoxels;
 //
-//    // ¹İ°æ
+//    // ë°˜ê²½
 //    float m_radius;
 //
-//    // ¿¬¸· ½ÃÀÛÁ¡
+//    // ì—°ë§‰ ì‹œì‘ì 
 //    XMFLOAT3 m_smokeOrigin;
 //
 //public:
-//    // º¹¼¿È­ ¿µ¿ªÀÇ Å©±â
+//    // ë³µì…€í™” ì˜ì—­ì˜ í¬ê¸°
 //    XMFLOAT3 boundsExtent = XMFLOAT3(3, 3, 3);
 //
-//    // º¹¼¿ ÇÏ³ªÀÇ Å©±â
+//    // ë³µì…€ í•˜ë‚˜ì˜ í¬ê¸°
 //    float voxelSize = 0.25f;
 //
-//    // º¹¼¿È­ ´ë»ó ¿ÀºêÁ§Æ®
+//    // ë³µì…€í™” ëŒ€ìƒ ì˜¤ë¸Œì íŠ¸
 //    CGameObject objectsToVoxelize = NULL;
 //
-//    // ±³Â÷Á¡ ¹ÙÀÌ¾î½º
+//    // êµì°¨ì  ë°”ì´ì–´ìŠ¤
 //    [Range(0.0f, 2.0f)]
 //    float intersectionBias = 1.0f;
 //
-//    // µğ¹ö±×¿ë ¸Ş½¬
+//    // ë””ë²„ê·¸ìš© ë©”ì‰¬
 //    CMesh debugMesh;
 //
-//    // Á¤Àû º¹¼¿ µğ¹ö±× ¿©ºÎ
+//    // ì •ì  ë³µì…€ ë””ë²„ê·¸ ì—¬ë¶€
 //    bool debugStaticVoxels = false;
 //
-//    // ¿¬±â º¹¼¿ µğ¹ö±× ¿©ºÎ
+//    // ì—°ê¸° ë³µì…€ ë””ë²„ê·¸ ì—¬ë¶€
 //    bool debugSmokeVoxels = false;
 //
-//    // ¿§Áö º¹¼¿ µğ¹ö±× ¿©ºÎ
+//    // ì—£ì§€ ë³µì…€ ë””ë²„ê·¸ ì—¬ë¶€
 //    bool debugEdgeVoxels = false;
 //
-//    // °¡Àå Å« ¹İ°æ
+//    // ê°€ì¥ í° ë°˜ê²½
 //    XMFLOAT3 maxRadius = XMFLOAT3(1, 1, 1);
 //
-//    // ¿¬±â È®»ê ¼Óµµ
+//    // ì—°ê¸° í™•ì‚° ì†ë„
 //    [Range(0.01f, 5.0f)]
 //    float growthSpeed = 1.0f;
 //
-//    // ÃÖ´ë È®»ê ¹üÀ§
+//    // ìµœëŒ€ í™•ì‚° ë²”ìœ„
 //    [Range(0, 128)]
 //    int maxFillSteps = 16;
 //
-//    // Ã¤¿ì±â ¹İº¹ ¿©ºÎ
+//    // ì±„ìš°ê¸° ë°˜ë³µ ì—¬ë¶€
 //    bool iterateFill = false;
 //
-//    // »ó¼ö Ã¤¿ì±â ¿©ºÎ
+//    // ìƒìˆ˜ ì±„ìš°ê¸° ì—¬ë¶€
 //    bool constantFill = false;
 //
-//    // ¿¬±â º¹¼¿ ¹öÆÛ ¹İÈ¯ ÇÔ¼ö
+//    // ì—°ê¸° ë³µì…€ ë²„í¼ ë°˜í™˜ í•¨ìˆ˜
 //    ComputeBuffer GetSmokeVoxelBuffer();
 //
-//    // º¹¼¿ ÇØ»óµµ ¹İÈ¯ ÇÔ¼ö
+//    // ë³µì…€ í•´ìƒë„ ë°˜í™˜ í•¨ìˆ˜
 //    XMFLOAT3 GetVoxelResolution();
 //
-//    // º¹¼¿È­ ¿µ¿ª ¹İÈ¯ ÇÔ¼ö
+//    // ë³µì…€í™” ì˜ì—­ ë°˜í™˜ í•¨ìˆ˜
 //    XMFLOAT3 GetBoundsExtent();
 //
-//    // º¹¼¿ Å©±â ¹İÈ¯ ÇÔ¼ö
+//    // ë³µì…€ í¬ê¸° ë°˜í™˜ í•¨ìˆ˜
 //    float GetVoxelSize();
 //
-//    // ¿¬±â ¿øÁ¡ ¹İÈ¯ ÇÔ¼ö
+//    // ì—°ê¸° ì›ì  ë°˜í™˜ í•¨ìˆ˜
 //    XMFLOAT3 GetSmokeOrigin();
 //
-//    // ¿¬±â ¹İ°æ ¹İÈ¯ ÇÔ¼ö
+//    // ì—°ê¸° ë°˜ê²½ ë°˜í™˜ í•¨ìˆ˜
 //    XMFLOAT3 GetSmokeRadius();
 //
-//    // easing(???) ¹İÈ¯ ÇÔ¼ö
+//    // easing(???) ë°˜í™˜ í•¨ìˆ˜
 //    float GetEasing();
 //
-//    // ¿¬±â º¸ÀÌ°Ô ¼³Á¤
+//    // ì—°ê¸° ë³´ì´ê²Œ ì„¤ì •
 //    void OnEnable();
 //
-//    // Easing ÇÔ¼ö
+//    // Easing í•¨ìˆ˜
 //    float Easing(float x);
 //
-//    // ¾÷µ¥ÀÌÆ® ÇÔ¼ö
+//    // ì—…ë°ì´íŠ¸ í•¨ìˆ˜
 //    void Update();
 //
-//    // ¿¬±â ¾Èº¸ÀÌ°Ô ¼³Á¤
+//    // ì—°ê¸° ì•ˆë³´ì´ê²Œ ì„¤ì •
 //    void OnDisable();
 //
-//    // µğ¹ö±×¿ë ¹Ù¿îµù ¹Ú½º ±×¸®±â
+//    // ë””ë²„ê·¸ìš© ë°”ìš´ë”© ë°•ìŠ¤ ê·¸ë¦¬ê¸°
 //    void OnDrawGizmos();
 //};

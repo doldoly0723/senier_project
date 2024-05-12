@@ -1,49 +1,49 @@
-//#include "stdafx.h"
+ï»¿//#include "stdafx.h"
 //#include "Voxelizer.h"
 // 
-// floatÀÇ ¼Ò¼öÁ¡À» ¿Ã¸®°í intÇüÀ¸·Î º¯È¯
-// 04.16 Ãß°¡
+// floatì˜ ì†Œìˆ˜ì ì„ ì˜¬ë¦¬ê³  intí˜•ìœ¼ë¡œ ë³€í™˜
+// 04.16 ì¶”ê°€
 //int CeilToInt(float value) {
 //	return static_cast<int>(std::ceil(value));
 //}
 //
-//// ¿¬±â º¹¼¿ ¹öÆÛ ¹İÈ¯ ÇÔ¼ö
+//// ì—°ê¸° ë³µì…€ ë²„í¼ ë°˜í™˜ í•¨ìˆ˜
 //ComputeBuffer Voxelizer::GetSmokeVoxelBuffer()
 //{
 //    return m_smokeVoxelsBuffer;
 //}
 //
-//// º¹¼¿ ÇØ»óµµ ¹İÈ¯ ÇÔ¼ö
+//// ë³µì…€ í•´ìƒë„ ë°˜í™˜ í•¨ìˆ˜
 //XMFLOAT3 Voxelizer::GetVoxelResolution()
 //{
 //    return XMFLOAT3(m_voxelsX, m_voxelsY, m_voxelsZ);
 //}
 //
-//// º¹¼¿È­ ¿µ¿ª ¹İÈ¯ ÇÔ¼ö
+//// ë³µì…€í™” ì˜ì—­ ë°˜í™˜ í•¨ìˆ˜
 //XMFLOAT3 Voxelizer::GetBoundsExtent()
 //{
 //    return boundsExtent;
 //}
 //
-//// º¹¼¿ Å©±â ¹İÈ¯ ÇÔ¼ö
+//// ë³µì…€ í¬ê¸° ë°˜í™˜ í•¨ìˆ˜
 //float Voxelizer::GetVoxelSize()
 //{
 //    return voxelSize;
 //}
 //
-//// ¿¬±â ¿øÁ¡ ¹İÈ¯ ÇÔ¼ö
+//// ì—°ê¸° ì›ì  ë°˜í™˜ í•¨ìˆ˜
 //XMFLOAT3 Voxelizer::GetSmokeOrigin()
 //{
 //    return m_smokeOrigin;
 //}
 //
-//// ¿¬±â ¹İ°æ ¹İÈ¯ ÇÔ¼ö
+//// ì—°ê¸° ë°˜ê²½ ë°˜í™˜ í•¨ìˆ˜
 //XMFLOAT3 Voxelizer::GetSmokeRadius()
 //{
 //    return Vector3::Lerp(Vector3::ZeroFloat(), maxRadius, Easing(m_radius));
 //}
 //
-//// easing ¹İÈ¯ ÇÔ¼ö
+//// easing ë°˜í™˜ í•¨ìˆ˜
 //float Voxelizer::GetEasing()
 //{
 //    return Easing(m_radius);
@@ -51,7 +51,7 @@
 //
 //void Voxelizer::OnEnable()
 //{
-//    // ÃÊ±âÈ­ ¹× ¼³Á¤
+//    // ì´ˆê¸°í™” ë° ì„¤ì •
 //    CMaterial debugMaterial();
 //
 //    m_radius = 0.0f;
@@ -68,11 +68,11 @@
 //
 //    m_staticVoxelsBuffer = ComputeBuffer(m_totalVoxels, 4);
 //
-//    // Á¤Àû º¹¼¿ ¹öÆÛ ÃÊ±âÈ­
+//    // ì •ì  ë³µì…€ ë²„í¼ ì´ˆê¸°í™”
 //    m_voxelizeCompute.SetBuffer(0, "_Voxels", m_staticVoxelsBuffer);
 //    m_voxelizeCompute.Dispatch(0, CeilToInt(m_totalVoxels / 128.0f), 1, 1);
 //
-//    // È­¸éÀÇ º¹¼¿È­ »çÀü °è»ê
+//    // í™”ë©´ì˜ ë³µì…€í™” ì‚¬ì „ ê³„ì‚°
 //    ComputeBuffer verticesBuffer, trianglesBuffer;
 //    foreach(Transform child in objectsToVoxelize.GetComponentsInChildren<Transform>()) {
 //        MeshFilter meshFilter = child.gameObject.GetComponent<MeshFilter>();
@@ -102,11 +102,11 @@
 //        trianglesBuffer.Release();
 //    }
 //
-//    // ¿¬±â º¹¼¿ ¹öÆÛ ÃÊ±âÈ­
+//    // ì—°ê¸° ë³µì…€ ë²„í¼ ì´ˆê¸°í™”
 //    m_smokeVoxelsBuffer = ComputeBuffer(m_totalVoxels, sizeof(int));
 //    m_smokePingVoxelsBuffer = ComputeBuffer(m_totalVoxels, sizeof(int));
 //
-//    // ¹öÆÛ ÃÊ±âÈ­
+//    // ë²„í¼ ì´ˆê¸°í™”
 //    m_voxelizeCompute.SetBuffer(0, "_Voxels", m_smokeVoxelsBuffer);
 //    m_voxelizeCompute.Dispatch(0, CeilToInt(m_totalVoxels / 128.0f), 1, 1);
 //    m_voxelizeCompute.SetBuffer(0, "_Voxels", m_smokePingVoxelsBuffer);
@@ -122,7 +122,7 @@
 //    m_voxelizeCompute.SetBuffer(4, "_PingVoxels", m_smokePingVoxelsBuffer);
 //    m_voxelizeCompute.SetBuffer(4, "_StaticVoxels", m_staticVoxelsBuffer);
 //
-//    // µğ¹ö±× ¸Ş½Ã ÀÎ½ºÅÏ½ºÈ­
+//    // ë””ë²„ê·¸ ë©”ì‹œ ì¸ìŠ¤í„´ìŠ¤í™”
 //    m_argsBuffer = ComputeBuffer(1, 5 * sizeof(uint), ComputeBufferType.IndirectArguments);
 //    uint[] args = uint[5]{ 0, 0, 0, 0, 0 };
 //    args[0] = (uint)debugMesh.GetIndexCount(0);
@@ -139,10 +139,10 @@
 //
 //void Voxelizer::Update()
 //{
-//    // ÃÖ´ë ¹üÀ§ ´Ü°è ¼³Á¤
+//    // ìµœëŒ€ ë²”ìœ„ ë‹¨ê³„ ì„¤ì •
 //    m_voxelizeCompute.SetInt("_MaxFillSteps", maxFillSteps);
 //
-//    // ¸¶¿ì½º ÀÔ·Â¿¡ µû¸¥ ¿¬¸· ¿øÁ¡ ¼³Á¤
+//    // ë§ˆìš°ìŠ¤ ì…ë ¥ì— ë”°ë¥¸ ì—°ë§‰ ì›ì  ì„¤ì •
 //    if (Input.GetMouseButtonDown(0)) {
 //        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 //        RaycastHit hit;
@@ -158,7 +158,7 @@
 //        }
 //    }
 //
-//    // ¿¬¸· Ã¤¿ì±â
+//    // ì—°ë§‰ ì±„ìš°ê¸°
 //    if (iterateFill || constantFill) {
 //        m_voxelizeCompute.SetVector("_Radius", Vector3.Lerp(Vector3.zero, maxRadius, Easing(m_radius)));
 //
@@ -170,7 +170,7 @@
 //            m_radius += growthSpeed * Time.deltaTime;
 //    }
 //
-//    // µğ¹ö±× º¹¼¿ ·»´õ¸µ
+//    // ë””ë²„ê·¸ ë³µì…€ ë Œë”ë§
 //    if (debugStaticVoxels || debugSmokeVoxels || debugEdgeVoxels) {
 //        m_debugVoxelMaterial.SetBuffer("_StaticVoxels", m_staticVoxelsBuffer);
 //        m_debugVoxelMaterial.SetBuffer("_SmokeVoxels", m_smokeVoxelsBuffer);

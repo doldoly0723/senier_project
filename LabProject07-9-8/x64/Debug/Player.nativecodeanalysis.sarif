@@ -1,0 +1,155 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CPlayer::m_ppBullets' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Player.cpp"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 10,
+                  "endLine": 12,
+                  "endColumn": 10
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CPlayer::{ctor}",
+                  "decoratedName": "??0CPlayer@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CPlayer::m_ppBullets"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "'CPlayer::m_fFireWaitingTime' 변수가 초기화되지 않았습니다. 항상 멤버 변수를 초기화하세요(type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Player.cpp"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 10,
+                  "endLine": 12,
+                  "endColumn": 10
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "CPlayer::{ctor}",
+                  "decoratedName": "??0CPlayer@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "CPlayer::m_fFireWaitingTime"
+          }
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.35.32216.1",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/akdl6/OneDrive/문서/GitHub/Senier_Project/senier_project/LabProject07-9-8/Player.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "535a3e131e907ca82c2f2953f39f64ba650be9570c1891142d5456fc2441a969"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/stdafx.h"
+          },
+          "hashes": {
+            "sha-256": "0ecc9016e414f4482b743c9268263c1d718b4bf248bd0fbb594281c89a094adb"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/player.h"
+          },
+          "hashes": {
+            "sha-256": "bf69c4886d87510484c2e24ba667300206a01c53e581d7a5d10d6bbaa304f3fd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/object.h"
+          },
+          "hashes": {
+            "sha-256": "4288717dcbb43d49d15ee94a874dc6afc4e0d020a17a5bedd0b0b384ea211174"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/mesh.h"
+          },
+          "hashes": {
+            "sha-256": "263779653286d515ddc91d3c165258b783bbf49cb8d8dd64ace2c9bce42ea14b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/camera.h"
+          },
+          "hashes": {
+            "sha-256": "457d38d0d042a5c273d0e5450d0cc61a085e418a40315b3e430d9d8ab2a4fd7e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/bullet.h"
+          },
+          "hashes": {
+            "sha-256": "583306f1ca88221dab90df377e7d79ea93aeef00208bd5ed69564dab1d13e90f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/akdl6/onedrive/문서/github/senier_project/senier_project/labproject07-9-8/shader.h"
+          },
+          "hashes": {
+            "sha-256": "21ded1a796fe4d18396307f2ed74e494fc4ad4974bef24391ab1e9d51af27580"
+          }
+        }
+      ]
+    }
+  ]
+}

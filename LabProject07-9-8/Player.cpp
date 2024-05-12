@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------------
 // File: CPlayer.cpp
 //-----------------------------------------------------------------------------
 
@@ -145,6 +145,7 @@ void CPlayer::Rotate(float x, float y, float z)
 void CPlayer::Update(float fTimeElapsed)
 {
 	m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, m_xmf3Gravity);
+	// std::cout << m_xmf3Velocity.x << "\t" << m_xmf3Velocity.y << "\t" << m_xmf3Velocity.z << "\t" << std::endl;
 	float fLength = sqrtf(m_xmf3Velocity.x * m_xmf3Velocity.x + m_xmf3Velocity.z * m_xmf3Velocity.z);
 	float fMaxVelocityXZ = m_fMaxVelocityXZ;
 	if (fLength > m_fMaxVelocityXZ)
@@ -157,6 +158,9 @@ void CPlayer::Update(float fTimeElapsed)
 	if (fLength > m_fMaxVelocityY) m_xmf3Velocity.y *= (fMaxVelocityY / fLength);
 
 	XMFLOAT3 xmf3Velocity = Vector3::ScalarProduct(m_xmf3Velocity, fTimeElapsed, false);
+	// 이전 위치 저장
+	std::cout << xmf3Velocity.x << "\t" << xmf3Velocity.y << "\t" << xmf3Velocity.z << "\t" << std::endl;
+	m_xmf3PreviousPosition = m_xmf3Position;
 	Move(xmf3Velocity, false);
 
 	if (m_pPlayerUpdatedContext) OnPlayerUpdateCallback(fTimeElapsed);
@@ -167,10 +171,13 @@ void CPlayer::Update(float fTimeElapsed)
 	if (nCurrentCameraMode == THIRD_PERSON_CAMERA) m_pCamera->SetLookAt(m_xmf3Position);
 	m_pCamera->RegenerateViewMatrix();
 
+	// 마찰력 
 	fLength = Vector3::Length(m_xmf3Velocity);
 	float fDeceleration = (m_fFriction * fTimeElapsed);
 	if (fDeceleration > fLength) fDeceleration = fLength;
 	m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, Vector3::ScalarProduct(m_xmf3Velocity, -fDeceleration, true));
+	// std::cout << "Length : " << fLength << std::endl;
+	// std::cout << "Deceleration : " << fDeceleration << std::endl;
 }
 
 CCamera *CPlayer::OnChangeCamera(DWORD nNewCameraMode, DWORD nCurrentCameraMode)
@@ -393,8 +400,8 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-		// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
-		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+		//CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
 
 		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
 		m_ppBullets[i]->SetScale(10.0f, 10.0f, 10.5f);
@@ -651,7 +658,7 @@ void CTerrainPlayer::FireBullet()
 		return;
 	}
 
-	std::cout << m_fFireWaitingTime << std::endl;
+	// std::cout << m_fFireWaitingTime << std::endl;
 
 	CBulletObject* pBulletObject = NULL;
 	for (int i = 0; i < MAX_BULLETS; i++)
@@ -665,6 +672,14 @@ void CTerrainPlayer::FireBullet()
 
 	if (pBulletObject)
 	{
+		random_device rd;
+		mt19937 gen(rd());
+
+		normal_distribution<float> dist(0.0f, 1.0f); // 평균 0, 표준편차 1
+		// 일반적으로 -3 ~ 3 의 값을 가짐
+		float value = dist(gen) / 30;
+		// std::cout << value << std::endl;
+
 		XMFLOAT3 xmf3Position = GetPosition();
 		XMFLOAT3 xmf3Direction = GetLook();
 		XMFLOAT3 xmf3Right = GetRight();
@@ -678,6 +693,14 @@ void CTerrainPlayer::FireBullet()
 		pBulletObject->m_xmf3Look = m_xmf3Look;
 
 		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
+
+		// 진짜 간단한 탄퍼짐
+		// 가중치에 따라서 더 퍼지도록 구현해야함
+		// 그래도 초탄은 맞긴해야하니까 잘못된 코드긴함
+		xmf3Direction.x = xmf3Direction.x + value;
+		xmf3Direction.y = xmf3Direction.y + value;
+		xmf3Direction.z = xmf3Direction.z + value;
+
 		// 발사 위치
 		xmf3FirePosition.x = xmf3Position.x+2;
 		xmf3FirePosition.y = xmf3Position.y + 12.2;

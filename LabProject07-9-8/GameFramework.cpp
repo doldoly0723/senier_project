@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------------
 // File: CGameFramework.cpp
 //-----------------------------------------------------------------------------
 
@@ -314,6 +314,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			::ReleaseCapture();
 			m_pPlayer->SetFire(false);
 			((CTerrainPlayer*)m_pPlayer)->bLeftMouseButtonDown = false;
+			((CTerrainPlayer*)m_pPlayer)->BulletSpread = 0.0;
 			break;
 		case WM_RBUTTONUP:
 			m_pCamera->SetOffset(normalCameraPos);
@@ -338,6 +339,15 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	switch (nMessageID)
 	{
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case 'q':
+		case 'Q':
+			m_pPlayer->DrawBoundingBox = !m_pPlayer->DrawBoundingBox;
+		default:
+			break;
+		}
 		case WM_KEYUP:
 			switch (wParam)
 			{

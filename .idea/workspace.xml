@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3e8ab291-f427-428a-9a97-ae741a91c3bf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/CObb.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/CObb.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Bullet.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Bullet.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Camera.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Camera.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/CodeAnalysisResultManifest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/DDSTextureLoader12.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/DDSTextureLoader12.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/GameFramework.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/GameFramework.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/LabProject07-9-8.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/LabProject07-9-8.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Mesh.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Mesh.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Object.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Object.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Player.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Player.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Raymarcher.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Raymarcher.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Scene.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Scene.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Shader.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Shader.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Timer.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Timer.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Voxelizer.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/Voxelizer.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/WICTextureLoader12.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/WICTextureLoader12.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/stdafx.nativecodeanalysis.sarif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/stdafx.nativecodeanalysis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/vc.nativecodeanalysis.all.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Bullet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Bullet.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Bullet.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Bullet.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Camera.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Camera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/DDSTextureLoader12.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/DDSTextureLoader12.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/DDSTextureLoader12.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/DDSTextureLoader12.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/GameFramework.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/GameFramework.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/GameFramework.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/GameFramework.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/LabProject07-9-8.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/LabProject07-9-8.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/LabProject07-9-8.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/LabProject07-9-8.vcxproj.filters" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/LabProject07-9-8.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/LabProject07-9-8.vcxproj.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Mesh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Mesh.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Mesh.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Mesh.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Object.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Object.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Player.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Player.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Raymarcher.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Raymarcher.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Raymarcher.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Raymarcher.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Scene.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Scene.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Scene.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Scene.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Shader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Shader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Shader.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Shader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Shaders.hlsl" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Shaders.hlsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Timer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Timer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Timer.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Timer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Voxelizer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Voxelizer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/Voxelizer.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/Voxelizer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/WICTextureLoader12.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/WICTextureLoader12.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/WICTextureLoader12.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/WICTextureLoader12.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/d3dx12.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/d3dx12.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/stdafx.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/stdafx.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/stdafx.h" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/stdafx.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/LabProject07-9-8.ilk" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/LabProject07-9-8.ilk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/LabProject07-9-8.log" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/LabProject07-9-8.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/LabProject07-9-8.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/LabProject07-9-8.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/vc143.idb" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/vc143.idb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/vc143.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/LabProject07-9-8/x64/Debug/vc143.pdb" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2gN4woZCBX5PjTXmBjN0x7oSXcT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e8ab291-f427-428a-9a97-ae741a91c3bf" name="Changes" comment="" />
+      <created>1715524942480</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715524942480</updated>
+    </task>
+    <servers />
+  </component>
+</project>
