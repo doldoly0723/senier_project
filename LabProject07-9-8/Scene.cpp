@@ -512,10 +512,28 @@ void CScene::CheckPlayerByObjectCollisions()
 
 		if (Object->m_xmOOBB.Intersects(m_pPlayer->m_xmOOBB))
 		{
-			XMFLOAT3 v{ 0.0f, 0.0f, 0.0f };
-			m_pPlayer->SetVelocity(v);
-			std::cout << "충돌!" << std::endl;
+			// 이전 위치로 돌려보내기
+			// 충돌하면 어느 방향으로도 안움직이네..
+			//auto t = m_pPlayer->GetPreviousPosition();
+			//m_pPlayer->SetPosition(t);
+			//std::cout << "충돌!" << std::endl;
 
+			// 충돌한 물체의 법선 벡터 계산해서 플레이어의 이동 방향 벡터를 반대로 돌리기
+			XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
+			XMFLOAT3 objectPosition = Object->GetPosition();
+
+			// 충돌 지점에서의 노멀 벡터 계산
+			XMFLOAT3 collisionNormal;
+			XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
+
+			// 충돌 법선의 반대 방향으로 플레이어 이동
+			XMFLOAT3 newPosition;
+			XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
+
+			// 새로운 위치로 플레이어 이동
+			m_pPlayer->SetPosition(newPosition);
+
+			std::cout << "충돌!" << std::endl;
 		}
 	}
 }

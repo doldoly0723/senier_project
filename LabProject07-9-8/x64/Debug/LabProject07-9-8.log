@@ -1,19 +1,5 @@
-﻿  Bullet.cpp
-  Camera.cpp
+﻿  Player.cpp
 C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  GameFramework.cpp
-C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  LabProject07-9-8.cpp
-C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  Mesh.cpp
-  Object.cpp
-C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  Player.cpp
-C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.cpp(699,39): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.cpp(701,39): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Scene.cpp
-C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-  Shader.cpp
-  코드를 생성하고 있습니다...
+C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.cpp(706,39): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\Player.cpp(708,39): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   LabProject07-9-8.vcxproj -> C:\Users\akdl6\OneDrive\문서\GitHub\Senier_Project\senier_project\LabProject07-9-8\x64\Debug\LabProject07-9-8.exe

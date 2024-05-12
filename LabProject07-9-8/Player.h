@@ -53,13 +53,16 @@ protected:
 	CCamera						*m_pCamera = NULL;
 
 
-	// �Ѿ� 
+	// 총알 
 	float						m_fFireDelayTime = 0.3f;
 	float						m_fFireWaitingTime;
 
 	bool						bZoom = FALSE;
 	bool						bMove = FALSE;
 	bool						bFire = FALSE;
+
+	// 이전 위치
+	XMFLOAT3					m_xmf3PreviousPosition;
 
 public:
 	CPlayer();
@@ -122,6 +125,9 @@ public:
 	float BulletSpread = 0.0;
 	// 바운딩 박스 렌더링
 	bool DrawBoundingBox = false;
+
+	// 이전 위치를 저장하는 함수
+	XMFLOAT3 GetPreviousPosition() const { return m_xmf3PreviousPosition; }
 
 	void SetZoom(bool bEnable) { bZoom = bEnable; }
 	void SetMove(bool bEnable) { bMove = bEnable; }
