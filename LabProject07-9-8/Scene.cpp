@@ -99,7 +99,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	XMFLOAT4 xmf4Color = XMFLOAT4(0.7608f, 0.6980f, 0.5020f, 0.0f);
 	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 513, 513, xmf3Scale, xmf4Color);
 
-	m_nHierarchicalGameObjects = 8;
+	m_nHierarchicalGameObjects = 9;
 	m_ppHierarchicalGameObjects = new CGameObject * [m_nHierarchicalGameObjects];
 
 	// 너는 이제부터 적군이야
@@ -207,6 +207,19 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	//m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (container2) delete container2;
+
+	CLoadedModelInfo* sandbag = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/sandbag1.bin", NULL);
+	m_ppHierarchicalGameObjects[8] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, sandbag, 1);
+	m_ppHierarchicalGameObjects[8]->SetPosition(1620.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1760.0f);
+	m_ppHierarchicalGameObjects[8]->Rotate(0.0f, -45.0f, 0.0f);
+	m_ppHierarchicalGameObjects[8]->SetScale(10.0f, 10.0f, 10.0f);
+	m_ppHierarchicalGameObjects[8]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
+	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	//m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
+	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	if (sandbag) delete sandbag;
+
+
 
 
 	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
