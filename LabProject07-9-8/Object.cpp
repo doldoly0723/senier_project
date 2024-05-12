@@ -1056,30 +1056,30 @@ void CGameObject::MoveForward(float fDistance)
 
 void CGameObject::MoveToTarget(XMFLOAT3 xmf3TargetPosition, float fDistance)
 {
-	// ¼öÁ¤ ÇÊ¿ä
-	// ÇöÀç À§Ä¡ ¹× ¸ñÇ¥ À§Ä¡ º¤ÅÍ »ý¼º
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	XMVECTOR currentPosition = XMLoadFloat3(&GetToParentPosition());
 	XMVECTOR targetPosition = XMLoadFloat3(&xmf3TargetPosition);
 
-	// ¸ñÇ¥ ÁöÁ¡±îÁöÀÇ ¹æÇâ º¤ÅÍ °è»ê
+	// ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	XMVECTOR direction = XMVector3Normalize(XMVectorSubtract(targetPosition, currentPosition));
 
-	// ÀÌµ¿ °Å¸® °è»ê
+	// ï¿½Ìµï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
 	float distance = XMVectorGetX(XMVector3Length(XMVectorSubtract(targetPosition, currentPosition)));
 
-	// ÀÌµ¿ÇÒ °Å¸® °è»ê (ÀÏÁ¤ °Å¸®¸¸Å­¸¸ ÀÌµ¿ÇÏµµ·Ï)
+	// ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½Å­ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ïµï¿½ï¿½ï¿½)
 	float moveDistance = fDistance;
 	if (distance < fDistance) {
 		moveDistance = distance;
 	}
 
-	// ½ÇÁ¦ ÀÌµ¿ÇÒ º¤ÅÍ °è»ê
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	XMVECTOR moveVector = XMVectorScale(direction, moveDistance);
 
-	// »õ·Î¿î À§Ä¡ °è»ê
+	// ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
 	XMVECTOR newPosition = XMVectorAdd(currentPosition, moveVector);
 
-	// »õ·Î¿î À§Ä¡¸¦ ¼³Á¤
+	// ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	SetPosition(XMFLOAT3(XMVectorGetX(newPosition), XMVectorGetY(newPosition), XMVectorGetZ(newPosition)));
 }
 
