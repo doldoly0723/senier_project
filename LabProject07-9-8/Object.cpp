@@ -1951,3 +1951,17 @@ void CBoundingBox::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* p
 
 	CGameObject::Render(pd3dCommandList, pCamera);
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+CEnemyNPC::CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, CLoadedModelInfo* pModel, int nAnimationTracks)
+{
+	pModel->m_pModelRootObject;
+	CLoadedModelInfo* pLionModel = pModel;
+	if (!pLionModel) pLionModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+
+	SetChild(pLionModel->m_pModelRootObject, true);
+	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pLionModel);
+}
+
+CEnemyNPC::~CEnemyNPC()
+{
+}

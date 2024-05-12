@@ -105,11 +105,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// 너는 이제부터 적군이야
 	// 너가 detect 함수를 갖고 있어야하고
 	// 결국 player의 정보가 필요함 -> scene에서 넘겨주는건 어때?
-	CLoadedModelInfo* pEthanModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Ethan.bin", NULL);
-	m_ppHierarchicalGameObjects[0] = new CEthanObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 1);
+	CLoadedModelInfo* pEthanModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
+	m_ppHierarchicalGameObjects[0] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 1);
 	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
 	m_ppHierarchicalGameObjects[0]->SetPosition(1370.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1650.0f);
-	m_ppHierarchicalGameObjects[0]->SetScale(2.0f, 2.0f, 2.0f);
+	m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
 
 	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
@@ -702,7 +702,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	CheckBulletByObjectCollisions();
 
 	//
-	m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
+	//m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
