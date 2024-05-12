@@ -1502,6 +1502,8 @@ CHeightMapTerrain::CHeightMapTerrain(ID3D12Device *pd3dDevice, ID3D12GraphicsCom
 	pTerrainMaterial->SetShader(pTerrainShader);
 
 	SetMaterial(0, pTerrainMaterial);
+
+	
 }
 
 CHeightMapTerrain::~CHeightMapTerrain(void)
@@ -1532,6 +1534,7 @@ CSkyBox::CSkyBox(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dComman
 	pSkyBoxMaterial->SetShader(pSkyBoxShader);
 
 	SetMaterial(0, pSkyBoxMaterial);
+
 }
 
 CSkyBox::~CSkyBox()
@@ -1857,4 +1860,41 @@ CSwatMan::CSwatMan(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dComm
 
 CSwatMan::~CSwatMan()
 {
+}
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+CUI::CUI(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature) : CGameObject(1)
+{
+	CAimingPointMesh* pAimingPointMesh = new CAimingPointMesh(pd3dDevice, pd3dCommandList, 1.0f);
+	SetMesh(pAimingPointMesh);
+
+	CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+	CTexture* pAimingTexture = new CTexture(1, RESOURCE_TEXTURE2D, 0, 3);
+	pAimingTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Model/Textures/target/AimingPoint.dds", RESOURCE_TEXTURE2D, 0);
+
+	CUIShader* pUIShader = new CUIShader();
+	pUIShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
+	pUIShader->CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+	CScene::CreateShaderResourceViews(pd3dDevice, pAimingTexture, 0, 3);
+
+	CMaterial* pSkyBoxMaterial = new CMaterial(1);
+	pSkyBoxMaterial->SetTexture(pAimingTexture);
+	pSkyBoxMaterial->SetShader(pUIShader);
+
+	SetMaterial(0, pSkyBoxMaterial);
+}
+
+CUI::~CUI()
+{
+}
+
+void CUI::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
+{
+	XMFLOAT3 xmf3CameraPos = pCamera->GetPosition();
+	SetPosition(xmf3CameraPos.x, xmf3CameraPos.y, xmf3CameraPos.z);
+
+	CGameObject::Render(pd3dCommandList, pCamera);
 }
