@@ -393,8 +393,8 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-		// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
-		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+		//CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
 
 		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
 		m_ppBullets[i]->SetScale(10.0f, 10.0f, 10.5f);
@@ -651,7 +651,7 @@ void CTerrainPlayer::FireBullet()
 		return;
 	}
 
-	std::cout << m_fFireWaitingTime << std::endl;
+	// std::cout << m_fFireWaitingTime << std::endl;
 
 	CBulletObject* pBulletObject = NULL;
 	for (int i = 0; i < MAX_BULLETS; i++)
@@ -671,7 +671,7 @@ void CTerrainPlayer::FireBullet()
 		normal_distribution<float> dist(0.0f, 1.0f); // 평균 0, 표준편차 1
 		// 일반적으로 -3 ~ 3 의 값을 가짐
 		float value = dist(gen) / 30;
-		std::cout << value << std::endl;
+		// std::cout << value << std::endl;
 
 		XMFLOAT3 xmf3Position = GetPosition();
 		XMFLOAT3 xmf3Direction = GetLook();

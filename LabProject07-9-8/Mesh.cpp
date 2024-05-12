@@ -761,3 +761,65 @@ void CSkinnedMesh::OnPreRender(ID3D12GraphicsCommandList *pd3dCommandList, void 
 	D3D12_VERTEX_BUFFER_VIEW pVertexBufferViews[7] = { m_d3dPositionBufferView, m_d3dTextureCoord0BufferView, m_d3dNormalBufferView, m_d3dTangentBufferView, m_d3dBiTangentBufferView, m_d3dBoneIndexBufferView, m_d3dBoneWeightBufferView };
 	pd3dCommandList->IASetVertexBuffers(m_nSlot, 7, pVertexBufferViews);
 }
+
+CBoundingBoxMesh::CBoundingBoxMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox& xmOOBB) : CMesh(pd3dDevice, pd3dCommandList)
+{
+	m_nVertices = 24;
+
+	XMFLOAT3 corners[8];
+	xmOOBB.GetCorners(corners);
+
+	// m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
+
+	m_pxmf3Positions = new XMFLOAT3[m_nVertices];
+
+
+
+	// boundingbox 렌더링 준비
+	m_pxmf3Positions[0] = corners[0];
+	m_pxmf3Positions[1] = corners[1];
+
+	m_pxmf3Positions[2] = corners[1];
+	m_pxmf3Positions[3] = corners[2];
+
+	m_pxmf3Positions[4] = corners[2];
+	m_pxmf3Positions[5] = corners[3];
+
+	m_pxmf3Positions[6] = corners[3];
+	m_pxmf3Positions[7] = corners[0];
+
+	m_pxmf3Positions[8] = corners[4];
+	m_pxmf3Positions[9] = corners[5];
+
+	m_pxmf3Positions[10] = corners[5];
+	m_pxmf3Positions[11] = corners[6];
+
+	m_pxmf3Positions[12] = corners[6];
+	m_pxmf3Positions[13] = corners[7];
+
+	m_pxmf3Positions[14] = corners[7];
+	m_pxmf3Positions[15] = corners[4];
+
+	m_pxmf3Positions[16] = corners[0];
+	m_pxmf3Positions[17] = corners[4];
+
+	m_pxmf3Positions[18] = corners[1];
+	m_pxmf3Positions[19] = corners[5];
+
+	m_pxmf3Positions[20] = corners[2];
+	m_pxmf3Positions[21] = corners[6];
+
+	m_pxmf3Positions[22] = corners[3];
+	m_pxmf3Positions[23] = corners[7];
+
+	m_pd3dPositionBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, m_pxmf3Positions, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
+
+	m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();
+	m_d3dPositionBufferView.StrideInBytes = sizeof(XMFLOAT3);
+	m_d3dPositionBufferView.SizeInBytes = sizeof(XMFLOAT3) * m_nVertices;
+}
+
+CBoundingBoxMesh::~CBoundingBoxMesh()
+{
+}

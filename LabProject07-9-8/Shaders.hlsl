@@ -18,6 +18,7 @@ cbuffer cbGameObjectInfo : register(b2)
 	matrix					gmtxGameObject : packoffset(c0);
 	MATERIAL				gMaterial : packoffset(c4);
 	uint					gnTexturesMask : packoffset(c8);
+	float3                  BoundingColor : packoffset(c9);
 };
 
 #include "Light.hlsl"
@@ -242,4 +243,33 @@ float4 PSSkyBox(VS_SKYBOX_CUBEMAP_OUTPUT input) : SV_TARGET
 	float4 cColor = gtxtSkyCubeTexture.Sample(gssClamp, input.positionL);
 
 	return(cColor);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+struct VS_BOUNDINGBOX_INPUT
+{
+	float3 position : POSITION;
+};
+
+struct VS_BOUNDINGBOX_OUTPUT
+{
+	float3	positionL : POSITION;
+	float4	position : SV_POSITION;
+};
+
+VS_BOUNDINGBOX_OUTPUT VSBoundingBox(VS_BOUNDINGBOX_INPUT input)
+{
+	VS_SKYBOX_CUBEMAP_OUTPUT output;
+
+	output.position = mul(mul(mul(float4(input.position, 1.0f), gmtxGameObject), gmtxView), gmtxProjection);
+	output.positionL = input.position;
+
+	return(output);
+}
+
+float4 PSBoundingBox(VS_BOUNDINGBOX_OUTPUT input) : SV_TARGET
+{
+	// return (float4(BoundingColor, 1.0f));
+	return (float4(1.0f, 0.0f, 0.0f, 1.0f));
 }

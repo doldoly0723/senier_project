@@ -138,7 +138,14 @@ void CBulletObject::ReflectBullet(const XMFLOAT3& surfaceNormal)
 	// 반사 벡터 계산
 	XMVECTOR reflectedDirection = XMVector3Reflect(incidentDirection, normal);
 
-	// Rotate(10.0f, 10.0f, 0.0f);
+	// 반사된 방향을 기준으로 회전 각도를 계산
+	//XMFLOAT3 rotationAxis;
+	//XMVECTOR axis = XMVector3Cross(incidentDirection, reflectedDirection);
+	//XMStoreFloat3(&rotationAxis, axis);
+	//float rotationAngle = XMVectorGetX(XMVector3AngleBetweenVectors(incidentDirection, reflectedDirection));
+
+	//this->Rotate(&rotationAxis, rotationAngle);
+
 	// 반사 벡터를 총알의 방향으로 설정
 	XMStoreFloat3(&m_xmf3MovingDirection, reflectedDirection);
 }

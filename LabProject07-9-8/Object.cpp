@@ -806,27 +806,41 @@ void CGameObject::SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& 
 		xmOOBB1.Extents.z = xmOOBB2.Extents.z;
 }
 
+void CGameObject::MyBoundingBox(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, BoundingOrientedBox& mxOOBB)
+{
+	CBoundingBoxMesh* pBoundingBoxMesh = new CBoundingBoxMesh(pd3dDevice, pd3dCommandList, mxOOBB);
+	SetMesh(pBoundingBoxMesh);
+
+	CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+	CTexture* pBoundingBoxTexture = new CTexture(1, RESOURCE_TEXTURE_CUBE, 0, 1);
+	pBoundingBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/skybox.dds", RESOURCE_TEXTURE_CUBE, 0);
+
+	CBoundingBoxShader* pBoundingBoxShader = new CBoundingBoxShader();
+	pBoundingBoxShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
+	pBoundingBoxShader->CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+	CScene::CreateShaderResourceViews(pd3dDevice, pBoundingBoxTexture, 0, 10);
+
+	//
+	m_nMaterials = 1;
+
+	m_ppMaterials = new CMaterial * [m_nMaterials];
+	for (int i = 0; i < m_nMaterials; i++) m_ppMaterials[i] = NULL;
+
+
+	CMaterial* pBoundingBoxMaterial = new CMaterial(1);
+	pBoundingBoxMaterial->SetTexture(pBoundingBoxTexture);
+	pBoundingBoxMaterial->SetShader(pBoundingBoxShader);
+
+	SetMaterial(0, pBoundingBoxMaterial);
+}
+
 void CGameObject::UpdateBoundingBox()
 {
 	// OOBB의 중심을 월드좌표로 이동
 	XMFLOAT3 Pos = GetPosition();
 	m_xmOOBB.Center = Pos;
-}
-
-void CGameObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox* xmOOBB)
-{
-	//// BoundingOrientedBox의 모서리 좌표를 가져오기
-	XMFLOAT3 corners[8];
-	xmOOBB->GetCorners(corners);
-
-	// 모르겠다.
-	XMFLOAT3 vertices[] = {
-	{ corners[0] }, { corners[1] }, { corners[1] }, { corners[2] }, { corners[2] }, { corners[3] }, { corners[3] }, { corners[0] },
-	{ corners[4] }, { corners[5] }, { corners[5] }, { corners[6] }, { corners[6] }, { corners[7] }, { corners[7] }, { corners[4] },
-	{ corners[0] }, { corners[4] }, { corners[1] }, { corners[5] }, { corners[2] }, { corners[6] }, { corners[3] }, { corners[7] }
-	};
-
-	pd3dCommandList->DrawInstanced(24, 1, 0, 0);
 }
 
 void CGameObject::ScaleBoundingBox(float x, float y, float z)
@@ -1857,4 +1871,39 @@ CSwatMan::CSwatMan(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dComm
 
 CSwatMan::~CSwatMan()
 {
+}
+
+CBoundingBox::CBoundingBox(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, BoundingOrientedBox& mxOOBB) : CGameObject(1)
+{
+	CBoundingBoxMesh* pBoundingBoxMesh = new CBoundingBoxMesh(pd3dDevice, pd3dCommandList, mxOOBB);
+	SetMesh(pBoundingBoxMesh);
+
+	CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+	CTexture* pBoundingBoxTexture = new CTexture(1, RESOURCE_TEXTURE_CUBE, 0, 1);
+	pBoundingBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/skybox.dds", RESOURCE_TEXTURE_CUBE, 0);
+
+	CBoundingBoxShader* pBoundingBoxShader = new CBoundingBoxShader();
+	pBoundingBoxShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
+	pBoundingBoxShader->CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+	CScene::CreateShaderResourceViews(pd3dDevice, pBoundingBoxTexture, 0, 10);
+
+	CMaterial* pBoundingBoxMaterial = new CMaterial(1);
+	pBoundingBoxMaterial->SetTexture(pBoundingBoxTexture);
+	pBoundingBoxMaterial->SetShader(pBoundingBoxShader);
+
+	SetMaterial(0, pBoundingBoxMaterial);
+}
+
+CBoundingBox::~CBoundingBox()
+{
+}
+
+void CBoundingBox::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera) 
+{
+	//XMFLOAT3 xmf3CameraPos = pCamera->GetPosition();
+	//SetPosition(xmf3CameraPos.x, xmf3CameraPos.y, xmf3CameraPos.z);
+
+	CGameObject::Render(pd3dCommandList, pCamera);
 }

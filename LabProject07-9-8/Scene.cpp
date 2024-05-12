@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------------
 // File: CScene.cpp
 //-----------------------------------------------------------------------------
 
@@ -108,6 +108,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
 	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[0]->MyBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[0]->m_xmOOBB);
+	m_pBoundingBox[0] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[0]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
 	if (pAngrybotModel) delete pAngrybotModel;
 
@@ -118,6 +120,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[1]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[1]->SetBoundingBox(m_ppHierarchicalGameObjects[1]->m_xmOOBB, m_ppHierarchicalGameObjects[1]);
 	m_ppHierarchicalGameObjects[1]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[1]->MyBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[1]->m_xmOOBB);
+	m_pBoundingBox[1] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[1]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[1]);
 	if (pMonsterModel) delete pMonsterModel;
 
@@ -127,7 +131,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[2]->SetPosition(330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
 	m_ppHierarchicalGameObjects[2]->SetScale(30.0f, 30.0f, 30.0f);
 	m_ppHierarchicalGameObjects[2]->SetBoundingBox(m_ppHierarchicalGameObjects[2]->m_xmOOBB, m_ppHierarchicalGameObjects[2]);
-	m_ppHierarchicalGameObjects[2]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	// m_ppHierarchicalGameObjects[2]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	//m_ppHierarchicalGameObjects[2]->MyBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[2]->m_xmOOBB);
+	m_pBoundingBox[2] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[2]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (pbox) delete pbox;
 
@@ -137,14 +143,16 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[3]->SetPosition(350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
 	m_ppHierarchicalGameObjects[3]->SetScale(30.0f, 30.0f, 30.0f);
 	m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	//m_ppHierarchicalGameObjects[3]->MyBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
+	m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (pbox1) delete pbox1;
 
 	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
 	{
 		if (m_ppHierarchicalGameObjects[i]) //m_ppHierarchicalGameObjects[i]->SetBoundingBox(m_ppHierarchicalGameObjects[i]->m_xmOOBB, m_ppHierarchicalGameObjects[i]);
-			m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[i]);
+			m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[i]);		
 	}
 
 
@@ -182,12 +190,15 @@ void CScene::ReleaseObjects()
 	if (m_pTerrain) delete m_pTerrain;
 	if (m_pSkyBox) delete m_pSkyBox;
 
-	// ¿©±â¼­µµ Á¦°Å ÇØÁà¾ßÇÔ
+	for (int i = 0; i < 4; i++)
+		delete m_pBoundingBox[i];
+
+	// 여기 고쳐야함
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-		// ÀÌ ºÎºÐÀ» ¾î¶»°Ô ÇØ¾ßÇÏÁö
+		// 흠..
 		if (m_pPlayer->m_ppBullets[i]->m_bActive) m_pPlayer->m_ppBullets[i]->Release();
-			delete m_pPlayer->m_ppBullets;
+			delete m_pPlayer->m_ppBullets[i];
 	}
 
 	if (m_ppHierarchicalGameObjects)
@@ -425,7 +436,6 @@ void CScene::ReleaseUploadBuffers()
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-	  // ÀÌ ºÎºÐÀ» ¾î¶»°Ô ÇØ¾ßÇÏÁö
 		if (m_pPlayer->m_ppBullets[i]->m_bActive)
 			m_pPlayer->m_ppBullets[i]->ReleaseUploadBuffers();
 	}
@@ -498,8 +508,8 @@ void CScene::CheckPlayerByObjectCollisions()
 		//auto t = Object->GetPosition();
 		//XMFLOAT3 playerCenter = m_pPlayer->m_xmOOBB.Center;
 
-		//std::cout << "ObjectÀÇ Áß½É À§Ä¡: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-		//std::cout << "PlayerÀÇ Áß½É À§Ä¡: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
+		//std::cout << "Object위치: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
+		//std::cout << "Player위치: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
 
 		//std::cout << "Object OBB: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
 		//std::cout << "Object Position: " << t.x << ", " << t.y << ", " << t.z << std::endl;
@@ -508,7 +518,7 @@ void CScene::CheckPlayerByObjectCollisions()
 		{
 			XMFLOAT3 v{ 0.0f, 0.0f, 0.0f };
 			m_pPlayer->SetVelocity(v);
-			std::cout << "Ãæµ¹!" << std::endl;
+			std::cout << "충돌!" << std::endl;
 
 		}
 	}
@@ -529,7 +539,7 @@ void CScene::CheckBulletByObjectCollisions()
 			{
 				//std::cout << "Object OBB: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
 				//std::cout << "Object Position: " << t.x << ", " << t.y << ", " << t.z << std::endl;
-				// std::cout << "BulletÀÇ Áß½É À§Ä¡: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
+				// std::cout << "Bullet 위치: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
 			}
 		}
 
@@ -538,19 +548,19 @@ void CScene::CheckBulletByObjectCollisions()
 			if (m_pPlayer->m_ppBullets[i]->m_bActive)
 				if (m_pPlayer->m_ppBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
 				{
-					// std::cout << "ÃÑ¾Ë Ãæµ¹!" << std::endl;
+					// std::cout << "충돌!" << std::endl;
 
-					// Ãæµ¹ÇÑ °´Ã¼¿Í ÃÑ¾ËÀÇ À§Ä¡¸¦ »ç¿ëÇÏ¿© Ç¥¸é ¹ý¼± °è»ê
+					// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
 					XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
 					XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
 					XMFLOAT3 xmf3SurfaceNormal;
 
-					// Ç¥¸é ¹ý¼± °è»ê
+					// 표면 법선 계산
 					XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
-					// À§,¾Æ·¡·Î Æ¦ ¹æÁö
+					// 위,아래로 튐 방지
 					xmf3SurfaceNormal.y = 0;
 
-					// ÃÑ¾ËÀ» ¹Ý»ç½ÃÅ°´Â ÇÔ¼ö È£Ãâ
+					// 총알을 반사시키는 함수 호출
 					m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
 
 				}
@@ -584,6 +594,9 @@ void CScene::AnimateObjects(float fTimeElapsed)
 {
 	m_fElapsedTime = fTimeElapsed;
 
+	CheckPlayerByObjectCollisions();
+	CheckBulletByObjectCollisions();
+
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Animate(fTimeElapsed);
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
 
@@ -592,8 +605,6 @@ void CScene::AnimateObjects(float fTimeElapsed)
 		m_pLights[1].m_xmf3Position = m_pPlayer->GetPosition();
 		m_pLights[1].m_xmf3Direction = m_pPlayer->GetLookVector();
 	}
-	CheckPlayerByObjectCollisions();
-	CheckBulletByObjectCollisions();
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -612,18 +623,27 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
 	if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
 
-	// ÃÑ¾Ë ·»´õ¸µ
+	// 총알 렌더링
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		if (m_pPlayer->m_ppBullets[i]->m_bActive)
+		{
 			m_pPlayer->m_ppBullets[i]->Render(pd3dCommandList, pCamera);
+		}
 	}
 
-	// OOBB ·»´õ¸µ
-	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
+	// OOBB 렌더링
+	//for (auto iter = m_lpBoundingBoxs.begin(); iter != m_lpBoundingBoxs.end(); ++iter)
+	//{
+	//	CBoundingBox* Object = *iter;
+	//	Object->Render(pd3dCommandList);
+	//}
+
+	for (int i = 0; i < 4; i++)
 	{
-		CGameObject* Object = *iter;
-		Object->Render(pd3dCommandList, &(Object->m_xmOOBB));
+		m_pBoundingBox[i]->Render(pd3dCommandList, pCamera);
+		/*auto t = m_pBoundingBox[i]->GetPosition();
+		std::cout << "Position " << i << ": " << t.x << "\t" << t.y << "\t" << t.z << std::endl;*/
 	}
 
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);

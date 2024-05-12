@@ -386,9 +386,8 @@ public:
 	BoundingOrientedBox				m_xmOOBB = BoundingOrientedBox();
 	void SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGameObject);	
 	void SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& xmOOBB2);
-
+	void MyBoundingBox(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, BoundingOrientedBox& mxOOBB);
 	void UpdateBoundingBox();
-	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, BoundingOrientedBox* xmOOBB);
 
 	void ScaleBoundingBox(float x, float y, float z);
 	//
@@ -669,3 +668,16 @@ public:
 
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+class CBoundingBox : public CGameObject
+{
+public:
+	CBoundingBox(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, BoundingOrientedBox& mxOOBB);
+	virtual ~CBoundingBox();
+
+	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera = NULL);
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
