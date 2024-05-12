@@ -53,13 +53,16 @@ protected:
 	CCamera						*m_pCamera = NULL;
 
 
-	// �Ѿ� 
+	// 총알 
 	float						m_fFireDelayTime = 0.3f;
 	float						m_fFireWaitingTime;
 
 	bool						bZoom = FALSE;
 	bool						bMove = FALSE;
 	bool						bFire = FALSE;
+
+	// 이전 위치
+	XMFLOAT3					m_xmf3PreviousPosition;
 
 public:
 	CPlayer();
@@ -111,13 +114,20 @@ public:
 	virtual void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera = NULL);
 
 
-	// �߰�
+	// 총알
 	CGameObject** m_BulletObjects = NULL;
 	CBulletObject* m_ppBullets[MAX_BULLETS];
 
 	void SetMovingDirection(XMFLOAT3& xmf3MovingDirection) { m_xmf3MovingDirection = Vector3::Normalize(xmf3MovingDirection); }
 	// 연속적인 총알 발사를 위해 추가
 	bool bLeftMouseButtonDown = false;
+	// 탄 퍼짐
+	float BulletSpread = 0.0;
+	// 바운딩 박스 렌더링
+	bool DrawBoundingBox = false;
+
+	// 이전 위치를 저장하는 함수
+	XMFLOAT3 GetPreviousPosition() const { return m_xmf3PreviousPosition; }
 
 	void SetZoom(bool bEnable) { bZoom = bEnable; }
 	bool GetZoom() { return bZoom; }

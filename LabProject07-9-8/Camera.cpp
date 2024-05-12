@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Player.h"
 #include "Camera.h"
 
@@ -108,7 +108,7 @@ void CCamera::RegenerateViewMatrix()
 
 void CCamera::CreateShaderVariables(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList)
 {
-	UINT ncbElementBytes = ((sizeof(VS_CB_CAMERA_INFO) + 255) & ~255); //256ÀÇ ¹è¼ö
+	UINT ncbElementBytes = ((sizeof(VS_CB_CAMERA_INFO) + 255) & ~255); //256ì˜ ë°°ìˆ˜
 	m_pd3dcbCamera = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbElementBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
 
 	m_pd3dcbCamera->Map(0, NULL, (void **)&m_pcbMappedCamera);
@@ -296,19 +296,19 @@ void CThirdPersonCamera::SetLookAt(XMFLOAT3& xmf3LookAt)
 	m_xmf3Up = XMFLOAT3(mtxLookAt._12, mtxLookAt._22, mtxLookAt._32);
 	m_xmf3Look = XMFLOAT3(mtxLookAt._13, mtxLookAt._23, mtxLookAt._33);*/
 
-	// ÇÃ·¹ÀÌ¾îÀÇ ¹æÇâ º¤ÅÍ¸¦ °¡Á®¿É´Ï´Ù.
+	// í”Œë ˆì´ì–´ì˜ ë°©í–¥ ë²¡í„°ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
 	XMFLOAT3 xmf3PlayerDirection = m_pPlayer->GetLookVector();
 	
-	// ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç À§Ä¡¸¦ ½ÃÀÛÁ¡À¸·Î ÇÏ°í, ÇÃ·¹ÀÌ¾îÀÇ ½Ã¼± ¹æÇâÀ» ¹Ù¶óº¸´Â ³¡Á¡À» °è»êÇÕ´Ï´Ù.
+	// í”Œë ˆì´ì–´ì˜ í˜„ì¬ ìœ„ì¹˜ë¥¼ ì‹œì‘ì ìœ¼ë¡œ í•˜ê³ , í”Œë ˆì´ì–´ì˜ ì‹œì„  ë°©í–¥ì„ ë°”ë¼ë³´ëŠ” ëì ì„ ê³„ì‚°í•©ë‹ˆë‹¤.
 	XMFLOAT3 xmf3LookAtPoint;
 	xmf3LookAtPoint.x = m_pPlayer->GetPosition().x + xmf3PlayerDirection.x;
 	xmf3LookAtPoint.y = m_pPlayer->GetPosition().y + xmf3PlayerDirection.y;
 	xmf3LookAtPoint.z = m_pPlayer->GetPosition().z + xmf3PlayerDirection.z;
 
-	// LookAt Çà·ÄÀ» °è»êÇÕ´Ï´Ù.
+	// LookAt í–‰ë ¬ì„ ê³„ì‚°í•©ë‹ˆë‹¤.
 	XMFLOAT4X4 mtxLookAt = Matrix4x4::LookAtLH(m_xmf3Position, xmf3LookAtPoint, m_pPlayer->GetUpVector());
 	//mtxLookAt = Rotate(mtxLookAt, 20.0f);
-	// ¾÷µ¥ÀÌÆ®µÈ º¤ÅÍ¸¦ Ä«¸Ş¶ó¿¡ Àû¿ëÇÕ´Ï´Ù.
+	// ì—…ë°ì´íŠ¸ëœ ë²¡í„°ë¥¼ ì¹´ë©”ë¼ì— ì ìš©í•©ë‹ˆë‹¤.
 	m_xmf3Right = XMFLOAT3(m_pPlayer->GetRightVector());
 	m_xmf3Up = XMFLOAT3(m_pPlayer->GetUpVector());
 	m_xmf3Look = XMFLOAT3(m_pPlayer->GetLookVector());
@@ -318,16 +318,16 @@ XMFLOAT4X4 CThirdPersonCamera::Rotate(XMFLOAT4X4& mtxLookAt, float Radians)
 {
 	XMMATRIX lookAtMatrix = XMLoadFloat4x4(&mtxLookAt);
 
-	// XÃà ÁÖÀ§·Î Radiansµµ È¸ÀüÇÏ´Â È¸Àü Çà·Ä »ı¼º
+	// Xì¶• ì£¼ìœ„ë¡œ Radiansë„ íšŒì „í•˜ëŠ” íšŒì „ í–‰ë ¬ ìƒì„±
 	float fAngleRadians = XMConvertToRadians(Radians);
 	XMMATRIX rotationMatrix = XMMatrixRotationX(fAngleRadians);
 
-	// È¸Àü Àû¿ë: ±âº» LookAt Çà·Ä * È¸Àü Çà·Ä
-	// ÁÖÀÇ: Çà·Ä °ö¼À ¼ø¼­°¡ Áß¿äÇÕ´Ï´Ù. ¿ùµå ÁÂÇ¥°è ±âÁØÀ¸·Î È¸ÀüÇÏ±â À§ÇØ¼­´Â
-	// LookAt Çà·Ä¿¡ È¸Àü Çà·ÄÀ» °öÇÏ´Â ¼ø¼­¸¦ ¸ÕÀú Àû¿ëÇØ¾ß ÇÕ´Ï´Ù.
+	// íšŒì „ ì ìš©: ê¸°ë³¸ LookAt í–‰ë ¬ * íšŒì „ í–‰ë ¬
+	// ì£¼ì˜: í–‰ë ¬ ê³±ì…ˆ ìˆœì„œê°€ ì¤‘ìš”í•©ë‹ˆë‹¤. ì›”ë“œ ì¢Œí‘œê³„ ê¸°ì¤€ìœ¼ë¡œ íšŒì „í•˜ê¸° ìœ„í•´ì„œëŠ”
+	// LookAt í–‰ë ¬ì— íšŒì „ í–‰ë ¬ì„ ê³±í•˜ëŠ” ìˆœì„œë¥¼ ë¨¼ì € ì ìš©í•´ì•¼ í•©ë‹ˆë‹¤.
 	XMMATRIX combinedMatrix = lookAtMatrix * rotationMatrix;
 
-	// °á°ú Çà·Ä ÀúÀå
+	// ê²°ê³¼ í–‰ë ¬ ì €ì¥
 	XMStoreFloat4x4(&mtxLookAt, combinedMatrix);
 	return mtxLookAt;
 }
