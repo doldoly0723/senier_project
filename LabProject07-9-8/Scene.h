@@ -132,6 +132,6 @@ public:
 	CUI									*m_pUI = NULL;
 
 	std::list<CBoundingBox*>    m_lpBoundingBoxs;
-	CBoundingBox*				m_pBoundingBox[4];
+	CBoundingBox*				m_pBoundingBox[9];
 
 };

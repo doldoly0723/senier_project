@@ -71,7 +71,6 @@ void CPlayer::Move(DWORD dwDirection, float fDistance, bool bUpdateVelocity)
 
 void CPlayer::Move(const XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
 {
-
 	if (bUpdateVelocity)
 	{
 		m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Shift);
@@ -79,7 +78,7 @@ void CPlayer::Move(const XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
 	else
 	{
 		m_xmf3Position = Vector3::Add(m_xmf3Position, xmf3Shift);
-		m_pCamera->Move(xmf3Shift);
+		// m_pCamera->Move(xmf3Shift);
 	}
 }
 
@@ -159,7 +158,7 @@ void CPlayer::Update(float fTimeElapsed)
 
 	XMFLOAT3 xmf3Velocity = Vector3::ScalarProduct(m_xmf3Velocity, fTimeElapsed, false);
 	// 이전 위치 저장
-	std::cout << xmf3Velocity.x << "\t" << xmf3Velocity.y << "\t" << xmf3Velocity.z << "\t" << std::endl;
+	//std::cout << xmf3Velocity.x << "\t" << xmf3Velocity.y << "\t" << xmf3Velocity.z << "\t" << std::endl;
 	m_xmf3PreviousPosition = m_xmf3Position;
 	Move(xmf3Velocity, false);
 
@@ -169,6 +168,7 @@ void CPlayer::Update(float fTimeElapsed)
 	if (nCurrentCameraMode == THIRD_PERSON_CAMERA) m_pCamera->Update(m_xmf3Position, fTimeElapsed);
 	if (m_pCameraUpdatedContext) OnCameraUpdateCallback(fTimeElapsed);
 	if (nCurrentCameraMode == THIRD_PERSON_CAMERA) m_pCamera->SetLookAt(m_xmf3Position);
+	m_pCamera->Update(m_xmf3Position, fTimeElapsed);
 	m_pCamera->RegenerateViewMatrix();
 
 	// 마찰력 
@@ -704,10 +704,10 @@ void CTerrainPlayer::FireBullet()
 		xmf3Direction.z = xmf3Direction.z + value;
 
 		// 발사 위치
-		xmf3FirePosition.x = xmf3Position.x+2;
-		xmf3FirePosition.y = xmf3Position.y + 12.2;
+		xmf3FirePosition.x = xmf3Position.x+2.0f;
+		xmf3FirePosition.y = xmf3Position.y + 12.2f;
 		// xmf3FirePosition.y = xmf3Position.y;
-		xmf3FirePosition.z = xmf3Position.z + 2.3;
+		xmf3FirePosition.z = xmf3Position.z + 2.3f;
 		//
 		pBulletObject->SetPosition(xmf3FirePosition);
 		pBulletObject->SetMovingDirection(xmf3Direction);
