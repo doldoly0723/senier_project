@@ -252,3 +252,13 @@ public:
 
 	virtual void OnPreRender(ID3D12GraphicsCommandList *pd3dCommandList, void *pContext);
 };
+
+/////////////////////////////////////////////////////
+class CAimingPointMesh : public CMesh
+{
+public:
+	CAimingPointMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fSize = 1.0f);
+
+	virtual ~CAimingPointMesh();
+	
+};
