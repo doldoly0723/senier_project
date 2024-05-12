@@ -1070,6 +1070,35 @@ void CGameObject::MoveForward(float fDistance)
 	CGameObject::SetPosition(xmf3Position);
 }
 
+void CGameObject::MoveToTarget(XMFLOAT3 xmf3TargetPosition, float fDistance)
+{
+	// 수정 필요
+	// 현재 위치 및 목표 위치 벡터 생성
+	XMVECTOR currentPosition = XMLoadFloat3(&GetToParentPosition());
+	XMVECTOR targetPosition = XMLoadFloat3(&xmf3TargetPosition);
+
+	// 목표 지점까지의 방향 벡터 계산
+	XMVECTOR direction = XMVector3Normalize(XMVectorSubtract(targetPosition, currentPosition));
+
+	// 이동 거리 계산
+	float distance = XMVectorGetX(XMVector3Length(XMVectorSubtract(targetPosition, currentPosition)));
+
+	// 이동할 거리 계산 (일정 거리만큼만 이동하도록)
+	float moveDistance = fDistance;
+	if (distance < fDistance) {
+		moveDistance = distance;
+	}
+
+	// 실제 이동할 벡터 계산
+	XMVECTOR moveVector = XMVectorScale(direction, moveDistance);
+
+	// 새로운 위치 계산
+	XMVECTOR newPosition = XMVectorAdd(currentPosition, moveVector);
+
+	// 새로운 위치를 설정
+	SetPosition(XMFLOAT3(XMVectorGetX(newPosition), XMVectorGetY(newPosition), XMVectorGetZ(newPosition)));
+}
+
 void CGameObject::Rotate(float fPitch, float fYaw, float fRoll)
 {
 	XMMATRIX mtxRotate = XMMatrixRotationRollPitchYaw(XMConvertToRadians(fPitch), XMConvertToRadians(fYaw), XMConvertToRadians(fRoll));
@@ -1769,6 +1798,10 @@ CEthanObject::CEthanObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *
 	m_pSkinnedAnimationController = new CEthanAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pEthanModel);
 
 	m_pSkinnedAnimationController->m_pRootMotionObject = pEthanModel->m_pModelRootObject->FindFrame("EthanHips");
+
+	//
+	pdetectSphere.Center = GetPosition();
+	pdetectSphere.Radius = 5.0f;
 }
 
 CEthanObject::~CEthanObject()

@@ -102,15 +102,18 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_nHierarchicalGameObjects = 4;
 	m_ppHierarchicalGameObjects = new CGameObject * [m_nHierarchicalGameObjects];
 
-	CLoadedModelInfo* pAngrybotModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Character_Swat_Guy.bin", NULL);
-	m_ppHierarchicalGameObjects[0] = new CAngrybotObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pAngrybotModel, 1);
+	// 너는 이제부터 적군이야
+	// 너가 detect 함수를 갖고 있어야하고
+	// 결국 player의 정보가 필요함 -> scene에서 넘겨주는건 어때?
+	CLoadedModelInfo* pEthanModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Ethan.bin", NULL);
+	m_ppHierarchicalGameObjects[0] = new CEthanObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 1);
 	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
-	m_ppHierarchicalGameObjects[0]->SetPosition(410.0f, m_pTerrain->GetHeight(410.0f, 735.0f), 735.0f);
-	m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
+	m_ppHierarchicalGameObjects[0]->SetPosition(370.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
+	m_ppHierarchicalGameObjects[0]->SetScale(2.0f, 2.0f, 2.0f);
 	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
-	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(2.0f, 2.0f, 2.0f);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
-	if (pAngrybotModel) delete pAngrybotModel;
+	if (pEthanModel) delete pEthanModel;
 
 	CLoadedModelInfo* pMonsterModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Character_Swat_Guy.bin", NULL);
 	m_ppHierarchicalGameObjects[1] = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pMonsterModel, 1);
@@ -509,7 +512,7 @@ void CScene::CheckPlayerByObjectCollisions()
 		{
 			XMFLOAT3 v{ 0.0f, 0.0f, 0.0f };
 			m_pPlayer->SetVelocity(v);
-			std::cout << "Ãæµ¹!" << std::endl;
+			std::cout << "충돌!" << std::endl;
 
 		}
 	}
@@ -595,6 +598,9 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	}
 	CheckPlayerByObjectCollisions();
 	CheckBulletByObjectCollisions();
+
+	//
+	m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)

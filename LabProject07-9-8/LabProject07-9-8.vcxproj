@@ -138,6 +138,8 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DDSTextureLoader12.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyOwnedStates.cpp" />
     <ClCompile Include="GameFramework.cpp" />
     <ClCompile Include="LabProject07-9-8.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -156,6 +158,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="DDSTextureLoader12.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyOwnedStates.h" />
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="LabProject07-9-8.h" />
     <ClInclude Include="Mesh.h" />
@@ -164,6 +168,8 @@
     <ClInclude Include="Raymarcher.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Voxelizer.h" />
