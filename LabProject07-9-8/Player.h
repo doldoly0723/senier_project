@@ -111,7 +111,7 @@ public:
 	virtual void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera = NULL);
 
 
-	// �߰�
+	// 총알
 	CGameObject** m_BulletObjects = NULL;
 	CBulletObject* m_ppBullets[MAX_BULLETS];
 
@@ -120,6 +120,8 @@ public:
 	bool bLeftMouseButtonDown = false;
 	// 탄 퍼짐
 	float BulletSpread = 0.0;
+	// 바운딩 박스 렌더링
+	bool DrawBoundingBox = false;
 
 	void SetZoom(bool bEnable) { bZoom = bEnable; }
 	void SetMove(bool bEnable) { bMove = bEnable; }

@@ -386,7 +386,6 @@ public:
 	BoundingOrientedBox				m_xmOOBB = BoundingOrientedBox();
 	void SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGameObject);	
 	void SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& xmOOBB2);
-	void MyBoundingBox(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, BoundingOrientedBox& mxOOBB);
 	void UpdateBoundingBox();
 
 	void ScaleBoundingBox(float x, float y, float z);

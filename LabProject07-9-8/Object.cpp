@@ -806,36 +806,6 @@ void CGameObject::SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& 
 		xmOOBB1.Extents.z = xmOOBB2.Extents.z;
 }
 
-void CGameObject::MyBoundingBox(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, BoundingOrientedBox& mxOOBB)
-{
-	CBoundingBoxMesh* pBoundingBoxMesh = new CBoundingBoxMesh(pd3dDevice, pd3dCommandList, mxOOBB);
-	SetMesh(pBoundingBoxMesh);
-
-	CreateShaderVariables(pd3dDevice, pd3dCommandList);
-
-	CTexture* pBoundingBoxTexture = new CTexture(1, RESOURCE_TEXTURE_CUBE, 0, 1);
-	pBoundingBoxTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"SkyBox/skybox.dds", RESOURCE_TEXTURE_CUBE, 0);
-
-	CBoundingBoxShader* pBoundingBoxShader = new CBoundingBoxShader();
-	pBoundingBoxShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
-	pBoundingBoxShader->CreateShaderVariables(pd3dDevice, pd3dCommandList);
-
-	CScene::CreateShaderResourceViews(pd3dDevice, pBoundingBoxTexture, 0, 10);
-
-	//
-	m_nMaterials = 1;
-
-	m_ppMaterials = new CMaterial * [m_nMaterials];
-	for (int i = 0; i < m_nMaterials; i++) m_ppMaterials[i] = NULL;
-
-
-	CMaterial* pBoundingBoxMaterial = new CMaterial(1);
-	pBoundingBoxMaterial->SetTexture(pBoundingBoxTexture);
-	pBoundingBoxMaterial->SetShader(pBoundingBoxShader);
-
-	SetMaterial(0, pBoundingBoxMaterial);
-}
-
 void CGameObject::UpdateBoundingBox()
 {
 	// OOBB의 중심을 월드좌표로 이동

@@ -336,6 +336,15 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	switch (nMessageID)
 	{
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case 'q':
+		case 'Q':
+			m_pPlayer->DrawBoundingBox = !m_pPlayer->DrawBoundingBox;
+		default:
+			break;
+		}
 		case WM_KEYUP:
 			switch (wParam)
 			{
