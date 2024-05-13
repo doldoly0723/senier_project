@@ -136,7 +136,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[1]->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
 	m_ppHierarchicalGameObjects[1]->SetScale(30.0f, 30.0f, 30.0f);
 	m_ppHierarchicalGameObjects[1]->SetBoundingBox(m_ppHierarchicalGameObjects[1]->m_xmOOBB, m_ppHierarchicalGameObjects[1]);
-	m_ppHierarchicalGameObjects[1]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	m_ppHierarchicalGameObjects[1]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
 	m_pBoundingBox[1] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[1]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[1]);
 	if (pMonsterModel) delete pMonsterModel;
@@ -170,7 +170,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[3]->SetPosition(1350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
 	m_ppHierarchicalGameObjects[3]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(10.0f, 10.0f, 180.0f);
+	m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(10.0f, 20.0f, 180.0f);
 	m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (wall1) delete wall1;
@@ -181,7 +181,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[4]->Rotate(0.0f, 90.0f, 0.0f);
 	m_ppHierarchicalGameObjects[4]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[4]->SetBoundingBox(m_ppHierarchicalGameObjects[4]->m_xmOOBB, m_ppHierarchicalGameObjects[4]);
-	m_ppHierarchicalGameObjects[4]->ScaleBoundingBox(180.0f, 10.0f, 10.0f);
+	m_ppHierarchicalGameObjects[4]->ScaleBoundingBox(180.0f, 20.0f, 10.0f);
 	m_pBoundingBox[4] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[4]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (wall2) delete wall2;
@@ -192,7 +192,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	//m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
 	m_ppHierarchicalGameObjects[5]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[5]->SetBoundingBox(m_ppHierarchicalGameObjects[5]->m_xmOOBB, m_ppHierarchicalGameObjects[5]);
-	m_ppHierarchicalGameObjects[5]->ScaleBoundingBox(10.0f, 10.0f, 180.0f);
+	m_ppHierarchicalGameObjects[5]->ScaleBoundingBox(10.0f, 20.0f, 180.0f);
 	m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[5]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (wall3) delete wall3;
@@ -204,7 +204,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[6]->Rotate(0.0f, 60.0f, 0.0f);
 	m_ppHierarchicalGameObjects[6]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[6]->SetBoundingBox(m_ppHierarchicalGameObjects[6]->m_xmOOBB, m_ppHierarchicalGameObjects[6]);
-	m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 10.0f, 20.0f);
+	m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 20.0f, 20.0f);
 	m_ppHierarchicalGameObjects[6]->RotateBoundingBox(0.0f, XMConvertToRadians(60.0f), 0.0f);
 	m_pBoundingBox[6] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[6]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
@@ -216,7 +216,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	//m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
 	m_ppHierarchicalGameObjects[7]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[7]->SetBoundingBox(m_ppHierarchicalGameObjects[7]->m_xmOOBB, m_ppHierarchicalGameObjects[7]);
-	m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 10.0f, 20.0f);
+	m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 20.0f, 20.0f);
 	m_pBoundingBox[7] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[7]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (container2) delete container2;

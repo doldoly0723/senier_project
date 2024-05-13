@@ -125,6 +125,8 @@ public:
 	float BulletSpread = 0.0;
 	// 바운딩 박스 렌더링
 	bool DrawBoundingBox = false;
+	// Spread On/Off
+	bool Spread = false;
 
 	// 이전 위치를 저장하는 함수
 	XMFLOAT3 GetPreviousPosition() const { return m_xmf3PreviousPosition; }
