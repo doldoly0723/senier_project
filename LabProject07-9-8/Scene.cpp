@@ -204,7 +204,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[6]->Rotate(0.0f, 60.0f, 0.0f);
 	m_ppHierarchicalGameObjects[6]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[6]->SetBoundingBox(m_ppHierarchicalGameObjects[6]->m_xmOOBB, m_ppHierarchicalGameObjects[6]);
-	m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 20.0f, 20.0f);
+	m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 20.0f, 30.0f);
 	m_ppHierarchicalGameObjects[6]->RotateBoundingBox(0.0f, XMConvertToRadians(60.0f), 0.0f);
 	m_pBoundingBox[6] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[6]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
@@ -216,7 +216,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	//m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
 	m_ppHierarchicalGameObjects[7]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[7]->SetBoundingBox(m_ppHierarchicalGameObjects[7]->m_xmOOBB, m_ppHierarchicalGameObjects[7]);
-	m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 20.0f, 20.0f);
+	m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 20.0f, 30.0f);
 	m_pBoundingBox[7] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[7]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (container2) delete container2;
@@ -239,7 +239,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[9]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[9]->SetBoundingBox(m_ppHierarchicalGameObjects[9]->m_xmOOBB, m_ppHierarchicalGameObjects[9]);
 
-	m_ppHierarchicalGameObjects[9]->ScaleBoundingBox(5.0f, 10.0f, 5.0f);
+	m_ppHierarchicalGameObjects[9]->ScaleBoundingBox(5.0f, 20.0f, 5.0f);
 	m_ppHierarchicalGameObjects[9]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
 	m_ppHierarchicalGameObjects[9]->nonConflicting = true;
 	m_ppHierarchicalGameObjects[9]->isNPC = true;
@@ -750,7 +750,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	m_fElapsedTime = fTimeElapsed;
 
 	CheckPlayerByObjectCollisions();
-	CheckBulletByObjectCollisions();
+	//CheckBulletByObjectCollisions();
 
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Animate(fTimeElapsed);
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
