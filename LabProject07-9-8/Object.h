@@ -389,6 +389,7 @@ public:
 	void UpdateBoundingBox();
 
 	void ScaleBoundingBox(float x, float y, float z);
+	void RotateBoundingBox(float x, float y, float z);
 	//
 
 	void SetMesh(CMesh *pMesh);

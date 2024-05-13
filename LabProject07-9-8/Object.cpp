@@ -820,6 +820,15 @@ void CGameObject::ScaleBoundingBox(float x, float y, float z)
 	m_xmOOBB.Extents.z *= z;
 }
 
+void CGameObject::RotateBoundingBox(float x, float y, float z)
+{
+	// Euler 각도를 사원수로 변환
+	XMVECTOR quaternion = XMQuaternionRotationRollPitchYaw(x, y, z);
+
+	// 사원수를 BoundingOrientedBox의 방향으로 설정
+	XMStoreFloat4(&m_xmOOBB.Orientation, quaternion);
+}
+
 void CGameObject::SetMesh(CMesh *pMesh)
 {
 	if (m_pMesh) m_pMesh->Release();

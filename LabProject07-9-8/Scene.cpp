@@ -127,7 +127,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
 
-	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(5.0f, 10.0f, 5.0f);
+	m_ppHierarchicalGameObjects[0]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
 	m_pBoundingBox[0] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[0]->m_xmOOBB);
 
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
@@ -182,8 +183,6 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[4] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall2, 1);
 	m_ppHierarchicalGameObjects[4]->SetPosition(1520.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1920.0f);
 	m_ppHierarchicalGameObjects[4]->Rotate(0.0f, 90.0f, 0.0f);
-	//XMFLOAT4 rotate = XMFLOAT4(0.0f, 90.0f, 0.0f, 1.0f);
-	//m_ppHierarchicalGameObjects[4]->m_xmOOBB.Orientation = rotate;
 	m_ppHierarchicalGameObjects[4]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[4]->SetBoundingBox(m_ppHierarchicalGameObjects[4]->m_xmOOBB, m_ppHierarchicalGameObjects[4]);
 	m_ppHierarchicalGameObjects[4]->ScaleBoundingBox(180.0f, 10.0f, 10.0f);
@@ -209,7 +208,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[6]->Rotate(0.0f, 60.0f, 0.0f);
 	m_ppHierarchicalGameObjects[6]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[6]->SetBoundingBox(m_ppHierarchicalGameObjects[6]->m_xmOOBB, m_ppHierarchicalGameObjects[6]);
-	m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(10.0f, 1.0f, 1.0f);
+	m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 10.0f, 20.0f);
+	m_ppHierarchicalGameObjects[6]->RotateBoundingBox(0.0f, XMConvertToRadians(60.0f), 0.0f);
 	m_pBoundingBox[6] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[6]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (container1) delete container1;
@@ -220,7 +220,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	//m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
 	m_ppHierarchicalGameObjects[7]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[7]->SetBoundingBox(m_ppHierarchicalGameObjects[7]->m_xmOOBB, m_ppHierarchicalGameObjects[7]);
-	m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
+	m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 10.0f, 20.0f);
 	m_pBoundingBox[7] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[7]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (container2) delete container2;
@@ -737,7 +737,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 
 	//
 	//m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
-	m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition());
+	//m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition());
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
