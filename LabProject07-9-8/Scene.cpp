@@ -121,7 +121,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
 
-	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(5.0f, 10.0f, 5.0f);
+	m_ppHierarchicalGameObjects[0]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
 	m_pBoundingBox[0] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[0]->m_xmOOBB);
 
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
@@ -167,7 +168,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[3]->SetPosition(1350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
 	m_ppHierarchicalGameObjects[3]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(10.0f, 10.0f, 180.0f);
 	m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (wall1) delete wall1;
@@ -177,9 +178,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[4]->SetPosition(1520.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1920.0f);
 	m_ppHierarchicalGameObjects[4]->Rotate(0.0f, 90.0f, 0.0f);
 	m_ppHierarchicalGameObjects[4]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[4]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
-	//m_pBoundingBox[4] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
+	m_ppHierarchicalGameObjects[4]->SetBoundingBox(m_ppHierarchicalGameObjects[4]->m_xmOOBB, m_ppHierarchicalGameObjects[4]);
+	m_ppHierarchicalGameObjects[4]->ScaleBoundingBox(180.0f, 10.0f, 10.0f);
+	m_pBoundingBox[4] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[4]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (wall2) delete wall2;
 
@@ -188,9 +189,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[5]->SetPosition(1670.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
 	//m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
 	m_ppHierarchicalGameObjects[5]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[5]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
-	//m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
+	m_ppHierarchicalGameObjects[5]->SetBoundingBox(m_ppHierarchicalGameObjects[5]->m_xmOOBB, m_ppHierarchicalGameObjects[5]);
+	m_ppHierarchicalGameObjects[5]->ScaleBoundingBox(10.0f, 10.0f, 180.0f);
+	m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[5]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (wall3) delete wall3;
 
@@ -200,9 +201,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[6]->SetPosition(1450.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1800.0f);
 	m_ppHierarchicalGameObjects[6]->Rotate(0.0f, 60.0f, 0.0f);
 	m_ppHierarchicalGameObjects[6]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[6]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
-	//m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
+	m_ppHierarchicalGameObjects[6]->SetBoundingBox(m_ppHierarchicalGameObjects[6]->m_xmOOBB, m_ppHierarchicalGameObjects[6]);
+	m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 10.0f, 20.0f);
+	m_ppHierarchicalGameObjects[6]->RotateBoundingBox(0.0f, XMConvertToRadians(60.0f), 0.0f);
+	m_pBoundingBox[6] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[6]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (container1) delete container1;
 
@@ -211,9 +213,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[7]->SetPosition(1600.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1700.0f);
 	//m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
 	m_ppHierarchicalGameObjects[7]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[7]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
-	//m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
+	m_ppHierarchicalGameObjects[7]->SetBoundingBox(m_ppHierarchicalGameObjects[7]->m_xmOOBB, m_ppHierarchicalGameObjects[7]);
+	m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 10.0f, 20.0f);
+	m_pBoundingBox[7] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[7]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (container2) delete container2;
 
@@ -222,9 +224,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[8]->SetPosition(1620.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1860.0f);
 	m_ppHierarchicalGameObjects[8]->Rotate(0.0f, 0.0f, 0.0f);
 	m_ppHierarchicalGameObjects[8]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[8]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
-	//m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
+	m_ppHierarchicalGameObjects[8]->SetBoundingBox(m_ppHierarchicalGameObjects[8]->m_xmOOBB, m_ppHierarchicalGameObjects[8]);
+	m_ppHierarchicalGameObjects[8]->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
+	m_pBoundingBox[8] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[8]->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (sandbag) delete sandbag;
 
@@ -601,9 +603,26 @@ void CScene::CheckPlayerByObjectCollisions()
 		{
 			// 이전 위치로 돌려보내기
 			// 충돌하면 어느 방향으로도 안움직이네..
+			// 충돌한 객체와 플레이어의 위치를 사용하여 표면 법선 계산
+			//XMFLOAT3 xmf3CollisionPoint = m_pPlayer->GetPosition();
+			//XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
+			//XMFLOAT3 xmf3SurfaceNormal;
+
+			//// 표면 법선 계산
+			//XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
+
+			//XMVECTOR incidentDirection = XMLoadFloat3(&m_pPlayer->m_xmf3MovingDirection);
+			//XMVECTOR normal = XMLoadFloat3(&xmf3SurfaceNormal);
+
+			//// 반사 벡터 계산
+			//XMVECTOR reflectedDirection = XMVector3Reflect(incidentDirection, normal);
+
+			//// 반사 벡터를 플레이어의 방향으로 설정
+			//XMStoreFloat3(&m_pPlayer->m_xmf3MovingDirection, reflectedDirection);
+
 			//auto t = m_pPlayer->GetPreviousPosition();
 			//m_pPlayer->SetPosition(t);
-			//std::cout << "충돌!" << std::endl;
+			//m_pPlayer->Move(m_pPlayer->m_xmf3MovingDirection);
 
 			// 충돌한 물체의 법선 벡터 계산해서 플레이어의 이동 방향 벡터를 반대로 돌리기
 			XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
@@ -712,6 +731,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 
 	
 	//m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
+
 	if (m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition()))
 	{
 		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, false);
@@ -722,6 +742,9 @@ void CScene::AnimateObjects(float fTimeElapsed)
 		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
 		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
 	}
+
+	//m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition());
+
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -755,7 +778,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	// OOBB 렌더링
 	if (m_pPlayer->DrawBoundingBox)
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 9; i++)
 		{
 			m_pBoundingBox[i]->Render(pd3dCommandList, pCamera);
 		}

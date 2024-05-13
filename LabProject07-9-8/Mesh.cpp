@@ -808,8 +808,6 @@ CBoundingBoxMesh::CBoundingBoxMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 
 	m_pxmf3Positions = new XMFLOAT3[m_nVertices];
 
-
-
 	// boundingbox 렌더링 준비
 	m_pxmf3Positions[0] = corners[0];
 	m_pxmf3Positions[1] = corners[1];
@@ -846,6 +844,9 @@ CBoundingBoxMesh::CBoundingBoxMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 
 	m_pxmf3Positions[22] = corners[3];
 	m_pxmf3Positions[23] = corners[7];
+
+	//for(int i = 0; i < 24; i++)
+	//	m_pxmf3Positions[i].y += 10;
 
 
 	m_pd3dPositionBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, m_pxmf3Positions, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
