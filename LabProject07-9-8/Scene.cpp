@@ -99,7 +99,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	XMFLOAT4 xmf4Color = XMFLOAT4(0.7608f, 0.6980f, 0.5020f, 0.0f);
 	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 513, 513, xmf3Scale, xmf4Color);
 
-	m_nHierarchicalGameObjects = 9;
+	m_nHierarchicalGameObjects = 10;
 	m_ppHierarchicalGameObjects = new CGameObject * [m_nHierarchicalGameObjects];
 
 	// 너는 이제부터 적군이야
@@ -232,7 +232,21 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	if (sandbag) delete sandbag;
 
+	CLoadedModelInfo* pNPCModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
+	m_ppHierarchicalGameObjects[9] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel, 4);
+	m_ppHierarchicalGameObjects[9]->SetPosition(1380.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
+	m_ppHierarchicalGameObjects[9]->Rotate(0.0f, 180.0f, 0.0f);
+	m_ppHierarchicalGameObjects[9]->SetScale(10.0f, 10.0f, 10.0f);
+	m_ppHierarchicalGameObjects[9]->SetBoundingBox(m_ppHierarchicalGameObjects[9]->m_xmOOBB, m_ppHierarchicalGameObjects[9]);
 
+	m_ppHierarchicalGameObjects[9]->ScaleBoundingBox(5.0f, 10.0f, 5.0f);
+	m_ppHierarchicalGameObjects[9]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
+	m_ppHierarchicalGameObjects[9]->nonConflicting = true;
+	m_ppHierarchicalGameObjects[9]->isNPC = true;
+	m_pBoundingBox[9] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[9]->m_xmOOBB);
+
+	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
+	if (pNPCModel) delete pNPCModel;
 
 
 	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
@@ -753,26 +767,30 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	
 	//m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
 
-	if (!m_ppHierarchicalGameObjects[0]->isheat)
+	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
 	{
-		if (m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition()))
+		if (m_ppHierarchicalGameObjects[i]->isNPC)
 		{
-			m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, false);
-			m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, true);
-		}
-		else
-		{
-			m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
-			m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+			if (!m_ppHierarchicalGameObjects[i]->isheat)
+			{
+				if (m_ppHierarchicalGameObjects[i]->findPlayer(m_pPlayer->GetPosition()))
+				{
+					m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(0, false);
+					m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(1, true);
+				}
+				else
+				{
+					m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
+					m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+				}
+			}
+			else
+			{
+				//m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackPosition(2, 3.0f);
+			}
 		}
 	}
-	else
-	{
-		//m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackPosition(2, 3.0f);
-	}
-	
 
-	//m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition());
 
 }
 
@@ -807,7 +825,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	// OOBB 렌더링
 	if (m_pPlayer->DrawBoundingBox)
 	{
-		for (int i = 0; i < 9; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			m_pBoundingBox[i]->Render(pd3dCommandList, pCamera);
 		}
