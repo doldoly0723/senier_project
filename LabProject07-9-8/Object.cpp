@@ -2004,7 +2004,7 @@ bool CEnemyNPC::findPlayer(XMFLOAT3 xmf3TargetPosition)
 
 		if (angle <= MAX_ANGLE)
 		{
-			cout << "발견" << endl;
+			//cout << "발견" << endl;
 			return true;
 		}
 	}

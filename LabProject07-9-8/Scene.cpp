@@ -627,36 +627,22 @@ void CScene::CheckPlayerByObjectCollisions()
 			//m_pPlayer->Move(m_pPlayer->m_xmf3MovingDirection);
 
 			// 충돌한 물체의 법선 벡터 계산해서 플레이어의 이동 방향 벡터를 반대로 돌리기
-			if (!Object->nonConflicting)
-			{
-				XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
-				XMFLOAT3 objectPosition = Object->GetPosition();
+			XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
+			XMFLOAT3 objectPosition = Object->GetPosition();
 
-				// 충돌 지점에서의 노멀 벡터 계산
-				XMFLOAT3 collisionNormal;
-				XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
+			// 충돌 지점에서의 노멀 벡터 계산
+			XMFLOAT3 collisionNormal;
+			XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
 
-				// 충돌 법선의 반대 방향으로 플레이어 이동
-				XMFLOAT3 newPosition;
-				XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
+			// 충돌 법선의 반대 방향으로 플레이어 이동
+			XMFLOAT3 newPosition;
+			XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
 
-				// 새로운 위치로 플레이어 이동
-				m_pPlayer->SetPosition(newPosition);
+			// 새로운 위치로 플레이어 이동
+			m_pPlayer->SetPosition(newPosition);
 
-				std::cout << "충돌!" << std::endl;
-			}
-			else
-			{
-				if (Object->isNPC)
-				{
-					Object->isheat = true;
-					cout << "NPC 맞음" << endl;
-					Object->m_pSkinnedAnimationController->SetTrackEnable(0, false);
-					Object->m_pSkinnedAnimationController->SetTrackEnable(1, false);
-					Object->m_pSkinnedAnimationController->SetTrackEnable(2, true);
-					Object->m_pSkinnedAnimationController->SetTrackEnable(3, false);
-				}
-			}
+			std::cout << "충돌!" << std::endl;
+			
 		}
 	}
 }
@@ -685,20 +671,36 @@ void CScene::CheckBulletByObjectCollisions()
 			if (m_pPlayer->m_ppBullets[i]->m_bActive)
 				if (m_pPlayer->m_ppBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
 				{
-					// std::cout << "충돌!" << std::endl;
+					if (!Object->nonConflicting)
+					{
+						// std::cout << "충돌!" << std::endl;
 
 					// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
-					XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
-					XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
-					XMFLOAT3 xmf3SurfaceNormal;
+						XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
+						XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
+						XMFLOAT3 xmf3SurfaceNormal;
 
-					// 표면 법선 계산
-					XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
-					// 위,아래로 튐 방지
-					xmf3SurfaceNormal.y = 0;
+						// 표면 법선 계산
+						XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
+						// 위,아래로 튐 방지
+						xmf3SurfaceNormal.y = 0;
 
-					// 총알을 반사시키는 함수 호출
-					m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
+						// 총알을 반사시키는 함수 호출
+						m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
+					}
+					else
+					{
+						if (Object->isNPC)
+						{
+							Object->isheat = true;
+							cout << "NPC 맞음" << endl;
+							Object->m_pSkinnedAnimationController->SetTrackEnable(0, false);
+							Object->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+							Object->m_pSkinnedAnimationController->SetTrackEnable(2, true);
+							Object->m_pSkinnedAnimationController->SetTrackEnable(3, false);
+						}
+					}
+					
 
 				}
 		}
@@ -764,7 +766,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	}
 	else
 	{
-		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackPosition(2, 1.5f);
+		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackPosition(2, 3.0f);
 	}
 	
 
