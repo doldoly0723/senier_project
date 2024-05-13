@@ -671,6 +671,10 @@ void CAnimationController::AdvanceTime(float fTimeElapsed, CGameObject* pRootGam
 		OnAnimationIK(pRootGameObject);
 	}
 }
+void CAnimationController::SetTrackType(int nAnimationTrack, int ntype)
+{
+	if (m_pAnimationTracks) m_pAnimationTracks[nAnimationTrack].m_nType = ANIMATION_TYPE_ONCE;
+}
 //*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

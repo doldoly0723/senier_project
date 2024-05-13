@@ -694,10 +694,12 @@ void CScene::CheckBulletByObjectCollisions()
 						{
 							Object->isheat = true;
 							cout << "NPC 맞음" << endl;
+							Object->m_pSkinnedAnimationController->SetTrackType(2, ANIMATION_TYPE_ONCE);
 							Object->m_pSkinnedAnimationController->SetTrackEnable(0, false);
 							Object->m_pSkinnedAnimationController->SetTrackEnable(1, false);
 							Object->m_pSkinnedAnimationController->SetTrackEnable(2, true);
 							Object->m_pSkinnedAnimationController->SetTrackEnable(3, false);
+							
 						}
 					}
 					
@@ -766,7 +768,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	}
 	else
 	{
-		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackPosition(2, 3.0f);
+		//m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackPosition(2, 3.0f);
 	}
 	
 
