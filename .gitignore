@@ -36,8 +36,8 @@
 *.vsidx
 *.ipch
 *.db
-LabProject07-9-8/.vs/LabProject07-9-8/v17/.suo
-LabProject07-9-8/.vs/LabProject07-9-8/FileContentIndex/read.lock
+.vs/
+x64/
 
 *.exe.recipe
 *.ilk
@@ -47,4 +47,4 @@ LabProject07-9-8/.vs/LabProject07-9-8/FileContentIndex/read.lock
 *.res
 *.vcxproj.user
 *.vs
-x64/*
+
