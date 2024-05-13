@@ -1971,12 +1971,12 @@ CEnemyNPC::CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCo
 	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pLionModel);
 	
 	
-	/*for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		m_pSkinnedAnimationController->SetTrackAnimationSet(i, i);
 		m_pSkinnedAnimationController->SetTrackEnable(i, false);
 	}
-	m_pSkinnedAnimationController->SetTrackEnable(0, true);*/
+	m_pSkinnedAnimationController->SetTrackEnable(0, true);
 }
 
 CEnemyNPC::~CEnemyNPC()
