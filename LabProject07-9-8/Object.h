@@ -323,6 +323,7 @@ public:
 
 	void AdvanceTime(float fElapsedTime, CGameObject *pRootGameObject);
 
+
 public:
 	bool							m_bRootMotion = false;
 	CGameObject*					m_pModelRootObject = NULL;
@@ -376,6 +377,12 @@ public:
 	XMFLOAT3						m_xmf3MovingDirection = XMFLOAT3(0.0f, 0.0f, 1.0f);
 	float							m_fMovingSpeed = 0.0;
 	float							m_fMovingRange = 0.0f;
+
+	// 충돌되지 않는 오브젝트
+	bool							nonConflicting = false;
+	// NPC 인가
+	bool							isNPC = false;
+	bool							isheat = false;
 
 	void SetActive(bool bActive) { m_bActive = bActive; }
 	//

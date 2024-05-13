@@ -109,12 +109,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[0] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 4);
 
 	
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(i, i);
 		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(i, false);
 	}
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
+	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);*/
 	
 	m_ppHierarchicalGameObjects[0]->SetPosition(1610.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
 	m_ppHierarchicalGameObjects[0]->Rotate(0.0f, 225.0f, 0.0f);
@@ -123,6 +123,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(5.0f, 10.0f, 5.0f);
 	m_ppHierarchicalGameObjects[0]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
+	m_ppHierarchicalGameObjects[0]->nonConflicting = true;
+	m_ppHierarchicalGameObjects[0]->isNPC = true;
 	m_pBoundingBox[0] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[0]->m_xmOOBB);
 
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
@@ -625,21 +627,36 @@ void CScene::CheckPlayerByObjectCollisions()
 			//m_pPlayer->Move(m_pPlayer->m_xmf3MovingDirection);
 
 			// 충돌한 물체의 법선 벡터 계산해서 플레이어의 이동 방향 벡터를 반대로 돌리기
-			XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
-			XMFLOAT3 objectPosition = Object->GetPosition();
+			if (!Object->nonConflicting)
+			{
+				XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
+				XMFLOAT3 objectPosition = Object->GetPosition();
 
-			// 충돌 지점에서의 노멀 벡터 계산
-			XMFLOAT3 collisionNormal;
-			XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
+				// 충돌 지점에서의 노멀 벡터 계산
+				XMFLOAT3 collisionNormal;
+				XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
 
-			// 충돌 법선의 반대 방향으로 플레이어 이동
-			XMFLOAT3 newPosition;
-			XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
+				// 충돌 법선의 반대 방향으로 플레이어 이동
+				XMFLOAT3 newPosition;
+				XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
 
-			// 새로운 위치로 플레이어 이동
-			m_pPlayer->SetPosition(newPosition);
+				// 새로운 위치로 플레이어 이동
+				m_pPlayer->SetPosition(newPosition);
 
-			std::cout << "충돌!" << std::endl;
+				std::cout << "충돌!" << std::endl;
+			}
+			else
+			{
+				if (Object->isNPC)
+				{
+					Object->isheat = true;
+					cout << "NPC 맞음" << endl;
+					Object->m_pSkinnedAnimationController->SetTrackEnable(0, false);
+					Object->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+					Object->m_pSkinnedAnimationController->SetTrackEnable(2, true);
+					Object->m_pSkinnedAnimationController->SetTrackEnable(3, false);
+				}
+			}
 		}
 	}
 }
@@ -732,16 +749,24 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	
 	//m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
 
-	if (m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition()))
+	if (!m_ppHierarchicalGameObjects[0]->isheat)
 	{
-		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, false);
-		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, true);
+		if (m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition()))
+		{
+			m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, false);
+			m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, true);
+		}
+		else
+		{
+			m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
+			m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+		}
 	}
 	else
 	{
-		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
-		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackPosition(2, 1.5f);
 	}
+	
 
 	//m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition());
 
