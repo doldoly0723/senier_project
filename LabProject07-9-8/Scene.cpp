@@ -121,7 +121,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
 
-	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(5.0f, 10.0f, 5.0f);
+	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(5.0f, 20.0f, 5.0f);
 	m_ppHierarchicalGameObjects[0]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
 	m_ppHierarchicalGameObjects[0]->nonConflicting = true;
 	m_ppHierarchicalGameObjects[0]->isNPC = true;
@@ -822,14 +822,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		}
 	}
 
-	// OOBB 렌더링
-	if (m_pPlayer->DrawBoundingBox)
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			m_pBoundingBox[i]->Render(pd3dCommandList, pCamera);
-		}
-	}
+	
 
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
@@ -847,6 +840,14 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	for (const auto& elm : m_lpGameObjects) {
 		elm->UpdateTransform(NULL);
 		elm->Render(pd3dCommandList, pCamera);
+	}
+	// OOBB 렌더링
+	if (m_pPlayer->DrawBoundingBox)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			m_pBoundingBox[i]->Render(pd3dCommandList, pCamera);
+		}
 	}
 
 	if(m_pUI)
