@@ -106,21 +106,15 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// 너가 detect 함수를 갖고 있어야하고
 	// 결국 player의 정보가 필요함 -> scene에서 넘겨주는건 어때?
 	CLoadedModelInfo* pEthanModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
-	m_ppHierarchicalGameObjects[0] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 1);
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
-	/*m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(1, 1);
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(2, 2);
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(3, 3);
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(2, false);
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(3, false);*/
+	m_ppHierarchicalGameObjects[0] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 4);
+
 	
-	/*for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(i, i);
 		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(i, false);
 	}
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);*/
+	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
 	
 	m_ppHierarchicalGameObjects[0]->SetPosition(1610.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
 	m_ppHierarchicalGameObjects[0]->Rotate(0.0f, 225.0f, 0.0f);
@@ -228,7 +222,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedModelInfo* sandbag = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/sandbag2.bin", NULL);
 	m_ppHierarchicalGameObjects[8] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, sandbag, 1);
 	m_ppHierarchicalGameObjects[8]->SetPosition(1620.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1860.0f);
-	m_ppHierarchicalGameObjects[8]->Rotate(0.0f, -45.0f, 0.0f);
+	m_ppHierarchicalGameObjects[8]->Rotate(0.0f, 0.0f, 0.0f);
 	m_ppHierarchicalGameObjects[8]->SetScale(10.0f, 10.0f, 10.0f);
 	m_ppHierarchicalGameObjects[8]->SetBoundingBox(m_ppHierarchicalGameObjects[8]->m_xmOOBB, m_ppHierarchicalGameObjects[8]);
 	m_ppHierarchicalGameObjects[8]->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
@@ -735,9 +729,22 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	CheckPlayerByObjectCollisions();
 	CheckBulletByObjectCollisions();
 
-	//
+	
 	//m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
+
+	if (m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition()))
+	{
+		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, false);
+		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, true);
+	}
+	else
+	{
+		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
+		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+	}
+
 	//m_ppHierarchicalGameObjects[0]->findPlayer(m_pPlayer->GetPosition());
+
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
