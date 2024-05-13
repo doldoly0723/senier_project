@@ -400,8 +400,8 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
-		//CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
+		//CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
 
 		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
 		m_ppBullets[i]->SetScale(10.0f, 10.0f, 10.5f);
@@ -699,9 +699,12 @@ void CTerrainPlayer::FireBullet()
 		// 진짜 간단한 탄퍼짐
 		// 가중치에 따라서 더 퍼지도록 구현해야함
 		// 그래도 초탄은 맞긴해야하니까 잘못된 코드긴함
-		xmf3Direction.x = xmf3Direction.x + value;
-		xmf3Direction.y = xmf3Direction.y + value;
-		xmf3Direction.z = xmf3Direction.z + value;
+		if(Spread)
+		{
+			xmf3Direction.x = xmf3Direction.x + value;
+			xmf3Direction.y = xmf3Direction.y + value;
+			xmf3Direction.z = xmf3Direction.z + value;
+		}
 
 		// 발사 위치
 		xmf3FirePosition.x = xmf3Position.x+2.0f;

@@ -345,6 +345,10 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		case 'q':
 		case 'Q':
 			m_pPlayer->DrawBoundingBox = !m_pPlayer->DrawBoundingBox;
+			break;
+		case 'e':
+		case 'E':
+			m_pPlayer->Spread = !m_pPlayer->Spread;
 		default:
 			break;
 		}
