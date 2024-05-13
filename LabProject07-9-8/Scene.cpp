@@ -134,7 +134,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[1] = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pMonsterModel, 1);
 	//m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
 	m_ppHierarchicalGameObjects[1]->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
-	m_ppHierarchicalGameObjects[1]->SetScale(30.0f, 30.0f, 30.0f);
+	m_ppHierarchicalGameObjects[1]->SetScale(50.0f, 30.0f, 50.0f);
 	m_ppHierarchicalGameObjects[1]->SetBoundingBox(m_ppHierarchicalGameObjects[1]->m_xmOOBB, m_ppHierarchicalGameObjects[1]);
 	m_ppHierarchicalGameObjects[1]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
 	m_pBoundingBox[1] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[1]->m_xmOOBB);
@@ -145,7 +145,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppHierarchicalGameObjects[2] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox, 1);
 	//m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
 	m_ppHierarchicalGameObjects[2]->SetPosition(1200.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1650.0f);
-	m_ppHierarchicalGameObjects[2]->SetScale(30.0f, 30.0f, 30.0f);
+	m_ppHierarchicalGameObjects[2]->SetScale(50.0f, 30.0f, 50.0f);
 	m_ppHierarchicalGameObjects[2]->SetBoundingBox(m_ppHierarchicalGameObjects[2]->m_xmOOBB, m_ppHierarchicalGameObjects[2]);
 	 m_ppHierarchicalGameObjects[2]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
 	m_pBoundingBox[2] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[2]->m_xmOOBB);
@@ -669,19 +669,6 @@ void CScene::CheckBulletByObjectCollisions()
 
 		for (int i = 0; i < MAX_BULLETS; i++)
 		{
-			XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
-			XMFLOAT3 bulletCenter = m_pPlayer->m_ppBullets[i]->m_xmOOBB.Center;
-			auto t = Object->GetPosition();
-			if (m_pPlayer->m_ppBullets[i]->m_bActive)
-			{
-				//std::cout << "Object OBB: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-				//std::cout << "Object Position: " << t.x << ", " << t.y << ", " << t.z << std::endl;
-				// std::cout << "Bullet 위치: " << bulletCenter.x << ", " << bulletCenter.y << ", " << bulletCenter.z << std::endl;
-			}
-		}
-
-		for (int i = 0; i < MAX_BULLETS; i++)
-		{
 			if (m_pPlayer->m_ppBullets[i]->m_bActive)
 				if (m_pPlayer->m_ppBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
 				{
@@ -693,6 +680,8 @@ void CScene::CheckBulletByObjectCollisions()
 						XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
 						XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
 						XMFLOAT3 xmf3SurfaceNormal;
+
+						xmf3CollisionPoint.y = xmf3ObjectCenter.y;
 
 						// 표면 법선 계산
 						XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
