@@ -671,6 +671,10 @@ void CAnimationController::AdvanceTime(float fTimeElapsed, CGameObject* pRootGam
 		OnAnimationIK(pRootGameObject);
 	}
 }
+void CAnimationController::SetTrackType(int nAnimationTrack, int ntype)
+{
+	if (m_pAnimationTracks) m_pAnimationTracks[nAnimationTrack].m_nType = ANIMATION_TYPE_ONCE;
+}
 //*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -2004,7 +2008,7 @@ bool CEnemyNPC::findPlayer(XMFLOAT3 xmf3TargetPosition)
 
 		if (angle <= MAX_ANGLE)
 		{
-			cout << "발견" << endl;
+			//cout << "발견" << endl;
 			return true;
 		}
 	}

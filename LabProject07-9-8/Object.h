@@ -323,6 +323,7 @@ public:
 
 	void AdvanceTime(float fElapsedTime, CGameObject *pRootGameObject);
 
+	void SetTrackType(int nAnimationTrack, int ntype);
 
 public:
 	bool							m_bRootMotion = false;
