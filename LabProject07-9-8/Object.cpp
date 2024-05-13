@@ -1960,8 +1960,49 @@ CEnemyNPC::CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCo
 
 	SetChild(pLionModel->m_pModelRootObject, true);
 	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pLionModel);
+	
+	
+	/*for (int i = 0; i < 3; i++)
+	{
+		m_pSkinnedAnimationController->SetTrackAnimationSet(i, i);
+		m_pSkinnedAnimationController->SetTrackEnable(i, false);
+	}
+	m_pSkinnedAnimationController->SetTrackEnable(0, true);*/
 }
 
 CEnemyNPC::~CEnemyNPC()
 {
+}
+
+bool CEnemyNPC::findPlayer(XMFLOAT3 xmf3TargetPosition)
+{
+	XMVECTOR currentPosition = XMLoadFloat3(&GetToParentPosition());
+	XMVECTOR targetPosition = XMLoadFloat3(&xmf3TargetPosition);
+	XMVECTOR lookDirection = XMLoadFloat3(&GetLook());
+
+	XMVECTOR direction = XMVector3Normalize(XMVectorSubtract(targetPosition, currentPosition));
+
+	float distance = XMVectorGetX(XMVector3Length(XMVectorSubtract(targetPosition, currentPosition)));
+
+	if (distance < 200)
+	{
+		// 만약 lookDirection의 좌우30도 안에 타겟의 direction이 있다면 target 방향으로 회전하라
+		float dot = XMVectorGetX(XMVector3Dot(lookDirection, direction));
+		float angle = acosf(dot);
+
+		// 30 degrees in radians
+		const float MAX_ANGLE = XM_PI / 6;
+
+		if (angle <= MAX_ANGLE)
+		{
+			cout << "발견" << endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+void CEnemyNPC::AnimateNPC(float fTimeElapsed)
+{
+	
 }
