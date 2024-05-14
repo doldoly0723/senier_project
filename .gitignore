@@ -31,20 +31,8 @@
 *.out
 *.app
 
-
-*.tlog
-*.vsidx
-*.ipch
-*.db
-LabProject07-9-8/.vs/LabProject07-9-8/v17/.suo
-LabProject07-9-8/.vs/LabProject07-9-8/FileContentIndex/read.lock
-
-*.exe.recipe
-*.ilk
-*.log
-*.pdb
-*.idb
-*.res
+# .vs and x64 folders
+.vs/
+x64/
+/.idea
 *.vcxproj.user
-*.vs
-x64/*
