@@ -71,7 +71,6 @@ void CPlayer::Move(DWORD dwDirection, float fDistance, bool bUpdateVelocity)
 
 void CPlayer::Move(const XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
 {
-
 	if (bUpdateVelocity)
 	{
 		m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Shift);
@@ -79,7 +78,7 @@ void CPlayer::Move(const XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
 	else
 	{
 		m_xmf3Position = Vector3::Add(m_xmf3Position, xmf3Shift);
-		m_pCamera->Move(xmf3Shift);
+		// m_pCamera->Move(xmf3Shift);
 	}
 }
 
@@ -159,7 +158,7 @@ void CPlayer::Update(float fTimeElapsed)
 
 	XMFLOAT3 xmf3Velocity = Vector3::ScalarProduct(m_xmf3Velocity, fTimeElapsed, false);
 	// 이전 위치 저장
-	std::cout << xmf3Velocity.x << "\t" << xmf3Velocity.y << "\t" << xmf3Velocity.z << "\t" << std::endl;
+	//std::cout << xmf3Velocity.x << "\t" << xmf3Velocity.y << "\t" << xmf3Velocity.z << "\t" << std::endl;
 	m_xmf3PreviousPosition = m_xmf3Position;
 	Move(xmf3Velocity, false);
 
@@ -169,6 +168,7 @@ void CPlayer::Update(float fTimeElapsed)
 	if (nCurrentCameraMode == THIRD_PERSON_CAMERA) m_pCamera->Update(m_xmf3Position, fTimeElapsed);
 	if (m_pCameraUpdatedContext) OnCameraUpdateCallback(fTimeElapsed);
 	if (nCurrentCameraMode == THIRD_PERSON_CAMERA) m_pCamera->SetLookAt(m_xmf3Position);
+	m_pCamera->Update(m_xmf3Position, fTimeElapsed);
 	m_pCamera->RegenerateViewMatrix();
 
 	// 마찰력 
@@ -400,8 +400,8 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
-		//CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
+		// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
 
 		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
 		m_ppBullets[i]->SetScale(10.0f, 10.0f, 10.5f);
@@ -424,7 +424,7 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 	SetCameraUpdatedContext(pContext);
 
 	CHeightMapTerrain *pTerrain = (CHeightMapTerrain *)pContext;
-	SetPosition(XMFLOAT3(310.0f, pTerrain->GetHeight(310.0f, 590.0f), 590.0f));
+	SetPosition(XMFLOAT3(1310.0f, pTerrain->GetHeight(1310.0f, 1590.0f), 1590.0f));
 	SetScale(XMFLOAT3(10.0f, 10.0f, 10.0f));
 
 	if (pAngrybotModel) delete pAngrybotModel;
@@ -469,8 +469,8 @@ CCamera *CTerrainPlayer::ChangeCamera(DWORD nNewCameraMode, float fTimeElapsed)
 			SetGravity(XMFLOAT3(0.0f, -250.0f, 0.0f));
 			//SetMaxVelocityXZ(300.0f);
 			//SetMaxVelocityY(400.0f);
-			SetMaxVelocityXZ(70.0f);
-			SetMaxVelocityY(70.0f);
+			SetMaxVelocityXZ(35.0f);
+			SetMaxVelocityY(35.0f);
 			m_pCamera = OnChangeCamera(THIRD_PERSON_CAMERA, nCurrentCameraMode);
 			m_pCamera->SetTimeLag(0.25f);
 			m_pCamera->SetOffset(XMFLOAT3(0.0f, 20.0f, -20.0f));
@@ -699,20 +699,31 @@ void CTerrainPlayer::FireBullet()
 		// 진짜 간단한 탄퍼짐
 		// 가중치에 따라서 더 퍼지도록 구현해야함
 		// 그래도 초탄은 맞긴해야하니까 잘못된 코드긴함
-		xmf3Direction.x = xmf3Direction.x + value;
-		xmf3Direction.y = xmf3Direction.y + value;
-		xmf3Direction.z = xmf3Direction.z + value;
+
+		if(Spread)
+		{
+			xmf3Direction.x = xmf3Direction.x + value;
+			xmf3Direction.y = xmf3Direction.y + value;
+			xmf3Direction.z = xmf3Direction.z + value;
+		}
+
 
 		// 발사 위치
-		xmf3FirePosition.x = xmf3Position.x+2;
-		xmf3FirePosition.y = xmf3Position.y + 12.2;
+		//xmf3FirePosition.x = xmf3Position.x+2.0f;
+		//xmf3FirePosition.y = xmf3Position.y + 12.2f;
+		//// xmf3FirePosition.y = xmf3Position.y;
+		//xmf3FirePosition.z = xmf3Position.z + 2.3f;
+
+		xmf3FirePosition.x = xmf3Position.x;
+		xmf3FirePosition.y = xmf3Position.y - 7.5f;
 		// xmf3FirePosition.y = xmf3Position.y;
-		xmf3FirePosition.z = xmf3Position.z + 2.3;
+		xmf3FirePosition.z = xmf3Position.z;
 		//
 		pBulletObject->SetPosition(xmf3FirePosition);
 		pBulletObject->SetMovingDirection(xmf3Direction);
 		pBulletObject->SetActive(true);
-		pBulletObject->SetScale(0.1f, 0.1f, 0.05f);
+		// pBulletObject->SetScale(0.1f, 0.1f, 0.05f);
+		pBulletObject->SetScale(1.0f, 1.0f, 1.0f);
 
 		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
 	}

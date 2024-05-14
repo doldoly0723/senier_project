@@ -323,6 +323,8 @@ public:
 
 	void AdvanceTime(float fElapsedTime, CGameObject *pRootGameObject);
 
+	void SetTrackType(int nAnimationTrack, int ntype);
+
 public:
 	bool							m_bRootMotion = false;
 	CGameObject*					m_pModelRootObject = NULL;
@@ -377,6 +379,12 @@ public:
 	float							m_fMovingSpeed = 0.0;
 	float							m_fMovingRange = 0.0f;
 
+	// 충돌되지 않는 오브젝트
+	bool							nonConflicting = false;
+	// NPC 인가
+	bool							isNPC = false;
+	bool							isheat = false;
+
 	void SetActive(bool bActive) { m_bActive = bActive; }
 	//
 
@@ -389,6 +397,7 @@ public:
 	void UpdateBoundingBox();
 
 	void ScaleBoundingBox(float x, float y, float z);
+	void RotateBoundingBox(float x, float y, float z);
 	//
 
 	void SetMesh(CMesh *pMesh);
@@ -464,6 +473,7 @@ public:
 
 	static void PrintFrameInfo(CGameObject *pGameObject, CGameObject *pParent);
 
+	virtual bool findPlayer(XMFLOAT3 xmf3TargetPosition) { return false; }
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -695,4 +705,21 @@ public:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
+// 1.idle
+// 2.firing
+// 3.dying
+// 4.walk
 
+class CEnemyNPC : public CGameObject
+{
+public:
+	CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, CLoadedModelInfo* pModel, int nAnimationTracks);
+	virtual ~CEnemyNPC();
+
+	void Attack();
+	virtual bool findPlayer(XMFLOAT3 xmf3TargetPosition);
+
+	void AnimateNPC(float fTimeElapsed);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

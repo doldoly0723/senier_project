@@ -5,9 +5,6 @@
 #include "stdafx.h"
 #include "GameFramework.h"
 
-// cmd 창 띄우기
-#pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
-
 CGameFramework::CGameFramework()
 {
 	m_pdxgiFactory = NULL;
@@ -34,7 +31,7 @@ CGameFramework::CGameFramework()
 	m_pScene = NULL;
 	m_pPlayer = NULL;
 
-	_tcscpy_s(m_pszFrameRate, _T("LabProject ("));
+	_tcscpy_s(m_pszFrameRate, _T("Recohet"));
 }
 
 CGameFramework::~CGameFramework()
@@ -345,6 +342,10 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		case 'q':
 		case 'Q':
 			m_pPlayer->DrawBoundingBox = !m_pPlayer->DrawBoundingBox;
+			break;
+		case 'e':
+		case 'E':
+			m_pPlayer->Spread = !m_pPlayer->Spread;
 		default:
 			break;
 		}
@@ -664,8 +665,8 @@ void CGameFramework::FrameAdvance()
 
 	m_GameTimer.GetFrameRate(m_pszFrameRate + 12, 37);
 	size_t nLength = _tcslen(m_pszFrameRate);
-	XMFLOAT3 xmf3Position = m_pPlayer->GetPosition();
-	_stprintf_s(m_pszFrameRate + nLength, 70 - nLength, _T("(%4f, %4f, %4f)"), xmf3Position.x, xmf3Position.y, xmf3Position.z);
+	//XMFLOAT3 xmf3Position = m_pPlayer->GetPosition();
+	//_stprintf_s(m_pszFrameRate + nLength, 70 - nLength, _T("(%4f, %4f, %4f)"), xmf3Position.x, xmf3Position.y, xmf3Position.z);
 	::SetWindowText(m_hWnd, m_pszFrameRate);
 }
 

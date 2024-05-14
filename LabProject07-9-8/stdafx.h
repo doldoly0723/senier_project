@@ -51,8 +51,8 @@ extern HINSTANCE						ghAppInstance;
 
 //#define _WITH_SWAPCHAIN_FULLSCREEN_STATE
 
-#define FRAME_BUFFER_WIDTH				1280
-#define FRAME_BUFFER_HEIGHT				720
+#define FRAME_BUFFER_WIDTH				2560
+#define FRAME_BUFFER_HEIGHT				1500
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")

@@ -671,6 +671,10 @@ void CAnimationController::AdvanceTime(float fTimeElapsed, CGameObject* pRootGam
 		OnAnimationIK(pRootGameObject);
 	}
 }
+void CAnimationController::SetTrackType(int nAnimationTrack, int ntype)
+{
+	if (m_pAnimationTracks) m_pAnimationTracks[nAnimationTrack].m_nType = ANIMATION_TYPE_ONCE;
+}
 //*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -818,6 +822,15 @@ void CGameObject::ScaleBoundingBox(float x, float y, float z)
 	m_xmOOBB.Extents.x *= x;
 	m_xmOOBB.Extents.y *= y;
 	m_xmOOBB.Extents.z *= z;
+}
+
+void CGameObject::RotateBoundingBox(float x, float y, float z)
+{
+	// Euler ê°ë„ë¥¼ ì‚¬ì›ìˆ˜ë¡œ ë³€í™˜
+	XMVECTOR quaternion = XMQuaternionRotationRollPitchYaw(x, y, z);
+
+	// ì‚¬ì›ìˆ˜ë¥¼ BoundingOrientedBoxì˜ ë°©í–¥ìœ¼ë¡œ ì„¤ì •
+	XMStoreFloat4(&m_xmOOBB.Orientation, quaternion);
 }
 
 void CGameObject::SetMesh(CMesh *pMesh)
@@ -1056,30 +1069,30 @@ void CGameObject::MoveForward(float fDistance)
 
 void CGameObject::MoveToTarget(XMFLOAT3 xmf3TargetPosition, float fDistance)
 {
-	// ¼öÁ¤ ÇÊ¿ä
-	// ÇöÀç À§Ä¡ ¹× ¸ñÇ¥ À§Ä¡ º¤ÅÍ »ı¼º
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	XMVECTOR currentPosition = XMLoadFloat3(&GetToParentPosition());
 	XMVECTOR targetPosition = XMLoadFloat3(&xmf3TargetPosition);
 
-	// ¸ñÇ¥ ÁöÁ¡±îÁöÀÇ ¹æÇâ º¤ÅÍ °è»ê
+	// ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	XMVECTOR direction = XMVector3Normalize(XMVectorSubtract(targetPosition, currentPosition));
 
-	// ÀÌµ¿ °Å¸® °è»ê
+	// ï¿½Ìµï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
 	float distance = XMVectorGetX(XMVector3Length(XMVectorSubtract(targetPosition, currentPosition)));
 
-	// ÀÌµ¿ÇÒ °Å¸® °è»ê (ÀÏÁ¤ °Å¸®¸¸Å­¸¸ ÀÌµ¿ÇÏµµ·Ï)
+	// ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½Å­ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ïµï¿½ï¿½ï¿½)
 	float moveDistance = fDistance;
 	if (distance < fDistance) {
 		moveDistance = distance;
 	}
 
-	// ½ÇÁ¦ ÀÌµ¿ÇÒ º¤ÅÍ °è»ê
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	XMVECTOR moveVector = XMVectorScale(direction, moveDistance);
 
-	// »õ·Î¿î À§Ä¡ °è»ê
+	// ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
 	XMVECTOR newPosition = XMVectorAdd(currentPosition, moveVector);
 
-	// »õ·Î¿î À§Ä¡¸¦ ¼³Á¤
+	// ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	SetPosition(XMFLOAT3(XMVectorGetX(newPosition), XMVectorGetY(newPosition), XMVectorGetZ(newPosition)));
 }
 
@@ -1950,4 +1963,59 @@ void CBoundingBox::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* p
 	//SetPosition(xmf3CameraPos.x, xmf3CameraPos.y, xmf3CameraPos.z);
 
 	CGameObject::Render(pd3dCommandList, pCamera);
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+CEnemyNPC::CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, CLoadedModelInfo* pModel, int nAnimationTracks)
+{
+	pModel->m_pModelRootObject;
+	CLoadedModelInfo* pLionModel = pModel;
+	if (!pLionModel) pLionModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+
+	SetChild(pLionModel->m_pModelRootObject, true);
+	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pLionModel);
+	
+	
+	for (int i = 0; i < 4; i++)
+	{
+		m_pSkinnedAnimationController->SetTrackAnimationSet(i, i);
+		m_pSkinnedAnimationController->SetTrackEnable(i, false);
+	}
+	m_pSkinnedAnimationController->SetTrackEnable(0, true);
+}
+
+CEnemyNPC::~CEnemyNPC()
+{
+}
+
+bool CEnemyNPC::findPlayer(XMFLOAT3 xmf3TargetPosition)
+{
+	XMVECTOR currentPosition = XMLoadFloat3(&GetToParentPosition());
+	XMVECTOR targetPosition = XMLoadFloat3(&xmf3TargetPosition);
+	XMVECTOR lookDirection = XMLoadFloat3(&GetLook());
+
+	XMVECTOR direction = XMVector3Normalize(XMVectorSubtract(targetPosition, currentPosition));
+
+	float distance = XMVectorGetX(XMVector3Length(XMVectorSubtract(targetPosition, currentPosition)));
+
+	if (distance < 200)
+	{
+		// ë§Œì•½ lookDirectionì˜ ì¢Œìš°30ë„ ì•ˆì— íƒ€ê²Ÿì˜ directionì´ ìˆë‹¤ë©´ target ë°©í–¥ìœ¼ë¡œ íšŒì „í•˜ë¼
+		float dot = XMVectorGetX(XMVector3Dot(lookDirection, direction));
+		float angle = acosf(dot);
+
+		// 30 degrees in radians
+		const float MAX_ANGLE = XM_PI / 6;
+
+		if (angle <= MAX_ANGLE)
+		{
+			//cout << "ë°œê²¬" << endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+void CEnemyNPC::AnimateNPC(float fTimeElapsed)
+{
+	
 }

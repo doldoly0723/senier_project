@@ -31,20 +31,8 @@
 *.out
 *.app
 
-
-*.tlog
-*.vsidx
-*.ipch
-*.db
+# .vs and x64 folders
 .vs/
 x64/
-
-*.exe.recipe
-*.ilk
-*.log
-*.pdb
-*.idb
-*.res
+/.idea
 *.vcxproj.user
-*.vs
-
