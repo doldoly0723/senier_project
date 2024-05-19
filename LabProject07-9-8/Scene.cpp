@@ -685,85 +685,86 @@ void CScene::CheckBulletByObjectCollisions()
 						// 이거 추가시켜
 
 						xmf3CollisionPoint.y = xmf3ObjectCenter.y;
-
-						xmf3CollisionPoint.y = xmf3ObjectCenter.y;
+						
 
 						// 표면 법선 계산
 						//XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
 						// 위,아래로 튐 방지
 						//xmf3SurfaceNormal.y = 0;
 
+						/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						// 회전 안된 물체에 대해서만 작동
+						// 회전한 물체의 법선 벡터를 잘못 구하는 현상 발생
+						//XMFLOAT3 corners[8];
+						//Object->m_xmOOBB.GetCorners(corners);
+						//XMFLOAT3 maxPos = {corners[0]};
+						//XMFLOAT3 minPos = { corners[0] };
+						//
+						///*for (int i = 0; i < 8; i++)
+						//	cout << corners[i].x << endl;*/
 
-						XMFLOAT3 corners[8];
-						Object->m_xmOOBB.GetCorners(corners);
-						XMFLOAT3 maxPos = {corners[0]};
-						XMFLOAT3 minPos = { corners[0] };
-						
-						/*for (int i = 0; i < 8; i++)
-							cout << corners[i].x << endl;*/
+						//
+						//for (int i = 1; i < 8; i++) {
+						//	if (corners[i].x > maxPos.x) {
+						//		maxPos.x = corners[i].x;
+						//	}
+						//	if (corners[i].x < minPos.x) {
+						//		minPos.x = corners[i].x;
+						//	}
 
-						
-						for (int i = 1; i < 8; i++) {
-							if (corners[i].x > maxPos.x) {
-								maxPos.x = corners[i].x;
-							}
-							if (corners[i].x < minPos.x) {
-								minPos.x = corners[i].x;
-							}
+						//	// Y 좌표에 대한 최대값과 최소값 검사
+						//	if (corners[i].y > maxPos.y) {
+						//		maxPos.y = corners[i].y;
+						//	}
+						//	if (corners[i].y < minPos.y) {
+						//		minPos.y = corners[i].y;
+						//	}
 
-							// Y 좌표에 대한 최대값과 최소값 검사
-							if (corners[i].y > maxPos.y) {
-								maxPos.y = corners[i].y;
-							}
-							if (corners[i].y < minPos.y) {
-								minPos.y = corners[i].y;
-							}
-
-							// Z 좌표에 대한 최대값과 최소값 검사
-							if (corners[i].z > maxPos.z) {
-								maxPos.z = corners[i].z;
-							}
-							if (corners[i].z < minPos.z) {
-								minPos.z = corners[i].z;
-							}
-						}
-						/*cout << maxPos.x << " " <<  maxPos.z << endl;
-						cout << minPos.x << " " << minPos.z << endl;*/
-
-						float closestX, closestZ;
-
-						// X 축에 대한 비교
-						float distanceToMaxX = fabs(maxPos.x - xmf3CollisionPoint.x);
-						float distanceToMinX = fabs(minPos.x - xmf3CollisionPoint.x);
-
-						if (distanceToMaxX < distanceToMinX) {
-							closestX = maxPos.x;
-						}
-						else {
-							closestX = minPos.x;
-						}
-
-						// Z 축에 대한 비교
-						float distanceToMaxZ = fabs(maxPos.z - xmf3CollisionPoint.z);
-						float distanceToMinZ = fabs(minPos.z - xmf3CollisionPoint.z);
-
-						if (distanceToMaxZ < distanceToMinZ) {
-							closestZ = maxPos.z;
-						}
-						else {
-							closestZ = minPos.z;
-						}
-
-						XMFLOAT3 result;
-						if (fabs( closestX - xmf3CollisionPoint.x )> fabs( closestZ - xmf3CollisionPoint.z))
-							result = { xmf3ObjectCenter.x, xmf3ObjectCenter.y, closestZ };
-						else 
-							result = { closestX, xmf3ObjectCenter.y, xmf3ObjectCenter.z };
-
+						//	// Z 좌표에 대한 최대값과 최소값 검사
+						//	if (corners[i].z > maxPos.z) {
+						//		maxPos.z = corners[i].z;
+						//	}
+						//	if (corners[i].z < minPos.z) {
+						//		minPos.z = corners[i].z;
+						//	}
+						//}
+						//cout << maxPos.x << " " <<  maxPos.z << endl;
+						//cout << minPos.x << " " << minPos.z << endl;
 						//cout << xmf3CollisionPoint.x << " " << xmf3CollisionPoint.z << endl;
+						//float closestX, closestZ;
 
-						XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&result) - XMLoadFloat3(&xmf3ObjectCenter)));
+						//// X 축에 대한 비교
+						//float distanceToMaxX = fabs(maxPos.x - xmf3CollisionPoint.x);
+						//float distanceToMinX = fabs(minPos.x - xmf3CollisionPoint.x);
 
+						//if (distanceToMaxX < distanceToMinX) {
+						//	closestX = maxPos.x;
+						//}
+						//else {
+						//	closestX = minPos.x;
+						//}
+
+						//// Z 축에 대한 비교
+						//float distanceToMaxZ = fabs(maxPos.z - xmf3CollisionPoint.z);
+						//float distanceToMinZ = fabs(minPos.z - xmf3CollisionPoint.z);
+
+						//if (distanceToMaxZ < distanceToMinZ) {
+						//	closestZ = maxPos.z;
+						//}
+						//else {
+						//	closestZ = minPos.z;
+						//}
+
+						//XMFLOAT3 result;
+						//if (fabs( closestX - xmf3CollisionPoint.x )> fabs( closestZ - xmf3CollisionPoint.z))
+						//	result = { xmf3ObjectCenter.x, xmf3ObjectCenter.y, closestZ };
+						//else 
+						//	result = { closestX, xmf3ObjectCenter.y, xmf3ObjectCenter.z };
+
+						////cout << xmf3CollisionPoint.x << " " << xmf3CollisionPoint.z << endl;
+
+						//XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&result) - XMLoadFloat3(&xmf3ObjectCenter)));
+						/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 						// 총알을 반사시키는 함수 호출
 						m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
