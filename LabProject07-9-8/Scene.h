@@ -135,3 +135,11 @@ public:
 	CBoundingBox*				m_pBoundingBox[10];
 
 };
+
+// 바운딩 박스 면을 저장하기 위한 구조체
+struct PlaneData {
+	XMVECTOR normal;
+	float distance;
+
+	PlaneData(XMVECTOR n, float d) : normal(n), distance(d) {}
+};

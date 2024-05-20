@@ -682,8 +682,7 @@ void CScene::CheckBulletByObjectCollisions()
 						XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
 						XMFLOAT3 xmf3SurfaceNormal;
 						
-						// 이거 추가시켜
-
+						// 우선은 y축은 고정으로
 						xmf3CollisionPoint.y = xmf3ObjectCenter.y;
 						
 
@@ -766,8 +765,61 @@ void CScene::CheckBulletByObjectCollisions()
 						//XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&result) - XMLoadFloat3(&xmf3ObjectCenter)));
 						/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+						XMFLOAT3 corners[8];
+						Object->m_xmOOBB.GetCorners(corners);
+						 
+
+						// 정면		 4 5 6 7
+						// 왼쪽		 0 4 7 3
+						// 오른쪽	 5 1 2 6
+						// 뒤쪽		 1 2 3 0
+						
+						// 위쪽		 7 6 2 3
+						// 아래쪽	 0 1 5 4
+
+
+						XMVECTOR xmCorners[8];
+						for (int i = 0; i < 8; i++) {
+							xmCorners[i] = XMLoadFloat3(&corners[i]);
+						}
+
+						XMVECTOR collisionPoint = XMLoadFloat3(&xmf3CollisionPoint);
+
+						std::vector<PlaneData> planeDistances;
+
+						// 면의 거리 계산 및 저장
+						auto calculateAndStoreDistance = [&](int a, int b, int c) {
+							// 평면의 법선 벡터 계산
+							XMVECTOR planeNormal = XMVector3Normalize(XMVector3Cross(XMVectorSubtract(xmCorners[b], xmCorners[a]), XMVectorSubtract(xmCorners[c], xmCorners[a])));
+							float planeD = -XMVectorGetX(XMVector3Dot(planeNormal, xmCorners[a]));
+							float distance = XMVectorGetX(XMVector3Dot(planeNormal, collisionPoint)) + planeD;
+							planeDistances.emplace_back(planeNormal, distance);
+							};
+
+						// 각 면에 대해 계산
+						calculateAndStoreDistance(4, 5, 6); // Front
+						calculateAndStoreDistance(0, 4, 7); // Left
+						calculateAndStoreDistance(5, 1, 2); // Right
+						calculateAndStoreDistance(1, 2, 3); // Back
+						calculateAndStoreDistance(7, 6, 2); // Top
+						calculateAndStoreDistance(0, 1, 5); // Bottom
+
+						// 가장 가까운 면 찾기
+						float minDistance = FLT_MAX;
+						XMVECTOR xmvNearestNormal;
+						for (const auto& plane : planeDistances) {
+							if (fabs(plane.distance) < minDistance) {
+								minDistance = fabs(plane.distance);
+								xmvNearestNormal = plane.normal;
+							}
+						}
+
+						// 가장 가까운 면의 법선 벡터 출력
+						XMFLOAT3 xmf3NearestNormalFloat3;
+						XMStoreFloat3(&xmf3NearestNormalFloat3, xmvNearestNormal);
+
 						// 총알을 반사시키는 함수 호출
-						m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
+						m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
 					}
 					else
 					{
