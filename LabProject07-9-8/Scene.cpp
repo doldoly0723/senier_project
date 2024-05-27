@@ -819,7 +819,12 @@ void CScene::CheckBulletByObjectCollisions()
 						XMStoreFloat3(&xmf3NearestNormalFloat3, xmvNearestNormal);
 
 						// 총알을 반사시키는 함수 호출
+						//XMFLOAT3 pastDirection = m_pPlayer->m_ppBullets[i]->m_xmf3MovingDirection;
 						m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
+						//XMFLOAT3 nowDirection =  m_pPlayer->m_ppBullets[i]->m_xmf3MovingDirection;		
+						// 총알이 도탄되는 방향으로 과거와 현재의 방향을 비교하여회전시켜라
+
+						//m_pPlayer->m_ppBullets[i]->RotateBulletTowards(pastDirection, nowDirection);
 					}
 					else
 					{

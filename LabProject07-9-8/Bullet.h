@@ -58,4 +58,5 @@ public:
 	void Reset();
 
 	void ReflectBullet(const XMFLOAT3& surfaceNormal);
+
 };
