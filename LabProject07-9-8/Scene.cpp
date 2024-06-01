@@ -157,6 +157,21 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	m_vGameObjects.push_back(pboxObject1);
 
+	std::vector<CLoadedModelInfo*> pScenes = CGameObject::LoadSceneFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	for (auto pLoadedModel : pScenes) {
+		CGameObject* pObj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pLoadedModel, 1);
+		pObj->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
+		pObj->SetScale(50.0f, 30.0f, 50.0f);
+		pObj->SetBoundingBox(pboxObject1->m_xmOOBB, pboxObject1);
+		pObj->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
+		// 여기에서 각 pLoadedModel에 대한 처리를 할 수 있습니다.
+		// 예를 들어 모델의 정보를 출력하거나, 초기화 과정을 진행할 수 있습니다.
+
+		// 필요한 경우 각 모델을 게임 환경에 추가하는 로직을 구현합니다.
+		// 예: 게임 환경에 모델 추가, 렌더링 준비 등
+		m_vGameObjects.push_back(pObj);
+	}
+	
 	//CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
 	//m_ppHierarchicalGameObjects[2] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox, 1);
 	////m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);

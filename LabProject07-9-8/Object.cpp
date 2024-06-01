@@ -1492,52 +1492,109 @@ CLoadedModelInfo *CGameObject::LoadGeometryAndAnimationFromFile(ID3D12Device *pd
 	return(pLoadedModel);
 }
 
-std::vector<CLoadedModelInfo*> CGameObject::LoadSceneFromFile(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, char* pstrFileName, CShader* pShader)
+std::vector<CLoadedModelInfo*> CGameObject::LoadSceneFromFile(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, const char* pstrFileName, CShader* pShader)
 {
-	FILE* pInFile = NULL;
-	::fopen_s(&pInFile, pstrFileName, "rb");
-	::rewind(pInFile);
-
-	CLoadedModelInfo* pLoadedModel = new CLoadedModelInfo();
+		FILE* pInFile = NULL;
+		::fopen_s(&pInFile, pstrFileName, "rb");
+		::rewind(pInFile);
 	
-	std::vector<CLoadedModelInfo*> vLoadedModels;
-
-	char pstrToken[64] = { '\0' };
-
+		CLoadedModelInfo* pLoadedModel = new CLoadedModelInfo();
+		
+		std::vector<CLoadedModelInfo*> vLoadedModels;
 	
-
-	for (; ; )
-	{
-		if (::ReadStringFromFile(pInFile, pstrToken))
+		char pstrToken[64] = { '\0' };
+	
+		
+	
+		for (; ; )
 		{
-			if (!strcmp(pstrToken, "<Hierarchy>:"))
+			if (::ReadStringFromFile(pInFile, pstrToken))
 			{
-				pLoadedModel->m_pModelRootObject = CGameObject::LoadFrameHierarchyFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, NULL, pInFile, pShader, &pLoadedModel->m_nSkinnedMeshes);
-				::ReadStringFromFile(pInFile, pstrToken); //"</Hierarchy>"
-
-				// setboundingbox, scaleboundingbox
-				// 재질, 두께(바운딩 박스를 통해 구하기) 설정
-				// 다 설정했으면 벡터에 넣기
-
-				vLoadedModels.push_back(pLoadedModel);
+				if (!strcmp(pstrToken, "<Hierarchy>:"))
+				{
+					pLoadedModel->m_pModelRootObject = CGameObject::LoadFrameHierarchyFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, NULL, pInFile, pShader, &pLoadedModel->m_nSkinnedMeshes);
+					::ReadStringFromFile(pInFile, pstrToken); //"</Hierarchy>"
+	
+					// setboundingbox, scaleboundingbox
+					// 재질, 두께(바운딩 박스를 통해 구하기) 설정
+					// 다 설정했으면 벡터에 넣기
+	
+					//vLoadedModels.push_back(pLoadedModel);
+				}
+				else if (!strcmp(pstrToken, "<Animation>:"))
+				{
+					CGameObject::LoadAnimationFromFile(pInFile, pLoadedModel);
+					pLoadedModel->PrepareSkinning();
+				}
+				else if (!strcmp(pstrToken, "</Animation>:"))
+				{
+					break;
+				}
 			}
+			else
+			{
+				break;
+			}
+			vLoadedModels.push_back(pLoadedModel);
 		}
-		else
-		{
-			break;
-		}
-	}
-
-#ifdef _WITH_DEBUG_FRAME_HIERARCHY
-	TCHAR pstrDebug[256] = { 0 };
-	_stprintf_s(pstrDebug, 256, "Frame Hierarchy\n"));
-	OutputDebugString(pstrDebug);
-
-	CGameObject::PrintFrameInfo(pGameObject, NULL);
-#endif
-	// 벡터를 리턴하기
-	return(vLoadedModels);
+	
+	#ifdef _WITH_DEBUG_FRAME_HIERARCHY
+		TCHAR pstrDebug[256] = { 0 };
+		_stprintf_s(pstrDebug, 256, "Frame Hierarchy\n"));
+		OutputDebugString(pstrDebug);
+	
+		CGameObject::PrintFrameInfo(pGameObject, NULL);
+	#endif
+		// 벡터를 리턴하기
+		return(vLoadedModels);
 }
+
+//std::vector<CLoadedModelInfo*> CGameObject::LoadSceneFromFile(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, char* pstrFileName, CShader* pShader)
+//{
+//	FILE* pInFile = NULL;
+//	::fopen_s(&pInFile, pstrFileName, "rb");
+//	::rewind(pInFile);
+//
+//	CLoadedModelInfo* pLoadedModel = new CLoadedModelInfo();
+//	
+//	std::vector<CLoadedModelInfo*> vLoadedModels;
+//
+//	char pstrToken[64] = { '\0' };
+//
+//	
+//
+//	for (; ; )
+//	{
+//		if (::ReadStringFromFile(pInFile, pstrToken))
+//		{
+//			if (!strcmp(pstrToken, "<Hierarchy>:"))
+//			{
+//				pLoadedModel->m_pModelRootObject = CGameObject::LoadFrameHierarchyFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, NULL, pInFile, pShader, &pLoadedModel->m_nSkinnedMeshes);
+//				::ReadStringFromFile(pInFile, pstrToken); //"</Hierarchy>"
+//
+//				// setboundingbox, scaleboundingbox
+//				// 재질, 두께(바운딩 박스를 통해 구하기) 설정
+//				// 다 설정했으면 벡터에 넣기
+//
+//				vLoadedModels.push_back(pLoadedModel);
+//			}
+//		}
+//		else
+//		{
+//			break;
+//		}
+//	}
+//
+//#ifdef _WITH_DEBUG_FRAME_HIERARCHY
+//	TCHAR pstrDebug[256] = { 0 };
+//	_stprintf_s(pstrDebug, 256, "Frame Hierarchy\n"));
+//	OutputDebugString(pstrDebug);
+//
+//	CGameObject::PrintFrameInfo(pGameObject, NULL);
+//#endif
+//	// 벡터를 리턴하기
+//	return(vLoadedModels);
+//}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
