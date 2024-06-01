@@ -132,8 +132,10 @@ public:
 
 	CUI									*m_pUI = NULL;
 
-	std::list<CBoundingBox*>    m_lpBoundingBoxs;
-	CBoundingBox*				m_pBoundingBox[10];
+	//std::list<CBoundingBox*>    m_lpBoundingBoxs;
+	//CBoundingBox*				m_pBoundingBox[10];
+
+	std::vector<CBoundingBox*> m_vBoundingBox;
 
 };
 
