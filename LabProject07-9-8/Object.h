@@ -16,6 +16,7 @@
 
 class CShader;
 class CStandardShader;
+class CBulletObject;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -35,6 +36,9 @@ class CStandardShader;
 #define materialSteel				0
 #define materialConcrete			1
 #define materialWood				2
+
+#define MAX_ENEMY_B					30
+
 
 class CTexture
 {
@@ -495,6 +499,7 @@ public:
 	static void PrintFrameInfo(CGameObject *pGameObject, CGameObject *pParent);
 
 	virtual bool findPlayer(XMFLOAT3 xmf3TargetPosition) { return false; }
+	virtual void Attack() {};
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -737,7 +742,15 @@ public:
 	CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, CLoadedModelInfo* pModel, int nAnimationTracks);
 	virtual ~CEnemyNPC();
 
-	void Attack();
+	// 총알
+	CGameObject** m_EBulletObjects = NULL;
+	CBulletObject* m_ppEBullets[MAX_ENEMY_B];
+
+	float						m_fFireDelayTime = 0.3f;
+	float						m_fFireWaitingTime;
+	float						m_fBulletEffectiveRange = 300.0f;
+
+	virtual void Attack();
 	virtual bool findPlayer(XMFLOAT3 xmf3TargetPosition);
 
 	void AnimateNPC(float fTimeElapsed);

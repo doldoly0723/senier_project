@@ -64,6 +64,7 @@ public:
 	void ReleaseUploadBuffers();
 
 	CPlayer								*m_pPlayer = NULL;
+	CEnemyNPC                           *m_pEnemy = NULL;
 	
 	CUIShader							* m_pCUIShader;
 protected:

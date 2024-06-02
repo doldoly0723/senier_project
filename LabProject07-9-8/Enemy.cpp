@@ -165,7 +165,6 @@ CTerrainEnemy::CTerrainEnemy(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 
 	for (int i = 0; i < ENEMY_MAX_BULLETS; i++)
 	{
-		// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
 		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
 
 		m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);

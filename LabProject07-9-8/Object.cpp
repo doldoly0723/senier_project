@@ -817,6 +817,7 @@ void CGameObject::UpdateBoundingBox()
 	// OOBB의 중심을 월드좌표로 이동
 	XMFLOAT3 Pos = GetPosition();
 	m_xmOOBB.Center = Pos;
+	// m_xmOOBB.Center.y += m_xmOOBB.Extents.y / 2;
 }
 
 void CGameObject::ScaleBoundingBox(float x, float y, float z)
@@ -2248,10 +2249,80 @@ CEnemyNPC::CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCo
 		m_pSkinnedAnimationController->SetTrackEnable(i, false);
 	}
 	m_pSkinnedAnimationController->SetTrackEnable(0, true);
+
+	for (int i = 0; i < MAX_ENEMY_B; i++)
+	{
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
+
+		m_ppEBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
+		m_ppEBullets[i]->SetScale(10.0f, 10.0f, 10.5f);
+		m_ppEBullets[i]->SetChild(pBulletMesh->m_pModelRootObject, true);
+		m_ppEBullets[i]->SetMovingSpeed(100.0f);
+		m_ppEBullets[i]->SetActive(false);
+
+		// 흠..
+		m_ppEBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
+		m_ppEBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
+		m_ppEBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
+
+	}
+
+		std::cout << "총알 생성 완료" << std::endl;
 }
 
 CEnemyNPC::~CEnemyNPC()
 {
+}
+
+void CEnemyNPC::Attack()
+{
+	std::cout << "공격중" << std::endl;
+	// std::cout << "발사 됨" << std::endl;
+	if (m_fFireWaitingTime > 0.0f)
+	{
+		m_fFireWaitingTime -= 0.1f;
+		return;
+	}
+
+	// std::cout << m_fFireWaitingTime << std::endl;
+
+	CBulletObject* pBulletObject = NULL;
+	for (int i = 0; i < MAX_ENEMY_B; i++)
+	{
+		if (!m_ppEBullets[i]->m_bActive)
+		{
+			pBulletObject = m_ppEBullets[i];
+			break;
+		}
+	}
+
+	if (pBulletObject)
+	{
+		XMFLOAT3 xmf3Position = GetPosition();
+		XMFLOAT3 xmf3Direction = GetLook();
+		XMFLOAT3 xmf3Right = GetRight();
+		XMFLOAT3 xmf3Up = GetUp();
+		XMFLOAT3 xmf3FirePosition;
+
+		// 이거 안하면 땅에 박히려나?
+		//XMFLOAT3 m_xmf3Look = GetLookVector();
+		//XMFLOAT3 m_xmf3LookC = m_pCamera->GetLookVector();
+
+		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
+
+		xmf3FirePosition.x = xmf3Position.x;
+		xmf3FirePosition.y = xmf3Position.y - 7.5f;
+		// xmf3FirePosition.y = xmf3Position.y;
+		xmf3FirePosition.z = xmf3Position.z;
+		//
+		pBulletObject->SetPosition(xmf3FirePosition);
+		pBulletObject->SetMovingDirection(xmf3Direction);
+		pBulletObject->SetActive(true);
+		// pBulletObject->SetScale(0.1f, 0.1f, 0.05f);
+		pBulletObject->SetScale(1.0f, 1.0f, 1.0f);
+
+		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
+	}
 }
 
 bool CEnemyNPC::findPlayer(XMFLOAT3 xmf3TargetPosition)
@@ -2284,7 +2355,12 @@ bool CEnemyNPC::findPlayer(XMFLOAT3 xmf3TargetPosition)
 
 void CEnemyNPC::AnimateNPC(float fTimeElapsed)
 {
-	
+	for (int i = 0; i < MAX_ENEMY_B; i++)
+	{
+		if (m_ppEBullets[i]->m_bActive) {
+			m_ppEBullets[i]->Animate(fTimeElapsed);
+		};
+	}
 }
 
 CObject::CObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, CLoadedModelInfo* pModel)
