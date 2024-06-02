@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // File: CScene.cpp
 //-----------------------------------------------------------------------------
 
@@ -152,9 +152,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	auto test = pboxModel1->Getm_xmf4x4ToParent(pboxModel1->m_pModelRootObject);
 	//pboxObject1->SetMesh(pboxModel1->m_pModelRootObject->m_pMesh);
 	//m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-	pboxObject1->SetPosition(1230.0f + testpos.x, m_pTerrain->GetHeight(430.0f, 700.0f) + testpos.y, 1630.0f + testpos.z);
-	//pboxObject1->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
-	pboxObject1->SetScale(50.0f, 30.0f, 50.0f);
+	pboxObject1->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
+	//pboxObject1->SetScale(50.0f, 30.0f, 50.0f);
 	pboxObject1->SetBoundingBox(pboxObject1->m_xmOOBB, pboxObject1);
 	//pboxObject1->m_xmOOBB.Extents.x = extends.x * 50;
 	//pboxObject1->m_xmOOBB.Extents.x = extends.x * test._11 * 50.0f;
@@ -197,6 +196,25 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	//	// 예: 게임 환경에 모델 추가, 렌더링 준비 등
 	//	m_vGameObjects.push_back(pObj);
 	//}
+
+	std::vector<CLoadedModelInfo*> pScenes = CGameObject::LoadSceneFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	for (auto pLoadedModel : pScenes) {
+		CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pLoadedModel, 1);
+		pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
+		pObj->SetScale(50.0f, 30.0f, 50.0f);
+		pObj->SetBoundingBox(pObj->m_xmOOBB, pObj);
+		pObj->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+		
+		CBoundingBox* pbBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pObj->m_xmOOBB);
+		m_vBoundingBox.push_back(pbBox);
+		// 여기에서 각 pLoadedModel에 대한 처리를 할 수 있습니다.
+		// 예를 들어 모델의 정보를 출력하거나, 초기화 과정을 진행할 수 있습니다.
+
+		// 필요한 경우 각 모델을 게임 환경에 추가하는 로직을 구현합니다.
+		// 예: 게임 환경에 모델 추가, 렌더링 준비 등
+		m_vGameObjects.push_back(pObj);
+	}
+
 	
 	//CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
 	//m_ppHierarchicalGameObjects[2] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox, 1);
