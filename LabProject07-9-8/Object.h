@@ -746,7 +746,7 @@ public:
 	CGameObject** m_EBulletObjects = NULL;
 	CBulletObject* m_ppEBullets[MAX_ENEMY_B];
 
-	float						m_fFireDelayTime = 0.3f;
+	float						m_fFireDelayTime = 1.0f;
 	float						m_fFireWaitingTime;
 	float						m_fBulletEffectiveRange = 300.0f;
 

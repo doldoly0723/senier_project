@@ -358,7 +358,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	TestNpc->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
 	TestNpc->nonConflicting = true;
 	TestNpc->isNPC = true;
-	m_pEnemy = dynamic_cast<CEnemyNPC*> (TestNpc);
+	m_pEnemy.push_back(dynamic_cast<CEnemyNPC*> (TestNpc));
+
 	CBoundingBox* npcboxx = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, TestNpc->m_xmOOBB);
 	m_vBoundingBox.push_back(npcboxx);
 	m_vGameObjects.push_back(TestNpc);
@@ -1030,12 +1031,16 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		}
 	}
 
-	for (int i = 0; i < MAX_ENEMY_B; i++)
+	for (auto iter = m_pEnemy.begin(); iter != m_pEnemy.end(); ++iter)
 	{
-		if (m_pEnemy->m_ppEBullets[i]->m_bActive)
+		CEnemyNPC* Enemy = *iter;
+		for (int i = 0; i < MAX_ENEMY_B; i++)
 		{
-			m_pEnemy->m_ppEBullets[i]->Animate(m_fElapsedTime);
-			m_pEnemy->m_ppEBullets[i]->Render(pd3dCommandList, pCamera);
+			if (Enemy->m_ppEBullets[i]->m_bActive)
+			{
+				Enemy->m_ppEBullets[i]->Animate(m_fElapsedTime);
+				Enemy->m_ppEBullets[i]->Render(pd3dCommandList, pCamera);
+			}
 		}
 	}
 	

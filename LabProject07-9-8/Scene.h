@@ -64,7 +64,7 @@ public:
 	void ReleaseUploadBuffers();
 
 	CPlayer								*m_pPlayer = NULL;
-	CEnemyNPC                           *m_pEnemy = NULL;
+	std::vector <CEnemyNPC*>			m_pEnemy;
 	
 	CUIShader							* m_pCUIShader;
 protected:
