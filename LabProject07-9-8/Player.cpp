@@ -352,11 +352,11 @@ void CSoundCallbackHandler::HandleCallback(void *pCallbackData, float fTrackPosi
 	_stprintf_s(pstrDebug, 256, _T("%s(%f)\n"), pWavName, fTrackPosition);
 	OutputDebugString(pstrDebug);
 #endif
-#ifdef _WITH_SOUND_RESOURCE
-   PlaySound(pWavName, ::ghAppInstance, SND_RESOURCE | SND_ASYNC);
-#else
-   PlaySound(pWavName, NULL, SND_FILENAME | SND_ASYNC);
-#endif
+//#ifdef _WITH_SOUND_RESOURCE
+//   PlaySound(pWavName, ::ghAppInstance, SND_RESOURCE | SND_ASYNC);
+//#else
+//   PlaySound(pWavName, NULL, SND_FILENAME | SND_ASYNC);
+//#endif
 }
 
 CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, void *pContext)
@@ -396,7 +396,7 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 	CAnimationCallbackHandler *pAnimationCallbackHandler = new CSoundCallbackHandler();
 	m_pSkinnedAnimationController->SetAnimationCallbackHandler(1, pAnimationCallbackHandler);
 
-	CGameObject::SetBoundingBox(pAngrybotModel->m_pModelRootObject->m_xmOOBB, pAngrybotModel->m_pModelRootObject);
+	// CGameObject::SetBoundingBox(pAngrybotModel->m_pModelRootObject->m_xmOOBB, pAngrybotModel->m_pModelRootObject);
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{

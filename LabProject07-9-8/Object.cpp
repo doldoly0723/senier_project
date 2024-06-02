@@ -692,6 +692,11 @@ void CLoadedModelInfo::PrepareSkinning()
 	for (int i = 0; i < m_nSkinnedMeshes; i++) m_ppSkinnedMeshes[i]->PrepareSkinning(m_pModelRootObject);
 }
 
+XMFLOAT4X4 CLoadedModelInfo::Getm_xmf4x4ToParent(CGameObject* m_pModelRootObject)
+{
+	return m_pModelRootObject->m_xmf4x4ToParent;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 CGameObject::CGameObject()
@@ -770,7 +775,7 @@ void CGameObject::SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGame
 	if (pGameObject->m_pChild)
 		pGameObject->m_pChild->SetBoundingBox(xmOOBB, pGameObject->m_pChild);
 
-	SetExtents(xmOOBB, pGameObject->m_xmOOBB);
+	SetExtents(xmOOBB, pGameObject);
 
 	//	// 부모 오브젝트의 변환을 고려하여 자식 오브젝트의 BoundingOrientedBox 설정
 	//XMVECTOR vCenter = XMLoadFloat3(&xmOOBB.Center);
@@ -800,14 +805,11 @@ void CGameObject::SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGame
 	//	pGameObject->m_pChild->SetBoundingBox(pGameObject->m_xmOOBB, pGameObject->m_pChild);
 }
 
-void CGameObject::SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& xmOOBB2)
+void CGameObject::SetExtents(BoundingOrientedBox& xmOOBB1, CGameObject* pGameObject)
 {
-	if (xmOOBB1.Extents.x < xmOOBB2.Extents.x)
-		xmOOBB1.Extents.x = xmOOBB2.Extents.x;
-	if (xmOOBB1.Extents.y < xmOOBB2.Extents.y)
-		xmOOBB1.Extents.y = xmOOBB2.Extents.y;
-	if (xmOOBB1.Extents.z < xmOOBB2.Extents.z)
-		xmOOBB1.Extents.z = xmOOBB2.Extents.z;
+	xmOOBB1.Extents.x = pGameObject->m_pMesh->GetBPExtents().x * m_xmf4x4World._11;
+	xmOOBB1.Extents.y = pGameObject->m_pMesh->GetBPExtents().y * m_xmf4x4World._22;
+	xmOOBB1.Extents.z = pGameObject->m_pMesh->GetBPExtents().z * m_xmf4x4World._33;
 }
 
 void CGameObject::UpdateBoundingBox()
@@ -1687,6 +1689,8 @@ std::vector<CLoadedModelInfo*> CGameObject::LoadSceneFromFile(ID3D12Device* pd3d
 			{
 				break;
 			}
+			
+			
 			vLoadedModels.push_back(pLoadedModel);
 		}
 	
