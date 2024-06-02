@@ -775,7 +775,7 @@ void CGameObject::SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGame
 	if (pGameObject->m_pChild)
 		pGameObject->m_pChild->SetBoundingBox(xmOOBB, pGameObject->m_pChild);
 
-	SetExtents(xmOOBB, pGameObject);
+	// SetExtents(xmOOBB, pGameObject);
 
 	//	// 부모 오브젝트의 변환을 고려하여 자식 오브젝트의 BoundingOrientedBox 설정
 	//XMVECTOR vCenter = XMLoadFloat3(&xmOOBB.Center);
@@ -2093,7 +2093,8 @@ CZebraObject::CZebraObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *
 	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pZebraModel);
 
 	SetMesh(pChild->m_pMesh);
-	
+	SetPosition(pChild->GetToParentPosition());
+	//SetPosition(pChild->m_pMesh->GetPosition());
 }
 
 CZebraObject::~CZebraObject()
