@@ -2092,7 +2092,8 @@ CZebraObject::CZebraObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *
 	SetChild(pZebraModel->m_pModelRootObject, true);
 	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pZebraModel);
 
-	SetMesh(pChild->m_pMesh);
+	if(pChild)
+		SetMesh(pChild->m_pMesh);
 	SetPosition(pChild->GetToParentPosition());
 	//SetPosition(pChild->m_pMesh->GetPosition());
 }
