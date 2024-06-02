@@ -818,7 +818,7 @@ void CScene::CheckBulletByObjectCollisions()
 				{
 					if (!Object->nonConflicting)
 					{
-						//std::cout << "충돌!" << std::endl;
+						std::cout << "충돌!" << std::endl;
 
 					// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
 						XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();

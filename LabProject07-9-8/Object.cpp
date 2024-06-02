@@ -817,7 +817,7 @@ void CGameObject::UpdateBoundingBox()
 	// OOBB의 중심을 월드좌표로 이동
 	XMFLOAT3 Pos = GetPosition();
 	m_xmOOBB.Center = Pos;
-	// m_xmOOBB.Center.y += m_xmOOBB.Extents.y / 2;
+	//m_xmOOBB.Center.y += m_xmOOBB.Extents.y / 2;
 }
 
 void CGameObject::ScaleBoundingBox(float x, float y, float z)
