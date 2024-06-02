@@ -291,6 +291,8 @@ public:
 
 public:
 	void PrepareSkinning();
+
+	XMFLOAT4X4 Getm_xmf4x4ToParent(CGameObject* m_pModelRootObject);
 };
 
 class CAnimationController 
@@ -407,7 +409,7 @@ public:
 	// AABB -> BoundingBox | OOBB->BoundingOrientedBox
 	BoundingOrientedBox				m_xmOOBB = BoundingOrientedBox();
 	void SetBoundingBox(BoundingOrientedBox& xmOOBB, CGameObject* pGameObject);	
-	void SetExtents(BoundingOrientedBox& xmOOBB1, BoundingOrientedBox& xmOOBB2);
+	void SetExtents(BoundingOrientedBox& xmOOBB1, CGameObject* pGameObject);
 	void UpdateBoundingBox();
 
 	void ScaleBoundingBox(float x, float y, float z);

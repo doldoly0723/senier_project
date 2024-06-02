@@ -75,6 +75,21 @@ void CMesh::OnPostRender(ID3D12GraphicsCommandList *pd3dCommandList, void *pCont
 {
 }
 
+XMFLOAT3 CMesh::GetPosition()
+{
+	return *m_pxmf3Positions;
+}
+
+XMFLOAT3 CMesh::GetBPosition()
+{
+	return m_xmf3AABBCenter;
+}
+
+XMFLOAT3 CMesh::GetBPExtents()
+{
+	return m_xmf3AABBExtents;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
 CHeightMapImage::CHeightMapImage(LPCTSTR pFileName, int nWidth, int nLength, XMFLOAT3 xmf3Scale)
