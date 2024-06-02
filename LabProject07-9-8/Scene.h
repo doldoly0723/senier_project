@@ -136,7 +136,9 @@ public:
 	//CBoundingBox*				m_pBoundingBox[10];
 
 	std::vector<CBoundingBox*> m_vBoundingBox;
+	std::vector<CBoundingBox*> test_vector;
 
+	void LoadObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, char* pstrFileName, CShader* pShader);
 };
 
 // 바운딩 박스 면을 저장하기 위한 구조체
