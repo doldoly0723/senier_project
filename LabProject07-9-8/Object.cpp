@@ -1305,6 +1305,8 @@ CGameObject *CGameObject::LoadFrameHierarchyFromFile(ID3D12Device *pd3dDevice, I
 			nReads = (UINT)::fread(&xmf3Rotation, sizeof(float), 3, pInFile); //Euler Angle
 			nReads = (UINT)::fread(&xmf3Scale, sizeof(float), 3, pInFile);
 			nReads = (UINT)::fread(&xmf4Rotation, sizeof(float), 4, pInFile); //Quaternion
+			pGameObject->m_xmf3RotationAngle = xmf3Rotation;
+			pGameObject->m_xmf3boundScale = xmf3Scale;
 		}
 		else if (!strcmp(pstrToken, "<TransformMatrix>:"))
 		{
