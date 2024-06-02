@@ -99,162 +99,203 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	XMFLOAT4 xmf4Color = XMFLOAT4(0.7608f, 0.6980f, 0.5020f, 0.0f);
 	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 513, 513, xmf3Scale, xmf4Color);
 
-	m_nHierarchicalGameObjects = 10;
-	m_ppHierarchicalGameObjects = new CGameObject * [m_nHierarchicalGameObjects];
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// loadscenefromfile 이 벡터를 리턴하여 벡터 안에는 게임 오브젝트? 로드모델인포       들이 들어가도록
 
-	// 너는 이제부터 적군이야
-	// 너가 detect 함수를 갖고 있어야하고
-	// 결국 player의 정보가 필요함 -> scene에서 넘겨주는건 어때?
-	CLoadedModelInfo* pEthanModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
-	m_ppHierarchicalGameObjects[0] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 4);
-
+	// CGameObject
+	// gameScene가 std::vector<CLoadedModelInfo*> 형태의 게임모델 로드 정보를 리턴
+	// 리턴받은 벡터에서 하나씩 꺼내 게임오브젝트에 연결
+	// 
+	// 
+	// 벡터에서 하나씩 꺼내 게임 오브젝트벡터에 연결 
 	
-	/*for (int i = 0; i < 4; i++)
-	{
-		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(i, i);
-		m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(i, false);
-	}
-	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);*/
-	
-	m_ppHierarchicalGameObjects[0]->SetPosition(1610.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
-	m_ppHierarchicalGameObjects[0]->Rotate(0.0f, 225.0f, 0.0f);
-	m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(5.0f, 20.0f, 5.0f);
-	m_ppHierarchicalGameObjects[0]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
-	m_ppHierarchicalGameObjects[0]->nonConflicting = true;
-	m_ppHierarchicalGameObjects[0]->isNPC = true;
-	m_pBoundingBox[0] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[0]->m_xmOOBB);
+	//m_nHierarchicalGameObjects = 10;
+	//m_ppHierarchicalGameObjects = new CGameObject * [m_nHierarchicalGameObjects];
 
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
-	if (pEthanModel) delete pEthanModel;
 
-	CLoadedModelInfo* pMonsterModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
-	m_ppHierarchicalGameObjects[1] = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pMonsterModel, 1);
+	//CLoadedModelInfo* pEthanModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
+	//m_ppHierarchicalGameObjects[0] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 4);
+	//CGameObject* pEthanNPC = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pEthanModel, 4);
+	//
+	///*for (int i = 0; i < 4; i++)
+	//{
+	//	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackAnimationSet(i, i);
+	//	m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(i, false);
+	//}
+	//m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackEnable(0, true);*/
+	//
+	//m_ppHierarchicalGameObjects[0]->SetPosition(1610.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
+	//m_ppHierarchicalGameObjects[0]->Rotate(0.0f, 225.0f, 0.0f);
+	//m_ppHierarchicalGameObjects[0]->SetScale(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[0]->SetBoundingBox(m_ppHierarchicalGameObjects[0]->m_xmOOBB, m_ppHierarchicalGameObjects[0]);
+
+	//m_ppHierarchicalGameObjects[0]->ScaleBoundingBox(5.0f, 20.0f, 5.0f);
+	//m_ppHierarchicalGameObjects[0]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
+	//m_ppHierarchicalGameObjects[0]->nonConflicting = true;
+	//m_ppHierarchicalGameObjects[0]->isNPC = true;
+	//m_pBoundingBox[0] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[0]->m_xmOOBB);
+
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
+	//if (pEthanModel) delete pEthanModel;
+
+
+
+	CLoadedModelInfo* pboxModel1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
+	CGameObject* pboxObject1 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxModel1, 1);
 	//m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-	m_ppHierarchicalGameObjects[1]->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
-	m_ppHierarchicalGameObjects[1]->SetScale(50.0f, 30.0f, 50.0f);
-	m_ppHierarchicalGameObjects[1]->SetBoundingBox(m_ppHierarchicalGameObjects[1]->m_xmOOBB, m_ppHierarchicalGameObjects[1]);
-	m_ppHierarchicalGameObjects[1]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
-	m_pBoundingBox[1] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[1]->m_xmOOBB);
+	pboxObject1->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
+	pboxObject1->SetScale(50.0f, 30.0f, 50.0f);
+	pboxObject1->SetBoundingBox(pboxObject1->m_xmOOBB, pboxObject1);
+	pboxObject1->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	CBoundingBox* pboundingBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxObject1->m_xmOOBB);
+	m_vBoundingBox.push_back(pboundingBox);
+
+	//m_pBoundingBox[1] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxObject1->m_xmOOBB);
 	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[1]);
-	if (pMonsterModel) delete pMonsterModel;
+	
+	if (pboxModel1) delete pboxModel1;
+	//if (pboxObject1) delete pboxObject1;
 
-	CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
-	m_ppHierarchicalGameObjects[2] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox, 1);
-	//m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
+	m_vGameObjects.push_back(pboxObject1);
 
-	m_ppHierarchicalGameObjects[2]->SetPosition(1200.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1650.0f);
-	m_ppHierarchicalGameObjects[2]->SetScale(50.0f, 30.0f, 50.0f);
-	m_ppHierarchicalGameObjects[2]->SetBoundingBox(m_ppHierarchicalGameObjects[2]->m_xmOOBB, m_ppHierarchicalGameObjects[2]);
-	 m_ppHierarchicalGameObjects[2]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
-	m_pBoundingBox[2] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[2]->m_xmOOBB);
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	if (pbox) delete pbox;
 
-	//CLoadedModelInfo* pbox1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
-	//m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox1, 1);
+	///////////////////////////////////////////////
+	// 현재 씬을 로드하면 바운딩 박스가 씬의 중심에만 생성된다
+	// 각각의 물체에 따른 바운딩 박스가 생성되지 않음
+	std::vector<CLoadedModelInfo*> pScenes = CGameObject::LoadSceneFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	for (auto pLoadedModel : pScenes) {
+		CGameObject* pObj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pLoadedModel, 1);
+		pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
+		pObj->SetScale(50.0f, 30.0f, 50.0f);
+		pObj->SetBoundingBox(pObj->m_xmOOBB, pObj);
+		pObj->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+		
+		CBoundingBox* pbBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pObj->m_xmOOBB);
+		m_vBoundingBox.push_back(pbBox);
+		// 여기에서 각 pLoadedModel에 대한 처리를 할 수 있습니다.
+		// 예를 들어 모델의 정보를 출력하거나, 초기화 과정을 진행할 수 있습니다.
+
+		// 필요한 경우 각 모델을 게임 환경에 추가하는 로직을 구현합니다.
+		// 예: 게임 환경에 모델 추가, 렌더링 준비 등
+		m_vGameObjects.push_back(pObj);
+	}
+	
+	//CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
+	//m_ppHierarchicalGameObjects[2] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox, 1);
 	////m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-	//m_ppHierarchicalGameObjects[3]->SetPosition(350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
+
+	//m_ppHierarchicalGameObjects[2]->SetPosition(1200.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1650.0f);
+	//m_ppHierarchicalGameObjects[2]->SetScale(50.0f, 30.0f, 50.0f);
+	//m_ppHierarchicalGameObjects[2]->SetBoundingBox(m_ppHierarchicalGameObjects[2]->m_xmOOBB, m_ppHierarchicalGameObjects[2]);
+	// m_ppHierarchicalGameObjects[2]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
+	//m_pBoundingBox[2] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[2]->m_xmOOBB);
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	//if (pbox) delete pbox;
+
+	////CLoadedModelInfo* pbox1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	////m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox1, 1);
+	//////m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
+	////m_ppHierarchicalGameObjects[3]->SetPosition(350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
+	////m_ppHierarchicalGameObjects[3]->SetScale(10.0f, 10.0f, 10.0f);
+	////m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
+	//////m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	////m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
+	////// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	////if (pbox1) delete pbox1;
+
+	//// 길이가 300 정도 된다
+	//CLoadedModelInfo* wall1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
+	//m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall1, 1);
+	////m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
+	//m_ppHierarchicalGameObjects[3]->SetPosition(1350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
 	//m_ppHierarchicalGameObjects[3]->SetScale(10.0f, 10.0f, 10.0f);
 	//m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	////m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
+	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(10.0f, 20.0f, 180.0f);
 	//m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
 	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	//if (pbox1) delete pbox1;
+	//if (wall1) delete wall1;
 
-	// 길이가 300 정도 된다
-	CLoadedModelInfo* wall1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
-	m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall1, 1);
-	//m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-	m_ppHierarchicalGameObjects[3]->SetPosition(1350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
-	m_ppHierarchicalGameObjects[3]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(10.0f, 20.0f, 180.0f);
-	m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	if (wall1) delete wall1;
+	//CLoadedModelInfo* wall2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
+	//m_ppHierarchicalGameObjects[4] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall2, 1);
+	//m_ppHierarchicalGameObjects[4]->SetPosition(1520.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1920.0f);
+	//m_ppHierarchicalGameObjects[4]->Rotate(0.0f, 90.0f, 0.0f);
+	//m_ppHierarchicalGameObjects[4]->SetScale(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[4]->SetBoundingBox(m_ppHierarchicalGameObjects[4]->m_xmOOBB, m_ppHierarchicalGameObjects[4]);
+	//m_ppHierarchicalGameObjects[4]->ScaleBoundingBox(180.0f, 20.0f, 10.0f);
+	//m_pBoundingBox[4] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[4]->m_xmOOBB);
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	//if (wall2) delete wall2;
 
-	CLoadedModelInfo* wall2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
-	m_ppHierarchicalGameObjects[4] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall2, 1);
-	m_ppHierarchicalGameObjects[4]->SetPosition(1520.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1920.0f);
-	m_ppHierarchicalGameObjects[4]->Rotate(0.0f, 90.0f, 0.0f);
-	m_ppHierarchicalGameObjects[4]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[4]->SetBoundingBox(m_ppHierarchicalGameObjects[4]->m_xmOOBB, m_ppHierarchicalGameObjects[4]);
-	m_ppHierarchicalGameObjects[4]->ScaleBoundingBox(180.0f, 20.0f, 10.0f);
-	m_pBoundingBox[4] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[4]->m_xmOOBB);
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	if (wall2) delete wall2;
-
-	CLoadedModelInfo* wall3 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
-	m_ppHierarchicalGameObjects[5] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall3, 1);
-	m_ppHierarchicalGameObjects[5]->SetPosition(1670.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
-	//m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
-	m_ppHierarchicalGameObjects[5]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[5]->SetBoundingBox(m_ppHierarchicalGameObjects[5]->m_xmOOBB, m_ppHierarchicalGameObjects[5]);
-	m_ppHierarchicalGameObjects[5]->ScaleBoundingBox(10.0f, 20.0f, 180.0f);
-	m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[5]->m_xmOOBB);
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	if (wall3) delete wall3;
+	//CLoadedModelInfo* wall3 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
+	//m_ppHierarchicalGameObjects[5] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall3, 1);
+	//m_ppHierarchicalGameObjects[5]->SetPosition(1670.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
+	////m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
+	//m_ppHierarchicalGameObjects[5]->SetScale(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[5]->SetBoundingBox(m_ppHierarchicalGameObjects[5]->m_xmOOBB, m_ppHierarchicalGameObjects[5]);
+	//m_ppHierarchicalGameObjects[5]->ScaleBoundingBox(10.0f, 20.0f, 180.0f);
+	//m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[5]->m_xmOOBB);
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	//if (wall3) delete wall3;
 
 
-	CLoadedModelInfo* container1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/container.bin", NULL);
-	m_ppHierarchicalGameObjects[6] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, container1, 1);
-	m_ppHierarchicalGameObjects[6]->SetPosition(1450.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1800.0f);
-	m_ppHierarchicalGameObjects[6]->Rotate(0.0f, 60.0f, 0.0f);
-	m_ppHierarchicalGameObjects[6]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[6]->SetBoundingBox(m_ppHierarchicalGameObjects[6]->m_xmOOBB, m_ppHierarchicalGameObjects[6]);
-	m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 20.0f, 30.0f);
-	m_ppHierarchicalGameObjects[6]->RotateBoundingBox(0.0f, XMConvertToRadians(60.0f), 0.0f);
-	m_pBoundingBox[6] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[6]->m_xmOOBB);
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	if (container1) delete container1;
+	//CLoadedModelInfo* container1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/container.bin", NULL);
+	//m_ppHierarchicalGameObjects[6] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, container1, 1);
+	//m_ppHierarchicalGameObjects[6]->SetPosition(1450.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1800.0f);
+	//m_ppHierarchicalGameObjects[6]->Rotate(0.0f, 60.0f, 0.0f);
+	//m_ppHierarchicalGameObjects[6]->SetScale(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[6]->SetBoundingBox(m_ppHierarchicalGameObjects[6]->m_xmOOBB, m_ppHierarchicalGameObjects[6]);
+	//m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 20.0f, 30.0f);
+	//m_ppHierarchicalGameObjects[6]->RotateBoundingBox(0.0f, XMConvertToRadians(60.0f), 0.0f);
+	//m_pBoundingBox[6] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[6]->m_xmOOBB);
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	//if (container1) delete container1;
 
-	CLoadedModelInfo* container2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/container.bin", NULL);
-	m_ppHierarchicalGameObjects[7] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, container2, 1);
-	m_ppHierarchicalGameObjects[7]->SetPosition(1600.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1700.0f);
-	//m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
-	m_ppHierarchicalGameObjects[7]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[7]->SetBoundingBox(m_ppHierarchicalGameObjects[7]->m_xmOOBB, m_ppHierarchicalGameObjects[7]);
-	m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 20.0f, 30.0f);
-	m_pBoundingBox[7] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[7]->m_xmOOBB);
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	if (container2) delete container2;
+	//CLoadedModelInfo* container2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/container.bin", NULL);
+	//m_ppHierarchicalGameObjects[7] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, container2, 1);
+	//m_ppHierarchicalGameObjects[7]->SetPosition(1600.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1700.0f);
+	////m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
+	//m_ppHierarchicalGameObjects[7]->SetScale(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[7]->SetBoundingBox(m_ppHierarchicalGameObjects[7]->m_xmOOBB, m_ppHierarchicalGameObjects[7]);
+	//m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 20.0f, 30.0f);
+	//m_pBoundingBox[7] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[7]->m_xmOOBB);
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	//if (container2) delete container2;
 
-	CLoadedModelInfo* sandbag = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/sandbag2.bin", NULL);
-	m_ppHierarchicalGameObjects[8] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, sandbag, 1);
-	m_ppHierarchicalGameObjects[8]->SetPosition(1620.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1860.0f);
-	m_ppHierarchicalGameObjects[8]->Rotate(0.0f, 0.0f, 0.0f);
-	m_ppHierarchicalGameObjects[8]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[8]->SetBoundingBox(m_ppHierarchicalGameObjects[8]->m_xmOOBB, m_ppHierarchicalGameObjects[8]);
-	m_ppHierarchicalGameObjects[8]->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
-	m_pBoundingBox[8] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[8]->m_xmOOBB);
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	if (sandbag) delete sandbag;
+	//CLoadedModelInfo* sandbag = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/sandbag2.bin", NULL);
+	//m_ppHierarchicalGameObjects[8] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, sandbag, 1);
+	//m_ppHierarchicalGameObjects[8]->SetPosition(1620.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1860.0f);
+	//m_ppHierarchicalGameObjects[8]->Rotate(0.0f, 0.0f, 0.0f);
+	//m_ppHierarchicalGameObjects[8]->SetScale(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[8]->SetBoundingBox(m_ppHierarchicalGameObjects[8]->m_xmOOBB, m_ppHierarchicalGameObjects[8]);
+	//m_ppHierarchicalGameObjects[8]->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
+	//m_pBoundingBox[8] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[8]->m_xmOOBB);
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
+	//if (sandbag) delete sandbag;
 
-	CLoadedModelInfo* pNPCModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
-	m_ppHierarchicalGameObjects[9] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel, 4);
-	m_ppHierarchicalGameObjects[9]->SetPosition(1380.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
-	m_ppHierarchicalGameObjects[9]->Rotate(0.0f, 180.0f, 0.0f);
-	m_ppHierarchicalGameObjects[9]->SetScale(10.0f, 10.0f, 10.0f);
-	m_ppHierarchicalGameObjects[9]->SetBoundingBox(m_ppHierarchicalGameObjects[9]->m_xmOOBB, m_ppHierarchicalGameObjects[9]);
+	//CLoadedModelInfo* pNPCModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
+	//m_ppHierarchicalGameObjects[9] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel, 4);
+	//m_ppHierarchicalGameObjects[9]->SetPosition(1380.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
+	//m_ppHierarchicalGameObjects[9]->Rotate(0.0f, 180.0f, 0.0f);
+	//m_ppHierarchicalGameObjects[9]->SetScale(10.0f, 10.0f, 10.0f);
+	//m_ppHierarchicalGameObjects[9]->SetBoundingBox(m_ppHierarchicalGameObjects[9]->m_xmOOBB, m_ppHierarchicalGameObjects[9]);
 
-	m_ppHierarchicalGameObjects[9]->ScaleBoundingBox(5.0f, 20.0f, 5.0f);
-	m_ppHierarchicalGameObjects[9]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
-	m_ppHierarchicalGameObjects[9]->nonConflicting = true;
-	m_ppHierarchicalGameObjects[9]->isNPC = true;
-	m_pBoundingBox[9] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[9]->m_xmOOBB);
+	//m_ppHierarchicalGameObjects[9]->ScaleBoundingBox(5.0f, 20.0f, 5.0f);
+	//m_ppHierarchicalGameObjects[9]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
+	//m_ppHierarchicalGameObjects[9]->nonConflicting = true;
+	//m_ppHierarchicalGameObjects[9]->isNPC = true;
+	//m_pBoundingBox[9] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[9]->m_xmOOBB);
 
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
-	if (pNPCModel) delete pNPCModel;
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
+	//if (pNPCModel) delete pNPCModel;
 
 
-	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
-	{
-		if (m_ppHierarchicalGameObjects[i]) //m_ppHierarchicalGameObjects[i]->SetBoundingBox(m_ppHierarchicalGameObjects[i]->m_xmOOBB, m_ppHierarchicalGameObjects[i]);
-			m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[i]);		
-	}
+	//for (int i = 0; i < m_nHierarchicalGameObjects; i++)
+	//{
+	//	if (m_ppHierarchicalGameObjects[i]) //m_ppHierarchicalGameObjects[i]->SetBoundingBox(m_ppHierarchicalGameObjects[i]->m_xmOOBB, m_ppHierarchicalGameObjects[i]);
+	//		m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[i]);		
+	//}
 
 	
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
@@ -282,17 +323,20 @@ void CScene::ReleaseObjects()
 		delete[] m_ppShaders;
 	}
 
-	while (m_lpGameObjects.size()) {
-		m_lpGameObjects.back()->Release();
-		m_lpGameObjects.pop_back();
+	while (m_vGameObjects.size()) {
+		m_vGameObjects.back()->Release();
+		m_vGameObjects.pop_back();
 	}
 
 	if (m_pTerrain) delete m_pTerrain;
 	if (m_pSkyBox) delete m_pSkyBox;
 
-	// OBB 제거
-	for (int i = 0; i < 4; i++)
-		delete m_pBoundingBox[i];
+	//// OBB 제거
+	//for (int i = 0; i < 4; i++)
+	//	delete m_pBoundingBox[i];
+
+	for (auto boungBox : m_vBoundingBox)
+		delete boungBox;
 
 	// 여기 고쳐야함
 
@@ -303,11 +347,11 @@ void CScene::ReleaseObjects()
 			delete m_pPlayer->m_ppBullets[i];
 	}
 
-	if (m_ppHierarchicalGameObjects)
-	{
-		for (int i = 0; i < m_nHierarchicalGameObjects; i++) if (m_ppHierarchicalGameObjects[i]) m_ppHierarchicalGameObjects[i]->Release();
-		delete[] m_ppHierarchicalGameObjects;
-	}
+	//if (m_ppHierarchicalGameObjects)
+	//{
+	//	for (int i = 0; i < m_nHierarchicalGameObjects; i++) if (m_ppHierarchicalGameObjects[i]) m_ppHierarchicalGameObjects[i]->Release();
+	//	delete[] m_ppHierarchicalGameObjects;
+	//}
 
 	ReleaseShaderVariables();
 
@@ -531,7 +575,7 @@ void CScene::ReleaseShaderVariables()
 
 void CScene::ReleaseUploadBuffers()
 {
-	for (const auto& elm : m_lpGameObjects) elm->ReleaseUploadBuffers();
+	for (const auto& elm : m_vGameObjects) elm->ReleaseUploadBuffers();
 
 	if (m_pSkyBox) m_pSkyBox->ReleaseUploadBuffers();
 	if (m_pTerrain) m_pTerrain->ReleaseUploadBuffers();
@@ -545,7 +589,7 @@ void CScene::ReleaseUploadBuffers()
 
 	for (int i = 0; i < m_nShaders; i++) m_ppShaders[i]->ReleaseUploadBuffers();
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->ReleaseUploadBuffers();
-	for (int i = 0; i < m_nHierarchicalGameObjects; i++) m_ppHierarchicalGameObjects[i]->ReleaseUploadBuffers();
+	//for (int i = 0; i < m_nHierarchicalGameObjects; i++) m_ppHierarchicalGameObjects[i]->ReleaseUploadBuffers();
 }
 
 void CScene::CreateCbvSrvDescriptorHeaps(ID3D12Device *pd3dDevice, int nConstantBufferViews, int nShaderResourceViews)
@@ -603,7 +647,7 @@ void CScene::CreateShaderResourceViews(ID3D12Device* pd3dDevice, CTexture* pText
 
 void CScene::CheckPlayerByObjectCollisions()
 {
-	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
+	for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end(); ++iter)
 	{
 		CGameObject* Object = *iter;
 		//XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
@@ -664,7 +708,7 @@ void CScene::CheckPlayerByObjectCollisions()
 
 void CScene::CheckBulletByObjectCollisions()
 {
-	for (auto iter = m_lpGameObjects.begin(); iter != m_lpGameObjects.end(); ++iter)
+	for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end(); ++iter)
 	{
 		CGameObject* Object = *iter;
 
@@ -682,91 +726,70 @@ void CScene::CheckBulletByObjectCollisions()
 						XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
 						XMFLOAT3 xmf3SurfaceNormal;
 						
-						// 이거 추가시켜
-
+						// 우선은 y축은 고정으로
 						xmf3CollisionPoint.y = xmf3ObjectCenter.y;
-
-						xmf3CollisionPoint.y = xmf3ObjectCenter.y;
-
-						// 표면 법선 계산
-						//XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
-						// 위,아래로 튐 방지
-						//xmf3SurfaceNormal.y = 0;
-
+						
 
 						XMFLOAT3 corners[8];
 						Object->m_xmOOBB.GetCorners(corners);
-						XMFLOAT3 maxPos = {corners[0]};
-						XMFLOAT3 minPos = { corners[0] };
+						 
+
+						// 정면		 4 5 6 7
+						// 왼쪽		 0 4 7 3
+						// 오른쪽	 5 1 2 6
+						// 뒤쪽		 1 2 3 0
 						
-						/*for (int i = 0; i < 8; i++)
-							cout << corners[i].x << endl;*/
+						// 위쪽		 7 6 2 3
+						// 아래쪽	 0 1 5 4
 
-						
-						for (int i = 1; i < 8; i++) {
-							if (corners[i].x > maxPos.x) {
-								maxPos.x = corners[i].x;
-							}
-							if (corners[i].x < minPos.x) {
-								minPos.x = corners[i].x;
-							}
 
-							// Y 좌표에 대한 최대값과 최소값 검사
-							if (corners[i].y > maxPos.y) {
-								maxPos.y = corners[i].y;
-							}
-							if (corners[i].y < minPos.y) {
-								minPos.y = corners[i].y;
-							}
-
-							// Z 좌표에 대한 최대값과 최소값 검사
-							if (corners[i].z > maxPos.z) {
-								maxPos.z = corners[i].z;
-							}
-							if (corners[i].z < minPos.z) {
-								minPos.z = corners[i].z;
-							}
-						}
-						/*cout << maxPos.x << " " <<  maxPos.z << endl;
-						cout << minPos.x << " " << minPos.z << endl;*/
-
-						float closestX, closestZ;
-
-						// X 축에 대한 비교
-						float distanceToMaxX = fabs(maxPos.x - xmf3CollisionPoint.x);
-						float distanceToMinX = fabs(minPos.x - xmf3CollisionPoint.x);
-
-						if (distanceToMaxX < distanceToMinX) {
-							closestX = maxPos.x;
-						}
-						else {
-							closestX = minPos.x;
+						XMVECTOR xmCorners[8];
+						for (int i = 0; i < 8; i++) {
+							xmCorners[i] = XMLoadFloat3(&corners[i]);
 						}
 
-						// Z 축에 대한 비교
-						float distanceToMaxZ = fabs(maxPos.z - xmf3CollisionPoint.z);
-						float distanceToMinZ = fabs(minPos.z - xmf3CollisionPoint.z);
+						XMVECTOR collisionPoint = XMLoadFloat3(&xmf3CollisionPoint);
 
-						if (distanceToMaxZ < distanceToMinZ) {
-							closestZ = maxPos.z;
+						std::vector<PlaneData> planeDistances;
+
+						// 면의 거리 계산 및 저장
+						auto calculateAndStoreDistance = [&](int a, int b, int c) {
+							// 평면의 법선 벡터 계산
+							XMVECTOR planeNormal = XMVector3Normalize(XMVector3Cross(XMVectorSubtract(xmCorners[b], xmCorners[a]), XMVectorSubtract(xmCorners[c], xmCorners[a])));
+							float planeD = -XMVectorGetX(XMVector3Dot(planeNormal, xmCorners[a]));
+							float distance = XMVectorGetX(XMVector3Dot(planeNormal, collisionPoint)) + planeD;
+							planeDistances.emplace_back(planeNormal, distance);
+							};
+
+						// 각 면에 대해 계산
+						calculateAndStoreDistance(4, 5, 6); // Front
+						calculateAndStoreDistance(0, 4, 7); // Left
+						calculateAndStoreDistance(5, 1, 2); // Right
+						calculateAndStoreDistance(1, 2, 3); // Back
+						calculateAndStoreDistance(7, 6, 2); // Top
+						calculateAndStoreDistance(0, 1, 5); // Bottom
+
+						// 가장 가까운 면 찾기
+						float minDistance = FLT_MAX;
+						XMVECTOR xmvNearestNormal;
+						for (const auto& plane : planeDistances) {
+							if (fabs(plane.distance) < minDistance) {
+								minDistance = fabs(plane.distance);
+								xmvNearestNormal = plane.normal;
+							}
 						}
-						else {
-							closestZ = minPos.z;
-						}
 
-						XMFLOAT3 result;
-						if (fabs( closestX - xmf3CollisionPoint.x )> fabs( closestZ - xmf3CollisionPoint.z))
-							result = { xmf3ObjectCenter.x, xmf3ObjectCenter.y, closestZ };
-						else 
-							result = { closestX, xmf3ObjectCenter.y, xmf3ObjectCenter.z };
-
-						//cout << xmf3CollisionPoint.x << " " << xmf3CollisionPoint.z << endl;
-
-						XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&result) - XMLoadFloat3(&xmf3ObjectCenter)));
-
+						// 가장 가까운 면의 법선 벡터 출력
+						XMFLOAT3 xmf3NearestNormalFloat3;
+						XMStoreFloat3(&xmf3NearestNormalFloat3, xmvNearestNormal);
 
 						// 총알을 반사시키는 함수 호출
-						m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3SurfaceNormal);
+						//XMFLOAT3 pastDirection = m_pPlayer->m_ppBullets[i]->m_xmf3MovingDirection;
+						m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
+						//XMFLOAT3 nowDirection =  m_pPlayer->m_ppBullets[i]->m_xmf3MovingDirection;		
+						// 총알이 도탄되는 방향으로 과거와 현재의 방향을 비교하여회전시켜라
+
+						//m_pPlayer->m_ppBullets[i]->RotateBulletTowards(pastDirection, nowDirection);
 					}
 					else
 					{
@@ -833,21 +856,46 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	
 	//m_ppHierarchicalGameObjects[0]->MoveToTarget(m_pPlayer->GetPosition(), 0.5f);
 
-	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
+	//for (int i = 0; i < m_nHierarchicalGameObjects; i++)
+	//{
+	//	if (m_ppHierarchicalGameObjects[i]->isNPC)
+	//	{
+	//		if (!m_ppHierarchicalGameObjects[i]->isheat)
+	//		{
+	//			if (m_ppHierarchicalGameObjects[i]->findPlayer(m_pPlayer->GetPosition()))
+	//			{
+	//				m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(0, false);
+	//				m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(1, true);
+	//			}
+	//			else
+	//			{
+	//				m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
+	//				m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			//m_ppHierarchicalGameObjects[0]->m_pSkinnedAnimationController->SetTrackPosition(2, 3.0f);
+	//		}
+	//	}
+	//}
+
+	for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end(); ++iter)
 	{
-		if (m_ppHierarchicalGameObjects[i]->isNPC)
+		CGameObject* obj = *iter;
+		if (obj->isNPC)
 		{
-			if (!m_ppHierarchicalGameObjects[i]->isheat)
+			if (!obj->isheat)
 			{
-				if (m_ppHierarchicalGameObjects[i]->findPlayer(m_pPlayer->GetPosition()))
+				if (obj->findPlayer(m_pPlayer->GetPosition()))
 				{
-					m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(0, false);
-					m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(1, true);
+					obj->m_pSkinnedAnimationController->SetTrackEnable(0, false);
+					obj->m_pSkinnedAnimationController->SetTrackEnable(1, true);
 				}
 				else
 				{
-					m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(0, true);
-					m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+					obj->m_pSkinnedAnimationController->SetTrackEnable(0, true);
+					obj->m_pSkinnedAnimationController->SetTrackEnable(1, false);
 				}
 			}
 			else
@@ -856,7 +904,6 @@ void CScene::AnimateObjects(float fTimeElapsed)
 			}
 		}
 	}
-
 
 }
 
@@ -893,28 +940,41 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
 
-	for (int i = 0; i < m_nHierarchicalGameObjects; i++)
+	//for (int i = 0; i < m_nHierarchicalGameObjects; i++)
+	//{
+	//	if (m_ppHierarchicalGameObjects[i])
+	//	{
+	//		m_ppHierarchicalGameObjects[i]->Animate(m_fElapsedTime);
+	//		if (!m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController) m_ppHierarchicalGameObjects[i]->UpdateTransform(NULL);
+	//		m_ppHierarchicalGameObjects[i]->Render(pd3dCommandList, pCamera);
+	//	}
+	//}
+
+	for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end(); ++iter) 
 	{
-		if (m_ppHierarchicalGameObjects[i])
-		{
-			m_ppHierarchicalGameObjects[i]->Animate(m_fElapsedTime);
-			if (!m_ppHierarchicalGameObjects[i]->m_pSkinnedAnimationController) m_ppHierarchicalGameObjects[i]->UpdateTransform(NULL);
-			m_ppHierarchicalGameObjects[i]->Render(pd3dCommandList, pCamera);
-		}
+		CGameObject* obj = *iter;
+		obj->Animate(m_fElapsedTime);
+		if (!obj->m_pSkinnedAnimationController) obj->UpdateTransform(NULL);
+		obj->Render(pd3dCommandList, pCamera);
 	}
 
-	for (const auto& elm : m_lpGameObjects) {
+
+	for (const auto& elm : m_vGameObjects) {
 		elm->UpdateTransform(NULL);
 		elm->Render(pd3dCommandList, pCamera);
 	}
 	// OOBB 렌더링
 	if (m_pPlayer->DrawBoundingBox)
 	{
-		for (int i = 0; i < 10; i++)
+		/*for (int i = 0; i < 10; i++)
 		{
 			m_pBoundingBox[i]->Render(pd3dCommandList, pCamera);
-		}
+		}*/
+
+		for (auto boundingBox : m_vBoundingBox)
+			boundingBox->Render(pd3dCommandList, pCamera);
 	}
+
 
 	if(m_pUI)
 		m_pUI->Render(pd3dCommandList, pCamera);

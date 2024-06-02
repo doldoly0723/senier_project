@@ -30,6 +30,12 @@ class CStandardShader;
 #define VK_A						0x41
 #define VK_D						0x44
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define materialSteel				0
+#define materialConcrete			1
+#define materialWood				2
+
 class CTexture
 {
 public:
@@ -384,6 +390,14 @@ public:
 	// NPC 인가
 	bool							isNPC = false;
 	bool							isheat = false;
+	///
+
+	// 재질별 도탄
+	
+	float thickness;					//두께에 따라 관통 혹은 도탄
+	int materialType;					// 강철, 콘크리트, 나무
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void SetActive(bool bActive) { m_bActive = bActive; }
 	//
@@ -470,6 +484,7 @@ public:
 	static CGameObject *LoadFrameHierarchyFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CGameObject *pParent, FILE *pInFile, CShader *pShader, int *pnSkinnedMeshes);
 
 	static CLoadedModelInfo *LoadGeometryAndAnimationFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, char *pstrFileName, CShader *pShader);
+	static std::vector<CLoadedModelInfo*> LoadSceneFromFile(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, const char* pstrFileName, CShader* pShader);
 
 	static void PrintFrameInfo(CGameObject *pGameObject, CGameObject *pParent);
 
@@ -723,3 +738,12 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class CObject : public CGameObject
+{
+public:
+	CObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, CLoadedModelInfo* pModel);
+	virtual ~CObject();
+
+
+};

@@ -104,6 +104,7 @@ public:
 
 	int									m_nHierarchicalGameObjects = 0;
 	CGameObject							**m_ppHierarchicalGameObjects = NULL;
+	std::vector<CGameObject*>			m_vGameObjects;
 
 	XMFLOAT3							m_xmf3RotatePosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
@@ -131,7 +132,17 @@ public:
 
 	CUI									*m_pUI = NULL;
 
-	std::list<CBoundingBox*>    m_lpBoundingBoxs;
-	CBoundingBox*				m_pBoundingBox[10];
+	//std::list<CBoundingBox*>    m_lpBoundingBoxs;
+	//CBoundingBox*				m_pBoundingBox[10];
 
+	std::vector<CBoundingBox*> m_vBoundingBox;
+
+};
+
+// 바운딩 박스 면을 저장하기 위한 구조체
+struct PlaneData {
+	XMVECTOR normal;
+	float distance;
+
+	PlaneData(XMVECTOR n, float d) : normal(n), distance(d) {}
 };
