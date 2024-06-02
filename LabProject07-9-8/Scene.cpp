@@ -184,7 +184,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CGameObject* pChild = pScene->m_pModelRootObject->m_pChild;
 	while (pChild != NULL)
 	{
-		CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1);
+		CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pChild);
 
 		pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
 		pObj->SetScale(50.0f, 30.0f, 50.0f);
