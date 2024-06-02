@@ -147,7 +147,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	//pboxObject1->SetMesh(pboxModel1->m_pModelRootObject->m_pMesh);
 	//m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
 	pboxObject1->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
-	pboxObject1->SetScale(50.0f, 30.0f, 50.0f);
+	//pboxObject1->SetScale(50.0f, 30.0f, 50.0f);
 	pboxObject1->SetBoundingBox(pboxObject1->m_xmOOBB, pboxObject1);
 	pboxObject1->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
 	CBoundingBox* pboundingBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxObject1->m_xmOOBB);
@@ -167,9 +167,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	// 현재 씬을 로드하면 바운딩 박스가 씬의 중심에만 생성된다
 	// 각각의 물체에 따른 바운딩 박스가 생성되지 않음
 
-	std::vector<CLoadedModelInfo*> pScenes = CGameObject::LoadSceneFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	std::vector<CLoadedModelInfo*> pScenes = CGameObject::LoadSceneFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
 	for (auto pLoadedModel : pScenes) {
-		CGameObject* pObj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pLoadedModel, 1);
+		CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pLoadedModel, 1);
 		pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
 		pObj->SetScale(50.0f, 30.0f, 50.0f);
 		pObj->SetBoundingBox(pObj->m_xmOOBB, pObj);
