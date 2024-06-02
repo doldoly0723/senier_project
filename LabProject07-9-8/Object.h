@@ -379,6 +379,9 @@ public:
 
 	CAnimationController*			m_pSkinnedAnimationController = NULL;
 
+	XMFLOAT3						m_xmf3RotationAngle = XMFLOAT3{ 0.0f, 0.0f, 0.0f };
+	XMFLOAT3						m_xmf3boundScale = XMFLOAT3{ 1.0f, 1.0f, 1.0f };
+
 	// 총알 
 	bool							m_bActive = false;
 

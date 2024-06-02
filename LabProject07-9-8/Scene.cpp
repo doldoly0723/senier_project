@@ -142,31 +142,31 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 
-	CLoadedModelInfo* pboxModel1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/tbox3.bin", NULL);
-	CGameObject* pboxObject1 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxModel1, 1);
-	pboxObject1 = dynamic_cast<CGameObject*> (pboxModel1->m_pModelRootObject);
-	// pboxObject1 = tObject;
-	auto testpos = pboxObject1->m_pMesh->GetPosition();
-	auto bpos = pboxObject1->m_pMesh->GetBPosition();
-	auto extends = pboxObject1->m_pMesh->GetBPExtents();
-	auto test = pboxModel1->Getm_xmf4x4ToParent(pboxModel1->m_pModelRootObject);
-	//pboxObject1->SetMesh(pboxModel1->m_pModelRootObject->m_pMesh);
-	//m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-	//pboxObject1->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
-	pboxObject1->SetPosition(1230.0f + testpos.x, m_pTerrain->GetHeight(430.0f, 700.0f) + testpos.y, 1630.0f + +testpos.z);
-	pboxObject1->SetScale(50.0f, 30.0f, 50.0f);
-	pboxObject1->SetBoundingBox(pboxObject1->m_xmOOBB, pboxObject1);
-	CBoundingBox* pboundingBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxObject1->m_xmOOBB);
-	m_vBoundingBox.push_back(pboundingBox);
+	//CLoadedModelInfo* pboxModel1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/tbox3.bin", NULL);
+	//CGameObject* pboxObject1 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxModel1, 1);
+	//pboxObject1 = dynamic_cast<CGameObject*> (pboxModel1->m_pModelRootObject);
+	//// pboxObject1 = tObject;
+	//auto testpos = pboxObject1->m_pMesh->GetPosition();
+	//auto bpos = pboxObject1->m_pMesh->GetBPosition();
+	//auto extends = pboxObject1->m_pMesh->GetBPExtents();
+	//auto test = pboxModel1->Getm_xmf4x4ToParent(pboxModel1->m_pModelRootObject);
+	////pboxObject1->SetMesh(pboxModel1->m_pModelRootObject->m_pMesh);
+	////m_ppHierarchicalGameObjects[1]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
+	////pboxObject1->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
+	//pboxObject1->SetPosition(1230.0f + testpos.x, m_pTerrain->GetHeight(430.0f, 700.0f) + testpos.y, 1630.0f + +testpos.z);
+	//pboxObject1->SetScale(50.0f, 30.0f, 50.0f);
+	//pboxObject1->SetBoundingBox(pboxObject1->m_xmOOBB, pboxObject1);
+	//CBoundingBox* pboundingBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxObject1->m_xmOOBB);
+	//m_vBoundingBox.push_back(pboundingBox);
 
 
-	//m_pBoundingBox[1] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxObject1->m_xmOOBB);
-	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[1]);
-	
-	//if (pboxModel1) delete pboxModel1;
-	//if (pboxObject1) delete pboxObject1;
+	////m_pBoundingBox[1] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pboxObject1->m_xmOOBB);
+	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[1]);
+	//
+	////if (pboxModel1) delete pboxModel1;
+	////if (pboxObject1) delete pboxObject1;
 
-	m_vGameObjects.push_back(pboxObject1);
+	//m_vGameObjects.push_back(pboxObject1);
 
 
 	///////////////////////////////////////////////
@@ -175,30 +175,33 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 
-	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/testScene.bin", NULL);
 	CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pScene->m_pModelRootObject->m_pChild);
 	pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
-	pObj->SetScale(50.0f, 30.0f, 50.0f);
+	pObj->SetScale(10.0f, 10.0f, 10.0f);
 	CGameObject* pChild = pScene->m_pModelRootObject->m_pChild;
-
+	
 	//CGameObject* pobj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pScene->m_pModelRootObject->m_pChild);
 	while (pChild != NULL)
 	{
 		//CGameObject* pobj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pScene->m_pModelRootObject->m_pChild);
 		auto pos = pChild->GetToParentPosition();
 		auto ObjPos = pObj->GetPosition();
-		XMFLOAT3 unityScale = { pChild->m_xmf4x4ToParent._11 , pChild->m_xmf4x4ToParent._22 , pChild->m_xmf4x4ToParent._33 };
+		XMFLOAT3 unityScale = {pChild->m_xmf3boundScale };
 		//auto unityScale = pChild->m_xmf4x4ToParent._11;
 
-		pChild->m_xmOOBB.Center = { ObjPos.x + pos.x*50, ObjPos.y + pos.y, ObjPos.z + pos.z*50};
-		pChild->m_xmOOBB.Extents = pObj->m_xmOOBB.Extents;
+		pChild->m_xmOOBB.Center = { ObjPos.x + pos.x*10, ObjPos.y + pos.y*10, ObjPos.z + pos.z*10};
+		pChild->m_xmOOBB.Extents = pChild->m_pMesh->GetBPExtents();
+	
 		//pObj->SetPosition(1330.0f + pos.x, m_pTerrain->GetHeight(430.0f, 700.0f) + pos.y, 1630.0f + pos.z);
 		//pObj->SetPosition(1330.0f , m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
 		
 		pChild->SetBoundingBox(pChild->m_xmOOBB, pChild);
-		pChild->m_xmOOBB.Extents.x = pChild->m_pMesh->GetBPExtents().x * unityScale.x * 50 ;
-		pChild->m_xmOOBB.Extents.y = pChild->m_pMesh->GetBPExtents().y * unityScale.y * 30;
-		pChild->m_xmOOBB.Extents.z = pChild->m_pMesh->GetBPExtents().z * unityScale.z * 50;
+		pChild->RotateBoundingBox(pChild->m_xmf3RotationAngle.x, pChild->m_xmf3RotationAngle.y + 60, pChild->m_xmf3RotationAngle.z);
+		
+		pChild->m_xmOOBB.Extents.x *= unityScale.x * 10;
+		pChild->m_xmOOBB.Extents.y *= unityScale.y * 10;
+		pChild->m_xmOOBB.Extents.z *= unityScale.z * 10;
 		pChild->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
 
 		CBoundingBox* pbBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pChild->m_xmOOBB);
