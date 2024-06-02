@@ -175,7 +175,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 
-	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/testScene.bin", NULL);
+	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	//CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/testScene.bin", NULL);
 	CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pScene->m_pModelRootObject->m_pChild);
 	pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
 	pObj->SetScale(10.0f, 10.0f, 10.0f);
@@ -197,7 +198,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		//pObj->SetPosition(1330.0f , m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
 		
 		pChild->SetBoundingBox(pChild->m_xmOOBB, pChild);
-		pChild->RotateBoundingBox(pChild->m_xmf3RotationAngle.x, pChild->m_xmf3RotationAngle.y + 60, pChild->m_xmf3RotationAngle.z);
+		pChild->RotateBoundingBox(pChild->m_xmf3RotationAngle.x, pChild->m_xmf3RotationAngle.y, pChild->m_xmf3RotationAngle.z);
 		
 		pChild->m_xmOOBB.Extents.x *= unityScale.x * 10;
 		pChild->m_xmOOBB.Extents.y *= unityScale.y * 10;
@@ -795,7 +796,7 @@ void CScene::CheckBulletByObjectCollisions()
 				{
 					if (!Object->nonConflicting)
 					{
-						// std::cout << "충돌!" << std::endl;
+						//std::cout << "충돌!" << std::endl;
 
 					// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
 						XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
