@@ -175,8 +175,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 
-	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
-	//CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene2.bin", NULL);
+	//CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene3.bin", NULL);
 	CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pScene->m_pModelRootObject->m_pChild);
 	pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
 	pObj->SetScale(10.0f, 10.0f, 10.0f);
@@ -204,7 +204,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		pChild->m_xmOOBB.Extents.y *= unityScale.y * 10;
 		pChild->m_xmOOBB.Extents.z *= unityScale.z * 10;
 		pChild->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
-
+		pChild->m_xmf3thickness = pChild->m_xmOOBB.Extents;
 		CBoundingBox* pbBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pChild->m_xmOOBB);
 		m_vGameObjects.push_back(pChild);
 		m_vBoundingBox.push_back(pbBox);
@@ -804,6 +804,36 @@ void CScene::CheckPlayerByObjectCollisions()
 		}
 	}
 }
+float CScene::GetCriticalRicochetAngle(float plateThickness) {
+	// 두께와 각도 맵핑
+	const int numPoints = 6;
+	float thicknesses[numPoints] = { 6, 8, 10, 12, 14, 16 };
+	float angles[numPoints] = { 83, 80, 78, 76, 74, 73 };
+
+	// 선형 보간 및 외삽 수행
+	for (int i = 0; i < numPoints - 1; i++) {
+		if (plateThickness == thicknesses[i]) {
+			return angles[i];
+		}
+		if (plateThickness < thicknesses[i + 1]) {
+			// 선형 보간 계산
+			float deltaTheta = (angles[i + 1] - angles[i]) / (thicknesses[i + 1] - thicknesses[i]);
+			return angles[i] + (plateThickness - thicknesses[i]) * deltaTheta;
+		}
+	}
+
+	// 외삽 계산
+	if (plateThickness < thicknesses[0]) { // 6 이하인 경우
+		float deltaTheta = (angles[1] - angles[0]) / (thicknesses[1] - thicknesses[0]);
+		return angles[0] + (plateThickness - thicknesses[0]) * deltaTheta;
+	}
+	else if (plateThickness > thicknesses[numPoints - 1]) { // 16 이상인 경우
+		float deltaTheta = (angles[numPoints - 1] - angles[numPoints - 2]) / (thicknesses[numPoints - 1] - thicknesses[numPoints - 2]);
+		return angles[numPoints - 1] + (plateThickness - thicknesses[numPoints - 1]) * deltaTheta;
+	}
+
+	return angles[numPoints - 1]; // 혹시 모를 오류 대비, 가장 마지막 값을 반환
+}
 
 void CScene::CheckBulletByObjectCollisions()
 {
@@ -818,12 +848,11 @@ void CScene::CheckBulletByObjectCollisions()
 				{
 					if (!Object->nonConflicting)
 					{
-						std::cout << "충돌!" << std::endl;
+						//std::cout << "충돌!" << std::endl;
 
 					// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
 						XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
 						XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
-						XMFLOAT3 xmf3SurfaceNormal;
 						
 						// 우선은 y축은 고정으로
 						xmf3CollisionPoint.y = xmf3ObjectCenter.y;
@@ -882,13 +911,54 @@ void CScene::CheckBulletByObjectCollisions()
 						XMFLOAT3 xmf3NearestNormalFloat3;
 						XMStoreFloat3(&xmf3NearestNormalFloat3, xmvNearestNormal);
 
-						// 총알을 반사시키는 함수 호출
-						//XMFLOAT3 pastDirection = m_pPlayer->m_ppBullets[i]->m_xmf3MovingDirection;
-						m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
-						//XMFLOAT3 nowDirection =  m_pPlayer->m_ppBullets[i]->m_xmf3MovingDirection;		
-						// 총알이 도탄되는 방향으로 과거와 현재의 방향을 비교하여회전시켜라
+						//충돌한 면과 반대편 면의 거리 그리고 그에따른 각도에 따라 도탄이 되는지 관통이 되는지 구현하라 
+						
+						// 위의 코드를 추가로 구현하여 가장 가까운 면과 그 반대편에 있는 면을 구한다
+						// 두 면의 거리를 구한다
+						// 두 면의 거리와 크기차이가 가장 작은 바운딩 박스의 너비*2가 thickness이다
+						
+						float thickness = Object->m_xmf3thickness.x * 2;
+						if (thickness > Object->m_xmf3thickness.y * 2)
+							thickness = Object->m_xmf3thickness.y * 2;
+						if (thickness > Object->m_xmf3thickness.z * 2)
+							thickness = Object->m_xmf3thickness.z * 2;
+						thickness *= 5; // mm 단위
+						//Object->m_xmf3thickness.x*2;		// 바운딩 박스의 x축 너비				
+						//Object->m_xmf3thickness.y*2;		// 바운딩 박스의 y축 너비	
+						//Object->m_xmf3thickness.z*2;		// 바운딩 박스의 z축 너비	
 
-						//m_pPlayer->m_ppBullets[i]->RotateBulletTowards(pastDirection, nowDirection);
+						// 여기서 충돌한 면과 그 반대
+
+						float criticalAngle = GetCriticalRicochetAngle(thickness);
+
+						// criticalAngle에 따라 도탄될지 안될지 
+						//m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
+
+						// 총알의 진행 방향과 충돌 면의 법선 사이의 각도 계산
+						// xmf3CollisionPoint부터 m_pPlayer->GetPosition();으로 향하는 벡터를 구한다.
+						// 구한 벡터와 xmf3NearestNormalFloat3 사이의 각도를 구한다.
+						
+						// xmf3CollisionPoint부터 m_pPlayer->GetPosition()으로 향하는 벡터 구하기
+						XMVECTOR playerPos = XMLoadFloat3(&m_pPlayer->GetPosition());
+						XMVECTOR collisionP = XMLoadFloat3(&xmf3CollisionPoint);
+						XMVECTOR vectorTowardsPlayer = XMVectorSubtract(playerPos, collisionP);
+
+						// 구한 벡터를 정규화 (단위 벡터로 변환)
+						XMVECTOR normalizedVectorTowardsPlayer = XMVector3Normalize(vectorTowardsPlayer);
+
+						// 충돌 면의 법선 벡터 로드 및 정규화
+						XMVECTOR surfaceNormalVec = XMLoadFloat3(&xmf3NearestNormalFloat3);
+						XMVECTOR normalizedSurfaceNormal = XMVector3Normalize(surfaceNormalVec);
+
+						// 구한 벡터와 법선 벡터 사이의 각도 계산
+						float dotProduct = XMVectorGetX(XMVector3Dot(normalizedVectorTowardsPlayer, normalizedSurfaceNormal));
+						float collisionAngle = acosf(dotProduct) * (180.0f / XM_PI);  // 라디안을 도로 변환
+
+						// 도탄 조건 검사
+						if (collisionAngle >= criticalAngle) {
+							// 도탄 처리
+							m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
+						}
 					}
 					else
 					{

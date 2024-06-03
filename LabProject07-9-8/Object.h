@@ -394,6 +394,8 @@ public:
 	float							m_fMovingSpeed = 0.0;
 	float							m_fMovingRange = 0.0f;
 
+	XMFLOAT3						m_xmf3thickness = XMFLOAT3(0.0f, 0.0f, 0.0f);
+
 	// 충돌되지 않는 오브젝트
 	bool							nonConflicting = false;
 	// NPC 인가
