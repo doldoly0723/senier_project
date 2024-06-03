@@ -175,10 +175,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 
-	//CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
-	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene3.bin", NULL);
+	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	//CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene3.bin", NULL);
 	CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pScene->m_pModelRootObject->m_pChild);
-	pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
+	pObj->SetPosition(1230.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1130.0f);
 	pObj->SetScale(10.0f, 10.0f, 10.0f);
 	CGameObject* pChild = pScene->m_pModelRootObject->m_pChild;
 	
@@ -211,170 +211,38 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		pChild = pChild->m_pSibling;
 	}
 	m_vGameObjects.push_back(pObj);
-	delete pScene;
+	//delete pScene;
 
 
 
-	//while (pChild != NULL)
-	//{
-	//	CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pChild);
-	//	// auto pos = pChild->GetToParentPosition();
-	//	auto pos = pObj->GetToParentPosition();
-	//	
-	//	pObj->SetPosition(1330.0f + pos.x, m_pTerrain->GetHeight(430.0f, 700.0f) + pos.y, 1630.0f + pos.z);
-	//	//pObj->SetPosition(1330.0f , m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
-	//	pObj->SetScale(50.0f, 30.0f, 50.0f);
-	//	pObj->SetBoundingBox(pObj->m_xmOOBB, pObj);
-	//	pObj->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
+	//CLoadedModelInfo* pNPCModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
+	//CGameObject* TestNpc = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel, 4);
+	//// TestNpc = dynamic_cast <CGameObject*> (pNPCModel->m_pModelRootObject);
 
-	//	CBoundingBox* pbBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pObj->m_xmOOBB);
-	//	m_vBoundingBox.push_back(pbBox);
-	//	m_vGameObjects.push_back(pObj);
-	//	pChild = pChild->m_pSibling;
-	//}
+	//XMFLOAT3 unityScale = { TestNpc->m_xmf3boundScale };
+	//auto ObjPos = TestNpc->GetPosition();
+	//auto pos = TestNpc->GetToParentPosition();
+	//TestNpc->m_xmOOBB.Center = { ObjPos.x + pos.x * 10, ObjPos.y + pos.y * 10, ObjPos.z + pos.z * 10 };
+	//TestNpc->m_xmOOBB.Extents = TestNpc->m_pMesh->GetBPExtents();
 
+	//TestNpc->SetBoundingBox(TestNpc->m_xmOOBB, TestNpc);
+	//TestNpc->RotateBoundingBox(TestNpc->m_xmf3RotationAngle.x, TestNpc->m_xmf3RotationAngle.y, TestNpc->m_xmf3RotationAngle.z);
 
-	//pScene->m_pModelRootObject->m_pChild[0];
-	
-	//CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1);
-	//m_vGameObjects.push_back(pObj);
+	//TestNpc->m_xmOOBB.Extents.x *= unityScale.x * 10;
+	//TestNpc->m_xmOOBB.Extents.y *= unityScale.y * 10;
+	//TestNpc->m_xmOOBB.Extents.z *= unityScale.z * 10;
+	//TestNpc->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
+	//TestNpc->m_xmf3thickness = TestNpc->m_xmOOBB.Extents;
+	//CBoundingBox* pbBox1= new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, TestNpc->m_xmOOBB);
+	//m_vGameObjects.push_back(TestNpc);
+	//m_vBoundingBox.push_back(pbBox1);
 
-
-
-	//std::vector<CLoadedModelInfo*> pScenes = CGameObject::LoadSceneFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
-	//for (auto pLoadedModel : pScenes) {
-	//	CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pLoadedModel, 1);
-	//	pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
-	//	pObj->SetScale(50.0f, 30.0f, 50.0f);
-	//	pObj->SetBoundingBox(pObj->m_xmOOBB, pObj);
-	//	pObj->ScaleBoundingBox(10.0f, 10.0f, 10.0f);
-	//	
-	//	CBoundingBox* pbBox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pObj->m_xmOOBB);
-	//	m_vBoundingBox.push_back(pbBox);
-	//	// 여기에서 각 pLoadedModel에 대한 처리를 할 수 있습니다.
-	//	// 예를 들어 모델의 정보를 출력하거나, 초기화 과정을 진행할 수 있습니다.
-
-	//	// 필요한 경우 각 모델을 게임 환경에 추가하는 로직을 구현합니다.
-	//	// 예: 게임 환경에 모델 추가, 렌더링 준비 등
-	//	m_vGameObjects.push_back(pObj);
-	//}
-
-	
-	//CLoadedModelInfo* pbox = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/box3.bin", NULL);
-	//m_ppHierarchicalGameObjects[2] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox, 1);
-	////m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-
-	//m_ppHierarchicalGameObjects[2]->SetPosition(1200.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1650.0f);
-	//m_ppHierarchicalGameObjects[2]->SetScale(50.0f, 30.0f, 50.0f);
-	//m_ppHierarchicalGameObjects[2]->SetBoundingBox(m_ppHierarchicalGameObjects[2]->m_xmOOBB, m_ppHierarchicalGameObjects[2]);
-	// m_ppHierarchicalGameObjects[2]->ScaleBoundingBox(10.0f, 20.0f, 10.0f);
-	//m_pBoundingBox[2] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[2]->m_xmOOBB);
-	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	//if (pbox) delete pbox;
-
-	////CLoadedModelInfo* pbox1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
-	////m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pbox1, 1);
-	//////m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-	////m_ppHierarchicalGameObjects[3]->SetPosition(350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 650.0f);
-	////m_ppHierarchicalGameObjects[3]->SetScale(10.0f, 10.0f, 10.0f);
-	////m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	//////m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(30.0f, 30.0f, 30.0f);
-	////m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
-	////// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	////if (pbox1) delete pbox1;
-
-	//// 길이가 300 정도 된다
-	//CLoadedModelInfo* wall1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
-	//m_ppHierarchicalGameObjects[3] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall1, 1);
-	////m_ppHierarchicalGameObjects[2]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 1);
-	//m_ppHierarchicalGameObjects[3]->SetPosition(1350.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
-	//m_ppHierarchicalGameObjects[3]->SetScale(10.0f, 10.0f, 10.0f);
-	//m_ppHierarchicalGameObjects[3]->SetBoundingBox(m_ppHierarchicalGameObjects[3]->m_xmOOBB, m_ppHierarchicalGameObjects[3]);
-	//m_ppHierarchicalGameObjects[3]->ScaleBoundingBox(10.0f, 20.0f, 180.0f);
-	//m_pBoundingBox[3] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[3]->m_xmOOBB);
-	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	//if (wall1) delete wall1;
-
-	//CLoadedModelInfo* wall2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
-	//m_ppHierarchicalGameObjects[4] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall2, 1);
-	//m_ppHierarchicalGameObjects[4]->SetPosition(1520.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1920.0f);
-	//m_ppHierarchicalGameObjects[4]->Rotate(0.0f, 90.0f, 0.0f);
-	//m_ppHierarchicalGameObjects[4]->SetScale(10.0f, 10.0f, 10.0f);
-	//m_ppHierarchicalGameObjects[4]->SetBoundingBox(m_ppHierarchicalGameObjects[4]->m_xmOOBB, m_ppHierarchicalGameObjects[4]);
-	//m_ppHierarchicalGameObjects[4]->ScaleBoundingBox(180.0f, 20.0f, 10.0f);
-	//m_pBoundingBox[4] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[4]->m_xmOOBB);
-	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	//if (wall2) delete wall2;
-
-	//CLoadedModelInfo* wall3 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Plastered_Wall.bin", NULL);
-	//m_ppHierarchicalGameObjects[5] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, wall3, 1);
-	//m_ppHierarchicalGameObjects[5]->SetPosition(1670.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1750.0f);
-	////m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
-	//m_ppHierarchicalGameObjects[5]->SetScale(10.0f, 10.0f, 10.0f);
-	//m_ppHierarchicalGameObjects[5]->SetBoundingBox(m_ppHierarchicalGameObjects[5]->m_xmOOBB, m_ppHierarchicalGameObjects[5]);
-	//m_ppHierarchicalGameObjects[5]->ScaleBoundingBox(10.0f, 20.0f, 180.0f);
-	//m_pBoundingBox[5] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[5]->m_xmOOBB);
-	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	//if (wall3) delete wall3;
-
-
-	//CLoadedModelInfo* container1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/container.bin", NULL);
-	//m_ppHierarchicalGameObjects[6] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, container1, 1);
-	//m_ppHierarchicalGameObjects[6]->SetPosition(1450.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1800.0f);
-	//m_ppHierarchicalGameObjects[6]->Rotate(0.0f, 60.0f, 0.0f);
-	//m_ppHierarchicalGameObjects[6]->SetScale(10.0f, 10.0f, 10.0f);
-	//m_ppHierarchicalGameObjects[6]->SetBoundingBox(m_ppHierarchicalGameObjects[6]->m_xmOOBB, m_ppHierarchicalGameObjects[6]);
-	//m_ppHierarchicalGameObjects[6]->ScaleBoundingBox(65.0f, 20.0f, 30.0f);
-	//m_ppHierarchicalGameObjects[6]->RotateBoundingBox(0.0f, XMConvertToRadians(60.0f), 0.0f);
-	//m_pBoundingBox[6] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[6]->m_xmOOBB);
-	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	//if (container1) delete container1;
-
-	//CLoadedModelInfo* container2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/container.bin", NULL);
-	//m_ppHierarchicalGameObjects[7] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, container2, 1);
-	//m_ppHierarchicalGameObjects[7]->SetPosition(1600.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1700.0f);
-	////m_ppHierarchicalGameObjects[5]->Rotate(0.0f, 90.0f, 0.0f);
-	//m_ppHierarchicalGameObjects[7]->SetScale(10.0f, 10.0f, 10.0f);
-	//m_ppHierarchicalGameObjects[7]->SetBoundingBox(m_ppHierarchicalGameObjects[7]->m_xmOOBB, m_ppHierarchicalGameObjects[7]);
-	//m_ppHierarchicalGameObjects[7]->ScaleBoundingBox(65.0f, 20.0f, 30.0f);
-	//m_pBoundingBox[7] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[7]->m_xmOOBB);
-	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	//if (container2) delete container2;
-
-	//CLoadedModelInfo* sandbag = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/sandbag2.bin", NULL);
-	//m_ppHierarchicalGameObjects[8] = new CSwatMan(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, sandbag, 1);
-	//m_ppHierarchicalGameObjects[8]->SetPosition(1620.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1860.0f);
-	//m_ppHierarchicalGameObjects[8]->Rotate(0.0f, 0.0f, 0.0f);
-	//m_ppHierarchicalGameObjects[8]->SetScale(10.0f, 10.0f, 10.0f);
-	//m_ppHierarchicalGameObjects[8]->SetBoundingBox(m_ppHierarchicalGameObjects[8]->m_xmOOBB, m_ppHierarchicalGameObjects[8]);
-	//m_ppHierarchicalGameObjects[8]->ScaleBoundingBox(1.0f, 1.0f, 1.0f);
-	//m_pBoundingBox[8] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[8]->m_xmOOBB);
-	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
-	//if (sandbag) delete sandbag;
-
-	CLoadedModelInfo* pNPCModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
-	CGameObject* TestNpc = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel, 4);
-	// TestNpc = dynamic_cast <CGameObject*> (pNPCModel->m_pModelRootObject);
-	TestNpc->SetPosition(1380.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
-	TestNpc->Rotate(0.0f, 180.0f, 0.0f);
-	TestNpc->SetScale(10.0f, 10.0f, 10.0f);
-	TestNpc->SetBoundingBox(TestNpc->m_xmOOBB, TestNpc);
-
-	TestNpc->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
-	TestNpc->nonConflicting = true;
-	TestNpc->isNPC = true;
-	m_pEnemy.push_back(dynamic_cast<CEnemyNPC*> (TestNpc));
-
-	CBoundingBox* npcbox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, TestNpc->m_xmOOBB);
-	m_vBoundingBox.push_back(npcbox);
-	m_vGameObjects.push_back(TestNpc);
-
-	delete pNPCModel;
+	//delete pNPCModel;
 
 	CLoadedModelInfo* pNPCModel1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
 	CGameObject* TestNpc1 = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel1, 4);
 	// TestNpc = dynamic_cast <CGameObject*> (pNPCModel->m_pModelRootObject);
-	TestNpc1->SetPosition(1700.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1500.0f);
+	TestNpc1->SetPosition(1600.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1000.0f);
 	TestNpc1->Rotate(0.0f, 180.0f, 0.0f);
 	TestNpc1->SetScale(10.0f, 10.0f, 10.0f);
 	TestNpc1->SetBoundingBox(TestNpc1->m_xmOOBB, TestNpc1);
@@ -388,12 +256,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_vBoundingBox.push_back(npcbox1);
 	m_vGameObjects.push_back(TestNpc1);
 
-	delete pNPCModel1;
+	//delete pNPCModel1;
 
 	CLoadedModelInfo* pNPCModel2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
 	CGameObject* TestNpc2 = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel2, 4);
 	// TestNpc = dynamic_cast <CGameObject*> (pNPCModel->m_pModelRootObject);
-	TestNpc2->SetPosition(1630.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1900.0f);
+	TestNpc2->SetPosition(1530.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1400.0f);
 	TestNpc2->Rotate(0.0f, 180.0f, 0.0f);
 	TestNpc2->SetScale(10.0f, 10.0f, 10.0f);
 	TestNpc2->SetBoundingBox(TestNpc2->m_xmOOBB, TestNpc2);
@@ -798,130 +666,130 @@ void CScene::CheckPlayerByObjectCollisions()
 			m_pPlayer->Move(m_pPlayer->m_xmf3MovingDirection);
 
 			// 충돌한 물체의 법선 벡터 계산해서 플레이어의 이동 방향 벡터를 반대로 돌리기
-			//XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
-			//XMFLOAT3 objectPosition = Object->GetPosition();
+			XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
+			XMFLOAT3 objectPosition = Object->GetPosition();
 
-			//// 충돌 지점에서의 노멀 벡터 계산
-			//XMFLOAT3 collisionNormal;
-			//XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
+			// 충돌 지점에서의 노멀 벡터 계산
+			XMFLOAT3 collisionNormal;
+			XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
 
-			//// 충돌 법선의 반대 방향으로 플레이어 이동
-			//XMFLOAT3 newPosition;
-			//XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
+			// 충돌 법선의 반대 방향으로 플레이어 이동
+			XMFLOAT3 newPosition;
+			XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
 
-			//// 새로운 위치로 플레이어 이동
-			//m_pPlayer->SetPosition(newPosition);
+			// 새로운 위치로 플레이어 이동
+			m_pPlayer->SetPosition(newPosition);
 
 			//std::cout << "충돌!" << std::endl;
 			
 			// 슬라이딩 벡터
-			if (!Object->nonConflicting)
-			{
-				std::cout << "충돌!" << std::endl;
-
-				// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
-				XMFLOAT3 xmf3CollisionPoint = m_pPlayer->GetPosition();
-				XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
-				XMFLOAT3 xmf3SurfaceNormal;
-
-				// 우선은 y축은 고정으로
-				xmf3CollisionPoint.y = xmf3ObjectCenter.y;
-
-
-				XMFLOAT3 corners[8];
-				Object->m_xmOOBB.GetCorners(corners);
-
-
-				// 정면		 4 5 6 7
-				// 왼쪽		 0 4 7 3
-				// 오른쪽	 5 1 2 6
-				// 뒤쪽		 1 2 3 0
-
-				// 위쪽		 7 6 2 3
-				// 아래쪽	 0 1 5 4
-
-
-				XMVECTOR xmCorners[8];
-				for (int i = 0; i < 8; i++) {
-					xmCorners[i] = XMLoadFloat3(&corners[i]);
-				}
-
-				XMVECTOR collisionPoint = XMLoadFloat3(&xmf3CollisionPoint);
-
-				std::vector<PlaneData> planeDistances;
-
-				// 면의 거리 계산 및 저장
-				auto calculateAndStoreDistance = [&](int a, int b, int c) {
-					// 평면의 법선 벡터 계산
-					XMVECTOR planeNormal = XMVector3Normalize(XMVector3Cross(XMVectorSubtract(xmCorners[b], xmCorners[a]), XMVectorSubtract(xmCorners[c], xmCorners[a])));
-					float planeD = -XMVectorGetX(XMVector3Dot(planeNormal, xmCorners[a]));
-					float distance = XMVectorGetX(XMVector3Dot(planeNormal, collisionPoint)) + planeD;
-					planeDistances.emplace_back(planeNormal, distance);
-					};
-
-				// 각 면에 대해 계산
-				calculateAndStoreDistance(4, 5, 6); // Front
-				calculateAndStoreDistance(0, 4, 7); // Left
-				calculateAndStoreDistance(5, 1, 2); // Right
-				calculateAndStoreDistance(1, 2, 3); // Back
-				calculateAndStoreDistance(7, 6, 2); // Top
-				calculateAndStoreDistance(0, 1, 5); // Bottom
-
-				// 가장 가까운 면 찾기
-				float minDistance = FLT_MAX;
-				XMVECTOR xmvNearestNormal;
-				for (const auto& plane : planeDistances) {
-					if (fabs(plane.distance) < minDistance) {
-						minDistance = fabs(plane.distance);
-						xmvNearestNormal = plane.normal;
-					}
-				}
-
-				// 가장 가까운 면의 법선 벡터 출력 -> n
-				XMFLOAT3 xmf3NearestNormalFloat3;
-				XMStoreFloat3(&xmf3NearestNormalFloat3, xmvNearestNormal);
-
-				// 충돌 벡터 -> p
-				XMVECTOR t1 = XMLoadFloat3(&m_pPlayer->GetVelocity());
-				XMVECTOR t2 = XMLoadFloat3(&m_pPlayer->GetLook());
-				XMVECTOR tp = XMVectorMultiply(t1, t2);
-				XMFLOAT3 p;
-				XMStoreFloat3(&p, tp);
-				//p = Vector3::Normalize(p);
-		
-
-
-				// s = p - (p dot n)
-				float dot = Vector3::DotProduct(p, xmf3NearestNormalFloat3);
-				XMFLOAT3 npn;
-				npn.x = xmf3NearestNormalFloat3.x * dot;
-				npn.y = xmf3NearestNormalFloat3.y * dot;
-				npn.z = xmf3NearestNormalFloat3.z * dot;
-				XMFLOAT3 s = Vector3::Subtract(p, npn);
-				
-				// s = p + n(-p dot n)
-/*				p.x = -p.x;
-				p.y = -p.y;
-				p.z = -p.z;
-				float dot = Vector3::DotProduct(p, xmf3NearestNormalFloat3);
-				XMFLOAT3 npn;
-				npn.x = xmf3NearestNormalFloat3.x * dot * 2;
-				npn.y = xmf3NearestNormalFloat3.y * dot * 2;
-				npn.z = xmf3NearestNormalFloat3.z * dot * 2*/;
-				//XMFLOAT3 s = Vector3::Add(p, npn);
-
-				m_pPlayer->SetPosition(m_pPlayer->m_xmf3PreviousPosition);
-				m_pPlayer->m_xmf3PreviousPosition = m_pPlayer->GetPosition();
-				m_pPlayer->SetVelocity(s);
-				m_pPlayer->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), s));
-
-				// 추가로 충돌 표면에서 밀어내기 (약간의 이동 추가)
-				XMFLOAT3 pushOut = xmf3NearestNormalFloat3;
-				pushOut.x *= 0.1f;
-				pushOut.y *= 0.1f;
-				pushOut.z *= 0.1f;
-				m_pPlayer->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), pushOut));
-			}
+//			if (!Object->nonConflicting)
+//			{
+//				std::cout << "충돌!" << std::endl;
+//
+//				// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
+//				XMFLOAT3 xmf3CollisionPoint = m_pPlayer->GetPosition();
+//				XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
+//				XMFLOAT3 xmf3SurfaceNormal;
+//
+//				// 우선은 y축은 고정으로
+//				xmf3CollisionPoint.y = xmf3ObjectCenter.y;
+//
+//
+//				XMFLOAT3 corners[8];
+//				Object->m_xmOOBB.GetCorners(corners);
+//
+//
+//				// 정면		 4 5 6 7
+//				// 왼쪽		 0 4 7 3
+//				// 오른쪽	 5 1 2 6
+//				// 뒤쪽		 1 2 3 0
+//
+//				// 위쪽		 7 6 2 3
+//				// 아래쪽	 0 1 5 4
+//
+//
+//				XMVECTOR xmCorners[8];
+//				for (int i = 0; i < 8; i++) {
+//					xmCorners[i] = XMLoadFloat3(&corners[i]);
+//				}
+//
+//				XMVECTOR collisionPoint = XMLoadFloat3(&xmf3CollisionPoint);
+//
+//				std::vector<PlaneData> planeDistances;
+//
+//				// 면의 거리 계산 및 저장
+//				auto calculateAndStoreDistance = [&](int a, int b, int c) {
+//					// 평면의 법선 벡터 계산
+//					XMVECTOR planeNormal = XMVector3Normalize(XMVector3Cross(XMVectorSubtract(xmCorners[b], xmCorners[a]), XMVectorSubtract(xmCorners[c], xmCorners[a])));
+//					float planeD = -XMVectorGetX(XMVector3Dot(planeNormal, xmCorners[a]));
+//					float distance = XMVectorGetX(XMVector3Dot(planeNormal, collisionPoint)) + planeD;
+//					planeDistances.emplace_back(planeNormal, distance);
+//					};
+//
+//				// 각 면에 대해 계산
+//				calculateAndStoreDistance(4, 5, 6); // Front
+//				calculateAndStoreDistance(0, 4, 7); // Left
+//				calculateAndStoreDistance(5, 1, 2); // Right
+//				calculateAndStoreDistance(1, 2, 3); // Back
+//				calculateAndStoreDistance(7, 6, 2); // Top
+//				calculateAndStoreDistance(0, 1, 5); // Bottom
+//
+//				// 가장 가까운 면 찾기
+//				float minDistance = FLT_MAX;
+//				XMVECTOR xmvNearestNormal;
+//				for (const auto& plane : planeDistances) {
+//					if (fabs(plane.distance) < minDistance) {
+//						minDistance = fabs(plane.distance);
+//						xmvNearestNormal = plane.normal;
+//					}
+//				}
+//
+//				// 가장 가까운 면의 법선 벡터 출력 -> n
+//				XMFLOAT3 xmf3NearestNormalFloat3;
+//				XMStoreFloat3(&xmf3NearestNormalFloat3, xmvNearestNormal);
+//
+//				// 충돌 벡터 -> p
+//				XMVECTOR t1 = XMLoadFloat3(&m_pPlayer->GetVelocity());
+//				XMVECTOR t2 = XMLoadFloat3(&m_pPlayer->GetLook());
+//				XMVECTOR tp = XMVectorMultiply(t1, t2);
+//				XMFLOAT3 p;
+//				XMStoreFloat3(&p, tp);
+//				//p = Vector3::Normalize(p);
+//		
+//
+//
+//				// s = p - (p dot n)
+//				float dot = Vector3::DotProduct(p, xmf3NearestNormalFloat3);
+//				XMFLOAT3 npn;
+//				npn.x = xmf3NearestNormalFloat3.x * dot;
+//				npn.y = xmf3NearestNormalFloat3.y * dot;
+//				npn.z = xmf3NearestNormalFloat3.z * dot;
+//				XMFLOAT3 s = Vector3::Subtract(p, npn);
+//				
+//				// s = p + n(-p dot n)
+///*				p.x = -p.x;
+//				p.y = -p.y;
+//				p.z = -p.z;
+//				float dot = Vector3::DotProduct(p, xmf3NearestNormalFloat3);
+//				XMFLOAT3 npn;
+//				npn.x = xmf3NearestNormalFloat3.x * dot * 2;
+//				npn.y = xmf3NearestNormalFloat3.y * dot * 2;
+//				npn.z = xmf3NearestNormalFloat3.z * dot * 2*/;
+//				//XMFLOAT3 s = Vector3::Add(p, npn);
+//
+//				m_pPlayer->SetPosition(m_pPlayer->m_xmf3PreviousPosition);
+//				m_pPlayer->m_xmf3PreviousPosition = m_pPlayer->GetPosition();
+//				m_pPlayer->SetVelocity(s);
+//				m_pPlayer->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), s));
+//
+//				// 추가로 충돌 표면에서 밀어내기 (약간의 이동 추가)
+//				XMFLOAT3 pushOut = xmf3NearestNormalFloat3;
+//				pushOut.x *= 0.1f;
+//				pushOut.y *= 0.1f;
+//				pushOut.z *= 0.1f;
+//				m_pPlayer->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), pushOut));
+//			}
 		}
 	}
 }
@@ -1080,6 +948,8 @@ void CScene::CheckBulletByObjectCollisions()
 							// 도탄 처리
 							m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
 						}
+						else
+							m_pPlayer->m_ppBullets[i]->Reset();
 					}
 					else
 					{

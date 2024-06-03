@@ -2284,7 +2284,7 @@ CEnemyNPC::CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCo
 		m_ppEBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
 
 	}
-
+	SetMesh(pLionModel->m_pModelRootObject->m_pMesh);
 		std::cout << "총알 생성 완료" << std::endl;
 }
 
