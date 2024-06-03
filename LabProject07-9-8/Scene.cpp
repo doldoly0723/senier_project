@@ -175,7 +175,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 
-	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/tGameScene.bin", NULL);
+	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
 	//CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/testScene.bin", NULL);
 	CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pScene->m_pModelRootObject->m_pChild);
 	pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
