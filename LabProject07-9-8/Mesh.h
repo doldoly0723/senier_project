@@ -69,6 +69,8 @@ protected:
 	ID3D12Resource					**m_ppd3dSubSetIndexUploadBuffers = NULL;
 	D3D12_INDEX_BUFFER_VIEW			*m_pd3dSubSetIndexBufferViews = NULL;
 
+	BoundingOrientedBox				m_xmBoundingBox;
+
 public:
 	UINT GetType() { return(m_nType); }
 
@@ -86,6 +88,7 @@ public:
 	XMFLOAT3 GetBPosition();
 	XMFLOAT3 GetBPExtents();
 
+	BoundingOrientedBox GetBoundingBox() { return(m_xmBoundingBox); }
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

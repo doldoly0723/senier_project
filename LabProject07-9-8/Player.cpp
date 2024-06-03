@@ -717,17 +717,17 @@ void CTerrainPlayer::FireBullet()
 		//// xmf3FirePosition.y = xmf3Position.y;
 		//xmf3FirePosition.z = xmf3Position.z + 2.3f;
 
-		xmf3FirePosition.x = xmf3Position.x + 2.0f;
+		xmf3FirePosition.x = xmf3Position.x + 0.5f ;
 		//xmf3FirePosition.y = xmf3Position.y - 7.5f;
 		xmf3FirePosition.y = xmf3Position.y + 14.0f;
 		// xmf3FirePosition.y = xmf3Position.y;
-		xmf3FirePosition.z = xmf3Position.z + 2.0f;
+		xmf3FirePosition.z = xmf3Position.z ;
 		//
 		pBulletObject->SetPosition(xmf3FirePosition);
 		pBulletObject->SetMovingDirection(xmf3Direction);
 		pBulletObject->SetActive(true);
 		//pBulletObject->SetScale(0.1f, 0.1f, 0.05f);
-		pBulletObject->SetScale(1.0f, 1.0f, 1.0f);
+		pBulletObject->SetScale(0.1f, 0.1f, 0.1f);
 
 		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
 	}
