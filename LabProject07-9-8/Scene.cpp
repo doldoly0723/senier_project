@@ -175,7 +175,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 
-	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/GameScene.bin", NULL);
+	CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/tGameScene.bin", NULL);
 	//CLoadedModelInfo* pScene = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/testScene.bin", NULL);
 	CGameObject* pObj = new CZebraObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pScene, 1, pScene->m_pModelRootObject->m_pChild);
 	pObj->SetPosition(1330.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1630.0f);
@@ -351,21 +351,43 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[2]);
 	//if (sandbag) delete sandbag;
 
-	//CLoadedModelInfo* pNPCModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
-	//m_ppHierarchicalGameObjects[9] = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel, 4);
-	//m_ppHierarchicalGameObjects[9]->SetPosition(1380.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
-	//m_ppHierarchicalGameObjects[9]->Rotate(0.0f, 180.0f, 0.0f);
-	//m_ppHierarchicalGameObjects[9]->SetScale(10.0f, 10.0f, 10.0f);
-	//m_ppHierarchicalGameObjects[9]->SetBoundingBox(m_ppHierarchicalGameObjects[9]->m_xmOOBB, m_ppHierarchicalGameObjects[9]);
+	CLoadedModelInfo* pNPCModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
+	CGameObject* TestNpc = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel, 4);
+	// TestNpc = dynamic_cast <CGameObject*> (pNPCModel->m_pModelRootObject);
+	TestNpc->SetPosition(1380.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1875.0f);
+	TestNpc->Rotate(0.0f, 180.0f, 0.0f);
+	TestNpc->SetScale(10.0f, 10.0f, 10.0f);
+	TestNpc->SetBoundingBox(TestNpc->m_xmOOBB, TestNpc);
 
-	//m_ppHierarchicalGameObjects[9]->ScaleBoundingBox(5.0f, 20.0f, 5.0f);
-	//m_ppHierarchicalGameObjects[9]->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
-	//m_ppHierarchicalGameObjects[9]->nonConflicting = true;
-	//m_ppHierarchicalGameObjects[9]->isNPC = true;
-	//m_pBoundingBox[9] = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, m_ppHierarchicalGameObjects[9]->m_xmOOBB);
+	TestNpc->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
+	TestNpc->nonConflicting = true;
+	TestNpc->isNPC = true;
+	m_pEnemy.push_back(dynamic_cast<CEnemyNPC*> (TestNpc));
 
-	//// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
-	//if (pNPCModel) delete pNPCModel;
+	CBoundingBox* npcboxx = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, TestNpc->m_xmOOBB);
+	m_vBoundingBox.push_back(npcboxx);
+	m_vGameObjects.push_back(TestNpc);
+	//for (int i = 0; i < MAX_ENEMY_B; i++)
+	//{
+	//	// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
+	//	CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
+
+	//	m_ppBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
+	//	m_ppBullets[i]->SetScale(10.0f, 10.0f, 10.5f);
+	//	m_ppBullets[i]->SetChild(pBulletMesh->m_pModelRootObject, true);
+	//	m_ppBullets[i]->SetMovingSpeed(100.0f);
+	//	m_ppBullets[i]->SetActive(false);
+
+	//	// 흠..
+	//	m_ppBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
+	//	m_ppBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
+	//	m_ppBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
+
+	//}
+
+	/*std::cout << "총알 생성 완료" << std::endl;*/
+	// m_lpGameObjects.push_back(m_ppHierarchicalGameObjects[0]);
+	// if (pNPCModel) delete pNPCModel;
 
 
 	//for (int i = 0; i < m_nHierarchicalGameObjects; i++)
@@ -796,7 +818,7 @@ void CScene::CheckBulletByObjectCollisions()
 				{
 					if (!Object->nonConflicting)
 					{
-						//std::cout << "충돌!" << std::endl;
+						std::cout << "충돌!" << std::endl;
 
 					// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
 						XMFLOAT3 xmf3CollisionPoint = m_pPlayer->m_ppBullets[i]->GetPosition();
@@ -968,6 +990,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 				{
 					obj->m_pSkinnedAnimationController->SetTrackEnable(0, false);
 					obj->m_pSkinnedAnimationController->SetTrackEnable(1, true);
+					obj->Attack();
 				}
 				else
 				{
@@ -1012,6 +1035,18 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		}
 	}
 
+	for (auto iter = m_pEnemy.begin(); iter != m_pEnemy.end(); ++iter)
+	{
+		CEnemyNPC* Enemy = *iter;
+		for (int i = 0; i < MAX_ENEMY_B; i++)
+		{
+			if (Enemy->m_ppEBullets[i]->m_bActive)
+			{
+				Enemy->m_ppEBullets[i]->Animate(m_fElapsedTime);
+				Enemy->m_ppEBullets[i]->Render(pd3dCommandList, pCamera);
+			}
+		}
+	}
 	
 
 	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);

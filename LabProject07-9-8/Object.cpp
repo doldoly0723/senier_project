@@ -255,7 +255,7 @@ void CMaterial::LoadTextureFromFile(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 {
 	char pstrTextureName[64] = { '\0' };
 
-	BYTE nStrLength = 64;
+	BYTE nStrLength = 100;
 	UINT nReads = (UINT)::fread(&nStrLength, sizeof(BYTE), 1, pInFile);
 	nReads = (UINT)::fread(pstrTextureName, sizeof(char), nStrLength, pInFile);
 	pstrTextureName[nStrLength] = '\0';
@@ -265,15 +265,15 @@ void CMaterial::LoadTextureFromFile(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	{
 		SetMaterialType(nType);
 
-		char pstrFilePath[64] = { '\0' };
-		strcpy_s(pstrFilePath, 64, "Model/Textures/");
+		char pstrFilePath[100] = { '\0' };
+		strcpy_s(pstrFilePath, 100, "Model/Textures/");
 
 		bDuplicated = (pstrTextureName[0] == '@');
-		strcpy_s(pstrFilePath + 15, 64 - 15, (bDuplicated) ? (pstrTextureName + 1) : pstrTextureName);
-		strcpy_s(pstrFilePath + 15 + ((bDuplicated) ? (nStrLength - 1) : nStrLength), 64 - 15 - ((bDuplicated) ? (nStrLength - 1) : nStrLength), ".dds");
+		strcpy_s(pstrFilePath + 15, 100 - 15, (bDuplicated) ? (pstrTextureName + 1) : pstrTextureName);
+		strcpy_s(pstrFilePath + 15 + ((bDuplicated) ? (nStrLength - 1) : nStrLength), 100 - 15 - ((bDuplicated) ? (nStrLength - 1) : nStrLength), ".dds");
 
 		size_t nConverted = 0;
-		mbstowcs_s(&nConverted, pwstrTextureName, 64, pstrFilePath, _TRUNCATE);
+		mbstowcs_s(&nConverted, pwstrTextureName, 100, pstrFilePath, _TRUNCATE);
 
 		//#define _WITH_DISPLAY_TEXTURE_NAME
 
@@ -316,7 +316,7 @@ CAnimationSet::CAnimationSet(float fLength, int nFramesPerSecond, int nKeyFrames
 	m_nFramesPerSecond = nFramesPerSecond;
 	m_nKeyFrames = nKeyFrames;
 
-	strcpy_s(m_pstrAnimationSetName, 64, pstrName);
+	strcpy_s(m_pstrAnimationSetName, 100, pstrName);
 
 #ifdef _WITH_ANIMATION_SRT
 	m_nKeyFrameTranslations = nKeyFrames;
@@ -817,6 +817,7 @@ void CGameObject::UpdateBoundingBox()
 	// OOBB의 중심을 월드좌표로 이동
 	XMFLOAT3 Pos = GetPosition();
 	m_xmOOBB.Center = Pos;
+	//m_xmOOBB.Center.y += m_xmOOBB.Extents.y / 2;
 }
 
 void CGameObject::ScaleBoundingBox(float x, float y, float z)
@@ -1533,7 +1534,7 @@ void CGameObject::PrintFrameInfo(CGameObject *pGameObject, CGameObject *pParent)
 
 void CGameObject::LoadAnimationFromFile(FILE *pInFile, CLoadedModelInfo *pLoadedModel)
 {
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 	UINT nReads = 0;
 
 	int nAnimationSets = 0;
@@ -1558,11 +1559,11 @@ void CGameObject::LoadAnimationFromFile(FILE *pInFile, CLoadedModelInfo *pLoaded
 
 #ifdef _WITH_DEBUG_SKINNING_BONE
 				TCHAR pstrDebug[256] = { 0 };
-				TCHAR pwstrAnimationBoneName[64] = { 0 };
-				TCHAR pwstrBoneCacheName[64] = { 0 };
+				TCHAR pwstrAnimationBoneName[256] = { 0 };
+				TCHAR pwstrBoneCacheName[256] = { 0 };
 				size_t nConverted = 0;
-				mbstowcs_s(&nConverted, pwstrAnimationBoneName, 64, pstrToken, _TRUNCATE);
-				mbstowcs_s(&nConverted, pwstrBoneCacheName, 64, pLoadedModel->m_ppBoneFrameCaches[j]->m_pstrFrameName, _TRUNCATE);
+				mbstowcs_s(&nConverted, pwstrAnimationBoneName, 256, pstrToken, _TRUNCATE);
+				mbstowcs_s(&nConverted, pwstrBoneCacheName, 256, pLoadedModel->m_ppBoneFrameCaches[j]->m_pstrFrameName, _TRUNCATE);
 				_stprintf_s(pstrDebug, 256, _T("AnimationBoneFrame:: Cache(%s) AnimationBone(%s)\n"), pwstrBoneCacheName, pwstrAnimationBoneName);
 				OutputDebugString(pstrDebug);
 #endif
@@ -2266,10 +2267,80 @@ CEnemyNPC::CEnemyNPC(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCo
 		m_pSkinnedAnimationController->SetTrackEnable(i, false);
 	}
 	m_pSkinnedAnimationController->SetTrackEnable(0, true);
+
+	for (int i = 0; i < MAX_ENEMY_B; i++)
+	{
+		CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Bullet.bin", NULL);
+
+		m_ppEBullets[i] = new CBulletObject(m_fBulletEffectiveRange);
+		m_ppEBullets[i]->SetScale(10.0f, 10.0f, 10.5f);
+		m_ppEBullets[i]->SetChild(pBulletMesh->m_pModelRootObject, true);
+		m_ppEBullets[i]->SetMovingSpeed(100.0f);
+		m_ppEBullets[i]->SetActive(false);
+
+		// 흠..
+		m_ppEBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
+		m_ppEBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
+		m_ppEBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
+
+	}
+
+		std::cout << "총알 생성 완료" << std::endl;
 }
 
 CEnemyNPC::~CEnemyNPC()
 {
+}
+
+void CEnemyNPC::Attack()
+{
+	// std::cout << "공격중" << std::endl;
+	// std::cout << "발사 됨" << std::endl;
+	if (m_fFireWaitingTime > 0.0f)
+	{
+		m_fFireWaitingTime -= 0.1f;
+		return;
+	}
+
+	// std::cout << m_fFireWaitingTime << std::endl;
+
+	CBulletObject* pBulletObject = NULL;
+	for (int i = 0; i < MAX_ENEMY_B; i++)
+	{
+		if (!m_ppEBullets[i]->m_bActive)
+		{
+			pBulletObject = m_ppEBullets[i];
+			break;
+		}
+	}
+
+	if (pBulletObject)
+	{
+		XMFLOAT3 xmf3Position = GetPosition();
+		XMFLOAT3 xmf3Direction = GetLook();
+		XMFLOAT3 xmf3Right = GetRight();
+		XMFLOAT3 xmf3Up = GetUp();
+		XMFLOAT3 xmf3FirePosition;
+
+		// 이거 안하면 땅에 박히려나?
+		//XMFLOAT3 m_xmf3Look = GetLookVector();
+		//XMFLOAT3 m_xmf3LookC = m_pCamera->GetLookVector();
+
+		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
+
+		xmf3FirePosition.x = xmf3Position.x - 1.0f;
+		xmf3FirePosition.y = xmf3Position.y + 14.0f;
+		// xmf3FirePosition.y = xmf3Position.y;
+		xmf3FirePosition.z = xmf3Position.z - 5.0f;
+		//
+		pBulletObject->SetPosition(xmf3FirePosition);
+		pBulletObject->SetMovingDirection(xmf3Direction);
+		pBulletObject->SetActive(true);
+		// pBulletObject->SetScale(0.1f, 0.1f, 0.05f);
+		pBulletObject->SetScale(1.0f, 1.0f, 1.0f);
+
+		m_fFireWaitingTime = m_fFireDelayTime * 1.0f;
+	}
 }
 
 bool CEnemyNPC::findPlayer(XMFLOAT3 xmf3TargetPosition)
@@ -2302,7 +2373,12 @@ bool CEnemyNPC::findPlayer(XMFLOAT3 xmf3TargetPosition)
 
 void CEnemyNPC::AnimateNPC(float fTimeElapsed)
 {
-	
+	for (int i = 0; i < MAX_ENEMY_B; i++)
+	{
+		if (m_ppEBullets[i]->m_bActive) {
+			m_ppEBullets[i]->Animate(fTimeElapsed);
+		};
+	}
 }
 
 CObject::CObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, CLoadedModelInfo* pModel)
