@@ -948,8 +948,8 @@ void CScene::CheckBulletByObjectCollisions()
 							// 도탄 처리
 							m_pPlayer->m_ppBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
 						}
-						else
-							m_pPlayer->m_ppBullets[i]->Reset();
+						/*else
+							m_pPlayer->m_ppBullets[i]->Reset();*/
 					}
 					else
 					{
