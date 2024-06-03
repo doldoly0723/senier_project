@@ -829,11 +829,25 @@ void CGameObject::ScaleBoundingBox(float x, float y, float z)
 
 void CGameObject::RotateBoundingBox(float x, float y, float z)
 {
-	// Euler 각도를 사원수로 변환
-	XMVECTOR quaternion = XMQuaternionRotationRollPitchYaw(x, y, z);
+	// 각도를 라디안으로 변환 (도를 라디안으로)
+	float radX = XMConvertToRadians(x);
+	float radY = XMConvertToRadians(y);
+	float radZ = XMConvertToRadians(z);
 
-	// 사원수를 BoundingOrientedBox의 방향으로 설정
-	XMStoreFloat4(&m_xmOOBB.Orientation, quaternion);
+	// Euler 각도를 사원수로 변환
+	XMVECTOR newRotation = XMQuaternionRotationRollPitchYaw(radX, radY, radZ);
+
+	// 기존의 방향을 사원수로 변환
+	XMVECTOR currentOrientation = XMLoadFloat4(&m_xmOOBB.Orientation);
+
+	// 새로운 회전을 기존의 회전에 합성 (순서 주의)
+	XMVECTOR combinedOrientation = XMQuaternionMultiply(newRotation, currentOrientation);
+
+	// 사원수 정규화
+	combinedOrientation = XMQuaternionNormalize(combinedOrientation);
+
+	// 합성된 사원수를 BoundingOrientedBox의 방향으로 설정
+	XMStoreFloat4(&m_xmOOBB.Orientation, combinedOrientation);
 }
 
 void CGameObject::SetMesh(CMesh *pMesh)
@@ -1174,7 +1188,7 @@ BYTE ReadStringFromFile(FILE *pInFile, char *pstrToken)
 
 void CGameObject::LoadMaterialsFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, CGameObject *pParent, FILE *pInFile, CShader *pShader)
 {
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 	int nMaterial = 0;
 	UINT nReads = 0;
 
@@ -1281,7 +1295,7 @@ void CGameObject::LoadMaterialsFromFile(ID3D12Device *pd3dDevice, ID3D12Graphics
 
 CGameObject *CGameObject::LoadFrameHierarchyFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CGameObject *pParent, FILE *pInFile, CShader *pShader, int *pnSkinnedMeshes)
 {
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 	UINT nReads = 0;
 
 	int nFrame = 0, nTextures = 0;
@@ -1348,7 +1362,9 @@ CGameObject *CGameObject::LoadFrameHierarchyFromFile(ID3D12Device *pd3dDevice, I
 					TCHAR pstrDebug[256] = { 0 };
 					_stprintf_s(pstrDebug, 256, "(Frame: %p) (Parent: %p)\n"), pChild, pGameObject);
 					OutputDebugString(pstrDebug);
-#endif
+#endif				
+					/*if (pChild)
+						delete pChild;*/
 				}
 			}
 		}
@@ -1604,7 +1620,7 @@ CLoadedModelInfo *CGameObject::LoadGeometryAndAnimationFromFile(ID3D12Device *pd
 
 	CLoadedModelInfo *pLoadedModel = new CLoadedModelInfo();
 
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 
 	for ( ; ; )
 	{
