@@ -1187,7 +1187,7 @@ BYTE ReadStringFromFile(FILE *pInFile, char *pstrToken)
 
 void CGameObject::LoadMaterialsFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, CGameObject *pParent, FILE *pInFile, CShader *pShader)
 {
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 	int nMaterial = 0;
 	UINT nReads = 0;
 
@@ -1294,7 +1294,7 @@ void CGameObject::LoadMaterialsFromFile(ID3D12Device *pd3dDevice, ID3D12Graphics
 
 CGameObject *CGameObject::LoadFrameHierarchyFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CGameObject *pParent, FILE *pInFile, CShader *pShader, int *pnSkinnedMeshes)
 {
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 	UINT nReads = 0;
 
 	int nFrame = 0, nTextures = 0;
@@ -1361,7 +1361,9 @@ CGameObject *CGameObject::LoadFrameHierarchyFromFile(ID3D12Device *pd3dDevice, I
 					TCHAR pstrDebug[256] = { 0 };
 					_stprintf_s(pstrDebug, 256, "(Frame: %p) (Parent: %p)\n"), pChild, pGameObject);
 					OutputDebugString(pstrDebug);
-#endif
+#endif				
+					/*if (pChild)
+						delete pChild;*/
 				}
 			}
 		}
@@ -1617,7 +1619,7 @@ CLoadedModelInfo *CGameObject::LoadGeometryAndAnimationFromFile(ID3D12Device *pd
 
 	CLoadedModelInfo *pLoadedModel = new CLoadedModelInfo();
 
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 
 	for ( ; ; )
 	{

@@ -97,7 +97,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	XMFLOAT3 xmf3Scale(8.0f, 0.0f, 8.0f);
 	//XMFLOAT4 xmf4Color(0.0f, 0.0f, 0.0f, 0.0f);
 	XMFLOAT4 xmf4Color = XMFLOAT4(0.7608f, 0.6980f, 0.5020f, 0.0f);
-	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 513, 513, xmf3Scale, xmf4Color);
+	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Terrain/HeightMap.raw"), 257, 257, xmf3Scale, xmf4Color);
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// loadscenefromfile 이 벡터를 리턴하여 벡터 안에는 게임 오브젝트? 로드모델인포       들이 들어가도록

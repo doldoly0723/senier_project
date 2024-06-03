@@ -441,7 +441,7 @@ void CStandardMesh::ReleaseUploadBuffers()
 
 void CStandardMesh::LoadMeshFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, FILE *pInFile)
 {
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 	int nPositions = 0, nColors = 0, nNormals = 0, nTangents = 0, nBiTangents = 0, nTextureCoords = 0, nIndices = 0, nSubMeshes = 0, nSubIndices = 0;
 
 	UINT nReads = (UINT)::fread(&m_nVertices, sizeof(int), 1, pInFile);
@@ -681,7 +681,7 @@ void CSkinnedMesh::PrepareSkinning(CGameObject *pModelRootObject)
 
 void CSkinnedMesh::LoadSkinInfoFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, FILE *pInFile)
 {
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 	UINT nReads = 0;
 
 	::ReadStringFromFile(pInFile, m_pstrMeshName); 
