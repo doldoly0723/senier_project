@@ -61,8 +61,7 @@ protected:
 	bool						bMove = FALSE;
 	bool						bFire = FALSE;
 
-	// 이전 위치
-	XMFLOAT3					m_xmf3PreviousPosition;
+
 
 public:
 	CPlayer();
@@ -83,6 +82,7 @@ public:
 	void SetScale(XMFLOAT3& xmf3Scale) { m_xmf3Scale = xmf3Scale; }
 
 	const XMFLOAT3& GetVelocity() const { return(m_xmf3Velocity); }
+	XMFLOAT3& GetVelocity()  { return(m_xmf3Velocity); }
 	float GetYaw() const { return(m_fYaw); }
 	float GetPitch() const { return(m_fPitch); }
 	float GetRoll() const { return(m_fRoll); }
@@ -127,6 +127,11 @@ public:
 	bool DrawBoundingBox = false;
 	// Spread On/Off
 	bool Spread = false;
+
+	// 이전 위치
+	XMFLOAT3					m_xmf3PreviousPosition = XMFLOAT3{0, 0, 0};
+	// 이전 속도
+	XMFLOAT3					m_xmf3PreviousVel = XMFLOAT3{ 0, 0, 0 };
 
 	// 이전 위치를 저장하는 함수
 	XMFLOAT3 GetPreviousPosition() const { return m_xmf3PreviousPosition; }

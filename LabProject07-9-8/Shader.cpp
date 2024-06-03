@@ -790,7 +790,8 @@ D3D12_RASTERIZER_DESC CBoundingBoxShader::CreateRasterizerState()
 	d3dRasterizerDesc.FillMode = D3D12_FILL_MODE_WIREFRAME;
 	// 다 채워서 그리고 싶음
 	// d3dRasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
-	d3dRasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
+	//d3dRasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
+	d3dRasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	// 은면 제거
 	// d3dRasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	d3dRasterizerDesc.FrontCounterClockwise = FALSE;

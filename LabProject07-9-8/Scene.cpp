@@ -211,6 +211,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		pChild = pChild->m_pSibling;
 	}
 	m_vGameObjects.push_back(pObj);
+	delete pScene;
 
 
 
@@ -364,9 +365,50 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	TestNpc->isNPC = true;
 	m_pEnemy.push_back(dynamic_cast<CEnemyNPC*> (TestNpc));
 
-	CBoundingBox* npcboxx = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, TestNpc->m_xmOOBB);
-	m_vBoundingBox.push_back(npcboxx);
+	CBoundingBox* npcbox = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, TestNpc->m_xmOOBB);
+	m_vBoundingBox.push_back(npcbox);
 	m_vGameObjects.push_back(TestNpc);
+
+	delete pNPCModel;
+
+	CLoadedModelInfo* pNPCModel1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
+	CGameObject* TestNpc1 = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel1, 4);
+	// TestNpc = dynamic_cast <CGameObject*> (pNPCModel->m_pModelRootObject);
+	TestNpc1->SetPosition(1700.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1500.0f);
+	TestNpc1->Rotate(0.0f, 180.0f, 0.0f);
+	TestNpc1->SetScale(10.0f, 10.0f, 10.0f);
+	TestNpc1->SetBoundingBox(TestNpc1->m_xmOOBB, TestNpc1);
+
+	TestNpc1->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
+	TestNpc1->nonConflicting = true;
+	TestNpc1->isNPC = true;
+	m_pEnemy.push_back(dynamic_cast<CEnemyNPC*> (TestNpc1));
+
+	CBoundingBox* npcbox1 = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, TestNpc1->m_xmOOBB);
+	m_vBoundingBox.push_back(npcbox1);
+	m_vGameObjects.push_back(TestNpc1);
+
+	delete pNPCModel1;
+
+	CLoadedModelInfo* pNPCModel2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "Model/NPC.bin", NULL);
+	CGameObject* TestNpc2 = new CEnemyNPC(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, pNPCModel2, 4);
+	// TestNpc = dynamic_cast <CGameObject*> (pNPCModel->m_pModelRootObject);
+	TestNpc2->SetPosition(1630.0f, m_pTerrain->GetHeight(430.0f, 700.0f), 1900.0f);
+	TestNpc2->Rotate(0.0f, 180.0f, 0.0f);
+	TestNpc2->SetScale(10.0f, 10.0f, 10.0f);
+	TestNpc2->SetBoundingBox(TestNpc2->m_xmOOBB, TestNpc2);
+
+	TestNpc2->RotateBoundingBox(0.0f, XMConvertToRadians(225.0f), 0.0f);
+	TestNpc2->nonConflicting = true;
+	TestNpc2->isNPC = true;
+	m_pEnemy.push_back(dynamic_cast<CEnemyNPC*> (TestNpc2));
+
+	CBoundingBox* npcbox2 = new CBoundingBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, TestNpc2->m_xmOOBB);
+	m_vBoundingBox.push_back(npcbox2);
+	m_vGameObjects.push_back(TestNpc2);
+
+	delete pNPCModel2;
+
 	//for (int i = 0; i < MAX_ENEMY_B; i++)
 	//{
 	//	// CLoadedModelInfo* pBulletMesh = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Cube.bin", NULL);
@@ -749,58 +791,137 @@ void CScene::CheckPlayerByObjectCollisions()
 	for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end(); ++iter)
 	{
 		CGameObject* Object = *iter;
-		//XMFLOAT3 objectCenter = Object->m_xmOOBB.Center;
-		//auto t = Object->GetPosition();
-		//XMFLOAT3 playerCenter = m_pPlayer->m_xmOOBB.Center;
-
-		//std::cout << "Object위치: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-		//std::cout << "Player위치: " << playerCenter.x << ", " << playerCenter.y << ", " << playerCenter.z << std::endl;
-
-		//std::cout << "Object OBB: " << objectCenter.x << ", " << objectCenter.y << ", " << objectCenter.z << std::endl;
-		//std::cout << "Object Position: " << t.x << ", " << t.y << ", " << t.z << std::endl;
 
 		if (Object->m_xmOOBB.Intersects(m_pPlayer->m_xmOOBB))
 		{
-			// 이전 위치로 돌려보내기
-			// 충돌하면 어느 방향으로도 안움직이네..
-			// 충돌한 객체와 플레이어의 위치를 사용하여 표면 법선 계산
-			//XMFLOAT3 xmf3CollisionPoint = m_pPlayer->GetPosition();
-			//XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
-			//XMFLOAT3 xmf3SurfaceNormal;
 
-			//// 표면 법선 계산
-			//XMStoreFloat3(&xmf3SurfaceNormal, XMVector3Normalize(XMLoadFloat3(&xmf3CollisionPoint) - XMLoadFloat3(&xmf3ObjectCenter)));
-
-			//XMVECTOR incidentDirection = XMLoadFloat3(&m_pPlayer->m_xmf3MovingDirection);
-			//XMVECTOR normal = XMLoadFloat3(&xmf3SurfaceNormal);
-
-			//// 반사 벡터 계산
-			//XMVECTOR reflectedDirection = XMVector3Reflect(incidentDirection, normal);
-
-			//// 반사 벡터를 플레이어의 방향으로 설정
-			//XMStoreFloat3(&m_pPlayer->m_xmf3MovingDirection, reflectedDirection);
-
-			//auto t = m_pPlayer->GetPreviousPosition();
-			//m_pPlayer->SetPosition(t);
-			//m_pPlayer->Move(m_pPlayer->m_xmf3MovingDirection);
+			m_pPlayer->Move(m_pPlayer->m_xmf3MovingDirection);
 
 			// 충돌한 물체의 법선 벡터 계산해서 플레이어의 이동 방향 벡터를 반대로 돌리기
-			XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
-			XMFLOAT3 objectPosition = Object->GetPosition();
+			//XMFLOAT3 playerPosition = m_pPlayer->GetPosition();
+			//XMFLOAT3 objectPosition = Object->GetPosition();
 
-			// 충돌 지점에서의 노멀 벡터 계산
-			XMFLOAT3 collisionNormal;
-			XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
+			//// 충돌 지점에서의 노멀 벡터 계산
+			//XMFLOAT3 collisionNormal;
+			//XMStoreFloat3(&collisionNormal, XMVector3Normalize(XMLoadFloat3(&playerPosition) - XMLoadFloat3(&objectPosition)));
 
-			// 충돌 법선의 반대 방향으로 플레이어 이동
-			XMFLOAT3 newPosition;
-			XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
+			//// 충돌 법선의 반대 방향으로 플레이어 이동
+			//XMFLOAT3 newPosition;
+			//XMStoreFloat3(&newPosition, XMLoadFloat3(&playerPosition) + XMLoadFloat3(&collisionNormal));
 
-			// 새로운 위치로 플레이어 이동
-			m_pPlayer->SetPosition(newPosition);
+			//// 새로운 위치로 플레이어 이동
+			//m_pPlayer->SetPosition(newPosition);
 
 			//std::cout << "충돌!" << std::endl;
 			
+			// 슬라이딩 벡터
+			if (!Object->nonConflicting)
+			{
+				std::cout << "충돌!" << std::endl;
+
+				// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
+				XMFLOAT3 xmf3CollisionPoint = m_pPlayer->GetPosition();
+				XMFLOAT3 xmf3ObjectCenter = Object->GetPosition();
+				XMFLOAT3 xmf3SurfaceNormal;
+
+				// 우선은 y축은 고정으로
+				xmf3CollisionPoint.y = xmf3ObjectCenter.y;
+
+
+				XMFLOAT3 corners[8];
+				Object->m_xmOOBB.GetCorners(corners);
+
+
+				// 정면		 4 5 6 7
+				// 왼쪽		 0 4 7 3
+				// 오른쪽	 5 1 2 6
+				// 뒤쪽		 1 2 3 0
+
+				// 위쪽		 7 6 2 3
+				// 아래쪽	 0 1 5 4
+
+
+				XMVECTOR xmCorners[8];
+				for (int i = 0; i < 8; i++) {
+					xmCorners[i] = XMLoadFloat3(&corners[i]);
+				}
+
+				XMVECTOR collisionPoint = XMLoadFloat3(&xmf3CollisionPoint);
+
+				std::vector<PlaneData> planeDistances;
+
+				// 면의 거리 계산 및 저장
+				auto calculateAndStoreDistance = [&](int a, int b, int c) {
+					// 평면의 법선 벡터 계산
+					XMVECTOR planeNormal = XMVector3Normalize(XMVector3Cross(XMVectorSubtract(xmCorners[b], xmCorners[a]), XMVectorSubtract(xmCorners[c], xmCorners[a])));
+					float planeD = -XMVectorGetX(XMVector3Dot(planeNormal, xmCorners[a]));
+					float distance = XMVectorGetX(XMVector3Dot(planeNormal, collisionPoint)) + planeD;
+					planeDistances.emplace_back(planeNormal, distance);
+					};
+
+				// 각 면에 대해 계산
+				calculateAndStoreDistance(4, 5, 6); // Front
+				calculateAndStoreDistance(0, 4, 7); // Left
+				calculateAndStoreDistance(5, 1, 2); // Right
+				calculateAndStoreDistance(1, 2, 3); // Back
+				calculateAndStoreDistance(7, 6, 2); // Top
+				calculateAndStoreDistance(0, 1, 5); // Bottom
+
+				// 가장 가까운 면 찾기
+				float minDistance = FLT_MAX;
+				XMVECTOR xmvNearestNormal;
+				for (const auto& plane : planeDistances) {
+					if (fabs(plane.distance) < minDistance) {
+						minDistance = fabs(plane.distance);
+						xmvNearestNormal = plane.normal;
+					}
+				}
+
+				// 가장 가까운 면의 법선 벡터 출력 -> n
+				XMFLOAT3 xmf3NearestNormalFloat3;
+				XMStoreFloat3(&xmf3NearestNormalFloat3, xmvNearestNormal);
+
+				// 충돌 벡터 -> p
+				XMVECTOR t1 = XMLoadFloat3(&m_pPlayer->GetVelocity());
+				XMVECTOR t2 = XMLoadFloat3(&m_pPlayer->GetLook());
+				XMVECTOR tp = XMVectorMultiply(t1, t2);
+				XMFLOAT3 p;
+				XMStoreFloat3(&p, tp);
+				//p = Vector3::Normalize(p);
+		
+
+
+				// s = p - (p dot n)
+				float dot = Vector3::DotProduct(p, xmf3NearestNormalFloat3);
+				XMFLOAT3 npn;
+				npn.x = xmf3NearestNormalFloat3.x * dot;
+				npn.y = xmf3NearestNormalFloat3.y * dot;
+				npn.z = xmf3NearestNormalFloat3.z * dot;
+				XMFLOAT3 s = Vector3::Subtract(p, npn);
+				
+				// s = p + n(-p dot n)
+/*				p.x = -p.x;
+				p.y = -p.y;
+				p.z = -p.z;
+				float dot = Vector3::DotProduct(p, xmf3NearestNormalFloat3);
+				XMFLOAT3 npn;
+				npn.x = xmf3NearestNormalFloat3.x * dot * 2;
+				npn.y = xmf3NearestNormalFloat3.y * dot * 2;
+				npn.z = xmf3NearestNormalFloat3.z * dot * 2*/;
+				//XMFLOAT3 s = Vector3::Add(p, npn);
+
+				m_pPlayer->SetPosition(m_pPlayer->m_xmf3PreviousPosition);
+				m_pPlayer->m_xmf3PreviousPosition = m_pPlayer->GetPosition();
+				m_pPlayer->SetVelocity(s);
+				m_pPlayer->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), s));
+
+				// 추가로 충돌 표면에서 밀어내기 (약간의 이동 추가)
+				XMFLOAT3 pushOut = xmf3NearestNormalFloat3;
+				pushOut.x *= 0.1f;
+				pushOut.y *= 0.1f;
+				pushOut.z *= 0.1f;
+				m_pPlayer->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), pushOut));
+			}
 		}
 	}
 }
@@ -909,6 +1030,112 @@ void CScene::CheckBulletByObjectCollisions()
 				}
 		}
 	}
+
+	//for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end(); ++iter)	
+	//{
+	//	CGameObject* Object = *iter;
+	//	for (auto enemy = m_pEnemy.begin(); enemy != m_pEnemy.end(); ++iter)
+	//	{
+	//		for (int i = 0; i < MAX_ENEMY_B; i++)
+	//		{
+	//			CEnemyNPC* Enemy = *enemy;
+	//			if (Enemy->m_ppEBullets[i]->m_bActive)
+	//				if (Enemy->m_ppEBullets[i]->m_xmOOBB.Intersects(Object->m_xmOOBB))
+	//				{
+	//					if (!Object->nonConflicting)
+	//					{
+	//						std::cout << "충돌!" << std::endl;
+
+	//						// 충돌한 객체와 총알의 위치를 사용하여 표면 법선 계산
+	//						XMFLOAT3 xmf3CollisionPoint = Enemy->m_ppEBullets[i]->GetPosition();
+	//						XMFLOAT3 xmf3ObjectCenter = Enemy->GetPosition();
+	//						XMFLOAT3 xmf3SurfaceNormal;
+
+	//						// 우선은 y축은 고정으로
+	//						xmf3CollisionPoint.y = xmf3ObjectCenter.y;
+
+
+	//						XMFLOAT3 corners[8];
+	//						Object->m_xmOOBB.GetCorners(corners);
+
+
+	//						// 정면		 4 5 6 7
+	//						// 왼쪽		 0 4 7 3
+	//						// 오른쪽	 5 1 2 6
+	//						// 뒤쪽		 1 2 3 0
+
+	//						// 위쪽		 7 6 2 3
+	//						// 아래쪽	 0 1 5 4
+
+
+	//						XMVECTOR xmCorners[8];
+	//						for (int i = 0; i < 8; i++) {
+	//							xmCorners[i] = XMLoadFloat3(&corners[i]);
+	//						}
+
+	//						XMVECTOR collisionPoint = XMLoadFloat3(&xmf3CollisionPoint);
+
+	//						std::vector<PlaneData> planeDistances;
+
+	//						// 면의 거리 계산 및 저장
+	//						auto calculateAndStoreDistance = [&](int a, int b, int c) {
+	//							// 평면의 법선 벡터 계산
+	//							XMVECTOR planeNormal = XMVector3Normalize(XMVector3Cross(XMVectorSubtract(xmCorners[b], xmCorners[a]), XMVectorSubtract(xmCorners[c], xmCorners[a])));
+	//							float planeD = -XMVectorGetX(XMVector3Dot(planeNormal, xmCorners[a]));
+	//							float distance = XMVectorGetX(XMVector3Dot(planeNormal, collisionPoint)) + planeD;
+	//							planeDistances.emplace_back(planeNormal, distance);
+	//							};
+
+	//						// 각 면에 대해 계산
+	//						calculateAndStoreDistance(4, 5, 6); // Front
+	//						calculateAndStoreDistance(0, 4, 7); // Left
+	//						calculateAndStoreDistance(5, 1, 2); // Right
+	//						calculateAndStoreDistance(1, 2, 3); // Back
+	//						calculateAndStoreDistance(7, 6, 2); // Top
+	//						calculateAndStoreDistance(0, 1, 5); // Bottom
+
+	//						// 가장 가까운 면 찾기
+	//						float minDistance = FLT_MAX;
+	//						XMVECTOR xmvNearestNormal;
+	//						for (const auto& plane : planeDistances) {
+	//							if (fabs(plane.distance) < minDistance) {
+	//								minDistance = fabs(plane.distance);
+	//								xmvNearestNormal = plane.normal;
+	//							}
+	//						}
+
+	//						// 가장 가까운 면의 법선 벡터 출력
+	//						XMFLOAT3 xmf3NearestNormalFloat3;
+	//						XMStoreFloat3(&xmf3NearestNormalFloat3, xmvNearestNormal);
+
+	//						// 총알을 반사시키는 함수 호출
+	//						//XMFLOAT3 pastDirection = m_pPlayer->m_ppBullets[i]->m_xmf3MovingDirection;
+	//						Enemy->m_ppEBullets[i]->ReflectBullet(xmf3NearestNormalFloat3);
+	//						//XMFLOAT3 nowDirection =  m_pPlayer->m_ppBullets[i]->m_xmf3MovingDirection;		
+	//						// 총알이 도탄되는 방향으로 과거와 현재의 방향을 비교하여회전시켜라
+
+	//						//m_pPlayer->m_ppBullets[i]->RotateBulletTowards(pastDirection, nowDirection);
+	//					}
+	//					else
+	//					{
+	//						if (Object->isNPC)
+	//						{
+	//							Object->isheat = true;
+	//							cout << "NPC 맞음" << endl;
+	//							Object->m_pSkinnedAnimationController->SetTrackType(2, ANIMATION_TYPE_ONCE);
+	//							Object->m_pSkinnedAnimationController->SetTrackEnable(0, false);
+	//							Object->m_pSkinnedAnimationController->SetTrackEnable(1, false);
+	//							Object->m_pSkinnedAnimationController->SetTrackEnable(2, true);
+	//							Object->m_pSkinnedAnimationController->SetTrackEnable(3, false);
+
+	//						}
+	//					}
+
+
+	//				}
+	//		}
+	//	}
+	//}
 }
 
 bool CScene::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)

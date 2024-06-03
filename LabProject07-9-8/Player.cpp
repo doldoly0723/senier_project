@@ -161,7 +161,7 @@ void CPlayer::Update(float fTimeElapsed)
 	//std::cout << xmf3Velocity.x << "\t" << xmf3Velocity.y << "\t" << xmf3Velocity.z << "\t" << std::endl;
 	m_xmf3PreviousPosition = m_xmf3Position;
 	Move(xmf3Velocity, false);
-
+	m_xmf3PreviousVel = m_xmf3Velocity;
 	if (m_pPlayerUpdatedContext) OnPlayerUpdateCallback(fTimeElapsed);
 
 	DWORD nCurrentCameraMode = m_pCamera->GetMode();
