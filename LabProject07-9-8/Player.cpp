@@ -410,9 +410,9 @@ CTerrainPlayer::CTerrainPlayer(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandLi
 		m_ppBullets[i]->SetActive(false);
 
 		// 흠..
-		m_ppBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
-		m_ppBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
-		m_ppBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
+		//m_ppBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
+		//m_ppBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
+		//m_ppBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
 
 	}
 
@@ -469,10 +469,13 @@ CCamera *CTerrainPlayer::ChangeCamera(DWORD nNewCameraMode, float fTimeElapsed)
 			SetGravity(XMFLOAT3(0.0f, -250.0f, 0.0f));
 			//SetMaxVelocityXZ(300.0f);
 			//SetMaxVelocityY(400.0f);
+			// Player 속도 조절
 			SetMaxVelocityXZ(35.0f);
 			SetMaxVelocityY(35.0f);
 			m_pCamera = OnChangeCamera(THIRD_PERSON_CAMERA, nCurrentCameraMode);
+			// 줌하는데 걸리는 시간
 			m_pCamera->SetTimeLag(0.25f);
+			// 카메라 위치
 			m_pCamera->SetOffset(XMFLOAT3(0.0f, 20.0f, -20.0f));
 			m_pCamera->GenerateProjectionMatrix(1.01f, 5000.0f, ASPECT_RATIO, 60.0f);
 			m_pCamera->SetViewport(0, 0, FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT, 0.0f, 1.0f);

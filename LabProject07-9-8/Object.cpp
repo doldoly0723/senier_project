@@ -255,7 +255,7 @@ void CMaterial::LoadTextureFromFile(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 {
 	char pstrTextureName[64] = { '\0' };
 
-	BYTE nStrLength = 64;
+	BYTE nStrLength = 100;
 	UINT nReads = (UINT)::fread(&nStrLength, sizeof(BYTE), 1, pInFile);
 	nReads = (UINT)::fread(pstrTextureName, sizeof(char), nStrLength, pInFile);
 	pstrTextureName[nStrLength] = '\0';
@@ -265,15 +265,15 @@ void CMaterial::LoadTextureFromFile(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	{
 		SetMaterialType(nType);
 
-		char pstrFilePath[64] = { '\0' };
-		strcpy_s(pstrFilePath, 64, "Model/Textures/");
+		char pstrFilePath[100] = { '\0' };
+		strcpy_s(pstrFilePath, 100, "Model/Textures/");
 
 		bDuplicated = (pstrTextureName[0] == '@');
-		strcpy_s(pstrFilePath + 15, 64 - 15, (bDuplicated) ? (pstrTextureName + 1) : pstrTextureName);
-		strcpy_s(pstrFilePath + 15 + ((bDuplicated) ? (nStrLength - 1) : nStrLength), 64 - 15 - ((bDuplicated) ? (nStrLength - 1) : nStrLength), ".dds");
+		strcpy_s(pstrFilePath + 15, 100 - 15, (bDuplicated) ? (pstrTextureName + 1) : pstrTextureName);
+		strcpy_s(pstrFilePath + 15 + ((bDuplicated) ? (nStrLength - 1) : nStrLength), 100 - 15 - ((bDuplicated) ? (nStrLength - 1) : nStrLength), ".dds");
 
 		size_t nConverted = 0;
-		mbstowcs_s(&nConverted, pwstrTextureName, 64, pstrFilePath, _TRUNCATE);
+		mbstowcs_s(&nConverted, pwstrTextureName, 100, pstrFilePath, _TRUNCATE);
 
 		//#define _WITH_DISPLAY_TEXTURE_NAME
 
@@ -316,7 +316,7 @@ CAnimationSet::CAnimationSet(float fLength, int nFramesPerSecond, int nKeyFrames
 	m_nFramesPerSecond = nFramesPerSecond;
 	m_nKeyFrames = nKeyFrames;
 
-	strcpy_s(m_pstrAnimationSetName, 64, pstrName);
+	strcpy_s(m_pstrAnimationSetName, 100, pstrName);
 
 #ifdef _WITH_ANIMATION_SRT
 	m_nKeyFrameTranslations = nKeyFrames;
@@ -1518,7 +1518,7 @@ void CGameObject::PrintFrameInfo(CGameObject *pGameObject, CGameObject *pParent)
 
 void CGameObject::LoadAnimationFromFile(FILE *pInFile, CLoadedModelInfo *pLoadedModel)
 {
-	char pstrToken[64] = { '\0' };
+	char pstrToken[256] = { '\0' };
 	UINT nReads = 0;
 
 	int nAnimationSets = 0;
@@ -1543,11 +1543,11 @@ void CGameObject::LoadAnimationFromFile(FILE *pInFile, CLoadedModelInfo *pLoaded
 
 #ifdef _WITH_DEBUG_SKINNING_BONE
 				TCHAR pstrDebug[256] = { 0 };
-				TCHAR pwstrAnimationBoneName[64] = { 0 };
-				TCHAR pwstrBoneCacheName[64] = { 0 };
+				TCHAR pwstrAnimationBoneName[256] = { 0 };
+				TCHAR pwstrBoneCacheName[256] = { 0 };
 				size_t nConverted = 0;
-				mbstowcs_s(&nConverted, pwstrAnimationBoneName, 64, pstrToken, _TRUNCATE);
-				mbstowcs_s(&nConverted, pwstrBoneCacheName, 64, pLoadedModel->m_ppBoneFrameCaches[j]->m_pstrFrameName, _TRUNCATE);
+				mbstowcs_s(&nConverted, pwstrAnimationBoneName, 256, pstrToken, _TRUNCATE);
+				mbstowcs_s(&nConverted, pwstrBoneCacheName, 256, pLoadedModel->m_ppBoneFrameCaches[j]->m_pstrFrameName, _TRUNCATE);
 				_stprintf_s(pstrDebug, 256, _T("AnimationBoneFrame:: Cache(%s) AnimationBone(%s)\n"), pwstrBoneCacheName, pwstrAnimationBoneName);
 				OutputDebugString(pstrDebug);
 #endif
@@ -2278,7 +2278,7 @@ CEnemyNPC::~CEnemyNPC()
 
 void CEnemyNPC::Attack()
 {
-	std::cout << "공격중" << std::endl;
+	// std::cout << "공격중" << std::endl;
 	// std::cout << "발사 됨" << std::endl;
 	if (m_fFireWaitingTime > 0.0f)
 	{
@@ -2312,10 +2312,10 @@ void CEnemyNPC::Attack()
 
 		pBulletObject->m_xmf4x4ToParent = m_xmf4x4ToParent;
 
-		xmf3FirePosition.x = xmf3Position.x;
-		xmf3FirePosition.y = xmf3Position.y - 7.5f;
+		xmf3FirePosition.x = xmf3Position.x - 1.0f;
+		xmf3FirePosition.y = xmf3Position.y + 14.0f;
 		// xmf3FirePosition.y = xmf3Position.y;
-		xmf3FirePosition.z = xmf3Position.z;
+		xmf3FirePosition.z = xmf3Position.z - 5.0f;
 		//
 		pBulletObject->SetPosition(xmf3FirePosition);
 		pBulletObject->SetMovingDirection(xmf3Direction);

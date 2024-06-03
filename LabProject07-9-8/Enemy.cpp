@@ -173,10 +173,10 @@ CTerrainEnemy::CTerrainEnemy(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 		m_ppBullets[i]->SetMovingSpeed(100.0f);
 		m_ppBullets[i]->SetActive(false);
 
-		// Èì..
-		m_ppBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
-		m_ppBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
-		m_ppBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
+		//// Èì..
+		//m_ppBullets[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, pBulletMesh);
+		//m_ppBullets[i]->m_pSkinnedAnimationController->SetTrackAnimationSet(0, 0);
+		//m_ppBullets[i]->m_pSkinnedAnimationController->SetCallbackKeys(0, 1);
 
 	}
 
