@@ -63,6 +63,8 @@ public:
 
 	void ReleaseUploadBuffers();
 
+	float GetCriticalRicochetAngle(float thickness);
+
 	CPlayer								*m_pPlayer = NULL;
 	std::vector <CEnemyNPC*>			m_pEnemy;
 	
