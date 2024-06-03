@@ -1062,7 +1062,7 @@ void CScene::CheckBulletByObjectCollisions()
 						// xmf3CollisionPoint부터 m_pPlayer->GetPosition()으로 향하는 벡터 구하기
 						XMVECTOR playerPos = XMLoadFloat3(&m_pPlayer->GetPosition());
 						XMVECTOR collisionP = XMLoadFloat3(&xmf3CollisionPoint);
-						XMVECTOR vectorTowardsPlayer = XMVectorSubtract(playerPos, collisionP);
+						XMVECTOR vectorTowardsPlayer = XMVectorSubtract(collisionP, playerPos);
 
 						// 구한 벡터를 정규화 (단위 벡터로 변환)
 						XMVECTOR normalizedVectorTowardsPlayer = XMVector3Normalize(vectorTowardsPlayer);
